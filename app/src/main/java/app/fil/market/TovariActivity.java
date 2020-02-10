@@ -51,7 +51,7 @@ public class TovariActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tovari);
-        //10.02.2020
+        //10.02.2020-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TovariSpisokAdapter(recyclerView, this, ceniList);
