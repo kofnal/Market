@@ -10,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,21 +30,34 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import app.fil.market.Model.ILoadMore;
 import app.fil.market.ceni_i_skidki.Ceni;
 
 
 public class TovariActivity extends AppCompatActivity {
+    List<Ceni> ceniList = new ArrayList<>();
+    TovariSpisokAdapter adapter;
     ScrollView scrollView;
     RequestQueue requestQueue;
     ImageButton ibKorzina;
     TextView tvCountKorzina;
+    final int countLoadItems=10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tovari);
+        //10.02.2020
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new TovariSpisokAdapter(recyclerView, this, ceniList);
+        recyclerView.setAdapter(adapter);
+
+
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         tvCountKorzina=findViewById(R.id.tvKorzinaCount);
         setStartCountKorzina(tvCountKorzina);
@@ -54,32 +70,52 @@ public class TovariActivity extends AppCompatActivity {
                 startActivity(intentKorzina);
             }
         });
-        showSQL();
+        showSQL(0, countLoadItems);
+        adapter.setLoadMore(new ILoadMore() {
+            @Override
+            public void onLoadMore() {
+                ceniList.add(null);
+                adapter.notifyItemInserted(ceniList.size() - 1);
+                ceniList.remove(ceniList.size() - 1);
+                adapter.notifyItemRemoved(ceniList.size());
+                int index = ceniList.size();
+                int end = index + countLoadItems;
+                showSQL(index, end);
+            }
+        });
     }
-    void showSQL (){
+    void showSQL (final int indexStart, final int indexEnd){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.SHOW_TOVAR,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonObject= new JSONObject(response.toString());
+                            JSONObject jsonObject= new JSONObject(response);
                             System.out.println("TovariActivityActivity tovarRow showSQL() "+jsonObject);
                             JSONArray jsonArray = jsonObject.getJSONArray("tovar");
                             JSONArray jsonArrayKorzina = jsonObject.getJSONArray("korzina");
-                            JSONObject jsKorz = jsonArrayKorzina.getJSONObject(0);
-                            final String[] korzCount = {jsKorz.getString("SUM(korzina.kolihestvo)")};
-                            if(!korzCount[0].equals("null")){
-                                MainActivity.userStatic.setkorzina_count_INT(Integer.parseInt(korzCount[0]), tvCountKorzina);
-                                tvCountKorzina.setVisibility(View.VISIBLE);
-                                tvCountKorzina.setText(MainActivity.userStatic.getKorzinaCountStr());
+                            if(jsonArrayKorzina.length()>0) {JSONObject jsKorz = jsonArrayKorzina.getJSONObject(0);}
+//                            final String[] korzCount = {jsKorz.getString("SUM(korzina.kolihestvo)")};
+//                            if(!korzCount[0].equals("null")){
+//                                MainActivity.userStatic.setkorzina_count_INT(Integer.parseInt(korzCount[0]), tvCountKorzina);
+//                                tvCountKorzina.setVisibility(View.VISIBLE);
+//                                tvCountKorzina.setText(MainActivity.userStatic.getKorzinaCountStr());
+//                            }
+//                            else {
+//                                MainActivity.userStatic.setkorzina_count_INT(0, tvCountKorzina);
+//                                tvCountKorzina.setVisibility(View.INVISIBLE);
+//                            }
+//                            LinearLayout linLayout = findViewById(R.id.linLayTovariVertical);
+//                            LayoutInflater layoutInflater = getLayoutInflater();
+//                            linLayout.removeAllViews();
+
+                            int razmerZaprosa = indexEnd - indexStart;
+                            if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
+                                Toast.makeText(TovariActivity.this, "Load data completed !", Toast.LENGTH_SHORT).show();
+                                System.out.println("if345dfs3 bolhe net");
+                            } else {
+                                System.out.println("ehe est 345dfs3");
                             }
-                            else {
-                                MainActivity.userStatic.setkorzina_count_INT(0, tvCountKorzina);
-                                tvCountKorzina.setVisibility(View.INVISIBLE);
-                            }
-                            LinearLayout linLayout = findViewById(R.id.linLayTovariVertical);
-                            LayoutInflater layoutInflater = getLayoutInflater();
-                            linLayout.removeAllViews();
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonRow = jsonArray.getJSONObject(i);
                                 System.out.println("TovarActvity Tovar row "+jsonRow);
@@ -102,78 +138,83 @@ public class TovariActivity extends AppCompatActivity {
                                         jsonRow.getString("raskazotovare")
 
                                 );
-                                View item = layoutInflater.inflate(R.layout.row_tovar, linLayout, false);
-                                TextView tvNazvanie = item.findViewById(R.id.tvRowTowarNaimenovanie);
-                                TextView tvCena = item.findViewById(R.id.tvRowTovarCena);
-                                TextView tvRub = item.findViewById(R.id.tvRub);
-                                tvCena.setPaintFlags(tvCena.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                                tvRub.setPaintFlags(tvRub.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                                TextView tvCena2= item.findViewById(R.id.tvCenaSoSkidkoy);
-                                TextView tvSkidka = item.findViewById(R.id.tvSkidkaTov);
-                                ConstraintLayout conlayCenaBezSkidki = item.findViewById(R.id.conlayCenaBezSkidki);
-                                final ImageButton btBuy=item.findViewById(R.id.ibKupit);
-                                if(ceniObjRowTovar.getKolihestvo()>0){
-                                    btBuy.setBackgroundResource(R.drawable.backgrbelizakruglzeleniy);
-                                }
-                                btBuy.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        btBuy.setBackgroundResource(R.drawable.backgrbelizakruglzeleniy);
-                                        if(ceniObjRowTovar.getIsSelected()){
-                                            if(!MainActivity.userStatic.getKorzinaCountStr().equals("null")&!MainActivity.userStatic.getKorzinaCountStr().equals("")){//
-                                                int  tempKorzCount=MainActivity.userStatic.getKorzina_count_INT();
-                                                MainActivity.userStatic.setkorzina_count_INT(tempKorzCount+1, tvCountKorzina);
-                                            }
-                                            ceniObjRowTovar.setVibranLi(true);
-                                        }
-                                        else {
-                                            int  tempKorzCount=MainActivity.userStatic.getKorzina_count_INT();
-                                            MainActivity.userStatic.setkorzina_count_INT(tempKorzCount+1, tvCountKorzina);
-                                            ceniObjRowTovar.setVibranLi(true);
-                                        }
-                                        tvCountKorzina.setText(MainActivity.userStatic.getKorzinaCountStr());
-                                        tvCountKorzina.setVisibility(View.VISIBLE);
-                                        buySQL(ceniObjRowTovar.getId_sql_tovara_v_baze(), MainActivity.userStatic.getSqlId());
-                                        System.out.println("Tovari Activity btBuy count korzCount$$= "+MainActivity.userStatic.getKorzinaCountStr());
-                                    }
-                                });
-                                tvNazvanie.setText(ceniObjRowTovar.getNaimenovanie());
-                                if(ceniObjRowTovar.getSkidka()>0) {
-                                    System.out.println("Tovari set visible skidki >0");
-                                    tvCena.setText(ceniObjRowTovar.getCenaStr());
-                                    tvSkidka.setText("СКИДКА " + Double.toString(ceniObjRowTovar.getSkidka()) + "%");
-                                    conlayCenaBezSkidki.setVisibility(View.VISIBLE);
-                                    tvSkidka.setVisibility(View.VISIBLE);
-                                }else{
-                                    System.out.println("Tovari set visible skidki ==0");
-                                }
-                                tvCena2.setText(ceniObjRowTovar.getCenaFinalSoSkidkoyStr());
-
-                                ImageView imageView=item.findViewById(R.id.ivTovar);
-                                Picasso.get().load(ceniObjRowTovar.getFoto()).into(imageView);
-                                item.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        createIntent(ceniObjRowTovar);
-                                        System.out.println("id + "+ceniObjRowTovar.getId_sql_tovara_v_baze());
-                                    }
-                                });
-                                linLayout.addView(item);
+                                ceniList.add(ceniObjRowTovar);
+//                                View item = layoutInflater.inflate(R.layout.row_tovar, linLayout, false);
+//                                TextView tvNazvanie = item.findViewById(R.id.tvRowTowarNaimenovanie);
+//                                TextView tvCena = item.findViewById(R.id.tvRowTovarCena);
+//                                TextView tvRub = item.findViewById(R.id.tvRub);
+//                                tvCena.setPaintFlags(tvCena.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//                                tvRub.setPaintFlags(tvRub.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//                                TextView tvCena2= item.findViewById(R.id.tvCenaSoSkidkoy);
+//                                TextView tvSkidka = item.findViewById(R.id.tvSkidkaTov);
+//                                ConstraintLayout conlayCenaBezSkidki = item.findViewById(R.id.conlayCenaBezSkidki);
+//                                final ImageButton btBuy=item.findViewById(R.id.ibKupit);
+//                                if(ceniObjRowTovar.getKolihestvo()>0){
+//                                    btBuy.setBackgroundResource(R.drawable.backgrbelizakruglzeleniy);
+//                                }
+//                                btBuy.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        btBuy.setBackgroundResource(R.drawable.backgrbelizakruglzeleniy);
+//                                        if(ceniObjRowTovar.getIsSelected()){
+//                                            if(!MainActivity.userStatic.getKorzinaCountStr().equals("null")&!MainActivity.userStatic.getKorzinaCountStr().equals("")){//
+//                                                int  tempKorzCount=MainActivity.userStatic.getKorzina_count_INT();
+//                                                MainActivity.userStatic.setkorzina_count_INT(tempKorzCount+1, tvCountKorzina);
+//                                            }
+//                                            ceniObjRowTovar.setVibranLi(true);
+//                                        }
+//                                        else {
+//                                            int  tempKorzCount=MainActivity.userStatic.getKorzina_count_INT();
+//                                            MainActivity.userStatic.setkorzina_count_INT(tempKorzCount+1, tvCountKorzina);
+//                                            ceniObjRowTovar.setVibranLi(true);
+//                                        }
+//                                        tvCountKorzina.setText(MainActivity.userStatic.getKorzinaCountStr());
+//                                        tvCountKorzina.setVisibility(View.VISIBLE);
+//                                        buySQL(ceniObjRowTovar.getId_sql_tovara_v_baze(), MainActivity.userStatic.getSqlId());
+//                                        System.out.println("Tovari Activity btBuy count korzCount$$= "+MainActivity.userStatic.getKorzinaCountStr());
+//                                    }
+//                                });
+//                                tvNazvanie.setText(ceniObjRowTovar.getNaimenovanie());
+//                                if(ceniObjRowTovar.getSkidka()>0) {
+//                                    System.out.println("Tovari set visible skidki >0");
+//                                    tvCena.setText(ceniObjRowTovar.getCenaStr());
+//                                    tvSkidka.setText("СКИДКА " + Double.toString(ceniObjRowTovar.getSkidka()) + "%");
+//                                    conlayCenaBezSkidki.setVisibility(View.VISIBLE);
+//                                    tvSkidka.setVisibility(View.VISIBLE);
+//                                }else{
+//                                    System.out.println("Tovari set visible skidki ==0");
+//                                }
+//                                tvCena2.setText(ceniObjRowTovar.getCenaFinalSoSkidkoyStr());
+//
+//                                ImageView imageView=item.findViewById(R.id.ivTovar);
+//                                Picasso.get().load(ceniObjRowTovar.getFoto()).into(imageView);
+//                                item.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        createIntent(ceniObjRowTovar);
+//                                        System.out.println("id + "+ceniObjRowTovar.getId_sql_tovara_v_baze());
+//                                    }
+//                                });
+//                                linLayout.addView(item);
                             }
-                            scrollView.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // scrollView.fullScroll(View.FOCUS_DOWN);
-                                }
-                            });
+
+                            adapter.notifyDataSetChanged();
+                            adapter.setLoaded();
+//                            scrollView.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    // scrollView.fullScroll(View.FOCUS_DOWN);
+//                                }
+//                            });
                         } catch (JSONException e) {
 
-                            System.out.println("\n ERR"+response.toString());
+                            System.out.println("\n ERR Try TovariActiv showSQL "+e.toString()+" <--->"+response);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                System.out.println("Err TovariActiv showSQL "+error.toString());
 
             }
         })
@@ -185,9 +226,9 @@ public class TovariActivity extends AppCompatActivity {
                 String id=bundle1.getString("vetka");
                 parameters.put("vetka", id);
                 parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
-                parameters.put("indexstart", "0");
-                parameters.put("count", "100");
-                System.out.println("Otpravka na server iz tovar id "+id);
+                parameters.put("indexstart", Integer.toString(indexStart));
+                parameters.put("count", Integer.toString(countLoadItems));
+                System.out.println("Otpravka na server iz "+id+", tovar id  "+parameters.toString());
                 return parameters;
             }
         };
