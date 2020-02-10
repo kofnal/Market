@@ -1,11 +1,91 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@android:color/background_dark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    <style name="textOrangKrupn">
+        <item name="android:textSize">@dimen/shrift_krupniy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/kategorii_font</item>
+    </style>
+    <style name="textOrangSredniy">
+        <item name="android:textSize">@dimen/shrift_sredniy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/kategorii_font</item>
+    </style>
+    <style name="textOrangMelkiy">
+        <item name="android:textSize">@dimen/shrift_melkiy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/kategorii_font</item>
+    </style>
+    <style name="textSerKrupn">
+        <item name="android:textSize">@dimen/shrift_krupniy</item>
+        <item name="android:textColor">@color/seriy_riba</item>
+    </style>
+    <style name="textSerSredniy">
+        <item name="android:textSize">@dimen/shrift_sredniy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textColor">@color/seriy_riba</item>
+    </style>
+    <style name="textSerMelkiy">
+        <item name="android:textSize">@dimen/shrift_micro</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textColor">@color/seriy_riba</item>
+    </style>
+    <style name="textSerOpisaniePohtiMelkiy">
+        <item name="android:textSize">@dimen/shrift_melkiy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/seriy_riba</item>
+    </style>
+    <style name="textHerniyKrupniy">
+        <item name="android:textSize">@dimen/shrift_krupniy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/herniy</item>
+    </style>
+    <style name="textHerniySredniy">
+        <item name="android:textSize">@dimen/shrift_sredniy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/herniy</item>
+    </style>
+    <style name="textHerniyMelkiy">
+        <item name="android:textSize">@dimen/shrift_melkiy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/herniy</item>
+    </style>
+    <style name="textRedKrupniy">
+        <item name="android:textSize">@dimen/shrift_krupniy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/red_text</item>
+    </style>
+    <style name="textRedSredniy">
+        <item name="android:textSize">@dimen/shrift_sredniy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/red_text</item>
+    </style>
+    <style name="textRedMelkiy">
+        <item name="android:textSize">@dimen/shrift_melkiy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/red_text</item>
+    </style>
 </resources>

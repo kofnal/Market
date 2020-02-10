@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radioAdres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/tvIzmenitAdres"
+                app:layout_constraintStart_toStartOf="@+id/tvIzmenitAdres"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:id="@+id/tvIzmenitAdres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/radioAdres"
+                android:gravity="center_vertical"
+                android:text="@string/izmenit"
+                android:textAllCaps="true"
+                android:textColor="@color/colorNazvanie"
+                android:textSize="@dimen/shrift_sredniy"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvRowTowarNaimenovanie"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="20dp"
+            android:text="@string/adres"
+            android:textColor="@color/colorCena"
+            android:textSize="@dimen/shrift_sredniy"
+            app:layout_constraintEnd_toStartOf="@+id/relativeLayout2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRowTovarCena" />
+
+
+        <TextView
+            android:id="@+id/tvRowTovarCena"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:text="@string/fio"
+            android:textColor="@android:color/background_dark"
+            android:textSize="@dimen/shrift_sredniy"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutRazdelenie"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/otstup_mejdu_panelkami"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/razdelenie"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRowTowarNaimenovanie">
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

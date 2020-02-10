@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conLayInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivTovar"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayoOPL"
+                android:layout_width="179dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRowTowarNaimenovanie">
+
+                <TextView
+                    android:id="@+id/tvCenaOplata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center"
+                    android:text="35 000 000"
+                    android:textColor="@color/colorCena"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvRubOpl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tvKolihestvoOplata"
+                    android:layout_marginStart="8dp"
+                    android:layout_toEndOf="@+id/tvKolihestvoOplata"
+                    android:gravity="center_vertical"
+                    android:text="руб."
+                    android:textColor="@color/colorCena"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvCenaOplata"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvKolihestvoOplata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tvCenaOplata"
+                    android:layout_alignBottom="@+id/tvCenaOplata"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center"
+                    android:text="x 8"
+                    android:textColor="@color/colorCena"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/tvRubOpl"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvItogoPoTovaruOplata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayoOPL" />
+
+            <TextView
+                android:id="@+id/tvRowTowarNaimenovanie"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="left|center_vertical"
+                android:maxLines="3"
+                android:paddingLeft="20dp"
+                android:text="ertgxc"
+                android:textColor="@color/colorNazvanie"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/ivTovar"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginBottom="40dp"-->
+<!--android:layout_marginTop="10dp">-->
+
+<!--<androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<CheckBox-->
+        <!--android:id="@+id/checkBox"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/imageViewTovar" />-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imageViewTovar"-->
+        <!--android:layout_width="140dp"-->
+        <!--android:layout_height="140dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/checkBox"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tvSkidka"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:background="@drawable/layout_bg"-->
+        <!--android:paddingLeft="5dp"-->
+        <!--android:paddingRight="5dp"-->
+        <!--android:text="TextView"-->
+
+        <!--android:textColor="@android:color/background_light"-->
+        <!--android:textColorLink="@android:color/darker_gray"-->
+        <!--android:textSize="16sp"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/imageViewTovar"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tVTovar"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:gravity="left|center_vertical"-->
+        <!--android:maxLines="3"-->
+        <!--android:paddingLeft="20dp"-->
+        <!--android:text="ertgxc"-->
+        <!--android:textColor="@color/colorNazvanie"-->
+        <!--android:textSize="24sp"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintHorizontal_bias="0.0"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/imageViewTovar"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/tvSkidka" />-->
+
+
+    <!--<TextView-->
+        <!--android:id="@+id/tvCena2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="4545"-->
+        <!--android:textColor="@color/colorCena"-->
+        <!--android:textSize="30sp"-->
+        <!--android:textStyle="bold"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/imageViewTovar"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/imageViewTovar"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/tVTovar" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/tvRub2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignBaseline="@+id/tvCena2"-->
+        <!--android:layout_alignBottom="@+id/tvCena2"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_toEndOf="@+id/tvCena2"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:text="руб."-->
+        <!--android:textColor="@color/colorCena"-->
+        <!--android:textSize="18sp"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/tvCena2"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/tvCena2"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/tvCena2"-->
+        <!--app:layout_constraintVertical_bias="0.47000003" />-->
+
+    <!--<ImageButton-->
+        <!--android:id="@+id/imageButton4"-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--app:layout_constraintEnd_toEndOf="@+id/textView2"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/textView2"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/tVTovar"-->
+        <!--app:srcCompat="?android:attr/findOnPagePreviousDrawable" />-->
+
+    <!--<ImageButton-->
+        <!--android:id="@+id/imageButton5"-->
+        <!--android:layout_width="20dp"-->
+        <!--android:layout_height="20dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="@+id/imageViewTovar"-->
+        <!--app:layout_constraintEnd_toEndOf="@+id/textView2"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/textView2"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/textView2"-->
+        <!--app:srcCompat="?android:attr/findOnPageNextDrawable" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textView2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="TextView"-->
+        <!--app:layout_constraintEnd_toEndOf="@+id/tVTovar"-->
+        <!--app:layout_constraintStart_toEndOf="@+id/tvRub2"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/imageButton4" />-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--</FrameLayout>-->

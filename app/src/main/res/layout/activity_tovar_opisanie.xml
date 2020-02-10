@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TovarOpisanie">
+
+    <ImageView
+        android:id="@+id/ivOpisBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bg_png" />
+    <include
+        android:id="@+id/conLayXmlTop"
+        layout="@layout/con_lay_top"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layTop" />
+
+
+    <ScrollView
+        android:id="@+id/scrlOpisanie"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/conLayXmlTop">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conLayOpisanieInScrol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvOpisNazvanieTovara"
+                style="@style/textSerKrupn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="tvOpisanieZnahenieMestaVilova,tvOpisanieMestoVilova"
+                tools:layout_editor_absoluteY="567dp" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="textView18,tvOpisRazmerniyRiad"
+                tools:layout_editor_absoluteY="497dp">
+
+
+            </android.support.constraint.Barrier>
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="etOpisInputCountTovar,tvOpisVKorzinu"
+                tools:layout_editor_absoluteY="567dp" />
+
+            <ImageView
+                android:id="@+id/ivOpisTovar"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvOpisNazvanieTovara"
+                app:srcCompat="@drawable/bg_png" />
+
+            <TextView
+                android:id="@+id/tvOpisCenaTovara"
+                style="@style/textOrangKrupn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivOpisTovar" />
+
+            <TextView
+                android:id="@+id/tvOpisRub"
+                style="@style/textOrangKrupn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/rub"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tvOpisCenaTovara"
+                app:layout_constraintStart_toEndOf="@+id/tvOpisCenaTovara" />
+
+            <TextView
+                android:id="@+id/tvOpisTovaraCenaZaEdinicu"
+                style="@style/textSerMelkiy"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                app:layout_constraintStart_toStartOf="@+id/tvOpisZaEdinicuIzmer"
+                app:layout_constraintTop_toBottomOf="@+id/tvOpisCenaTovara" />
+
+
+            <TextView
+                android:id="@+id/tvOpisZaEdinicuIzmer"
+                style="@style/textSerKrupn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="за 1 кг."
+                app:layout_constraintBaseline_toBaselineOf="@+id/tvOpisCenaTovara"
+                app:layout_constraintStart_toEndOf="@+id/tvOpisRub" />
+
+            <TextView
+                android:id="@+id/tvOpisVesUpak"
+                style="@style/textSerMelkiy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/ves_upakovki"
+                app:layout_constraintStart_toStartOf="@+id/tvOpisCenaTovara"
+                app:layout_constraintTop_toTopOf="@+id/barrier3" />
+
+            <TextView
+                android:id="@+id/tvOpisZnahenieVesaUpakovki"
+                style="@style/textSerMelkiy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="вес_упаковки"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tvOpisVesUpak"
+                app:layout_constraintStart_toEndOf="@+id/tvOpisVesUpak" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="tvOpisZaEdinicuIzmer,tvOpisCenaTovara,tvOpisTovaraCenaZaEdinicu"
+                tools:layout_editor_absoluteY="497dp" />
+
+            <TextView
+                android:id="@+id/tvopisMinusTovar"
+                style="@style/textSerSredniy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="24dp"
+                android:paddingTop="12dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="12dp"
+                android:text="-"
+                app:layout_constraintBaseline_toBaselineOf="@+id/etOpisInputCountTovar"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/etOpisInputCountTovar"
+                style="@style/textSerSredniy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittextstyle"
+                android:paddingLeft="12dp"
+                android:paddingTop="8dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="8dp"
+                android:text="1"
+                app:layout_constraintStart_toEndOf="@+id/tvopisMinusTovar"
+                app:layout_constraintTop_toBottomOf="@+id/tvOpisVesUpak" />
+
+            <TextView
+                android:id="@+id/tvOpisPlusTovar"
+                style="@style/textSerSredniy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="12dp"
+                android:text="+"
+                app:layout_constraintBaseline_toBaselineOf="@+id/etOpisInputCountTovar"
+                app:layout_constraintStart_toEndOf="@+id/etOpisInputCountTovar" />
+
+            <TextView
+                android:id="@+id/tvOpisVKorzinu"
+                style="@style/textOrangKrupn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/v_korzinu"
+                app:layout_constraintBaseline_toBaselineOf="@+id/etOpisInputCountTovar"
+                app:layout_constraintStart_toEndOf="@+id/tvOpisPlusTovar" />
+
+            <TextView
+                android:id="@+id/tvOpisVesUpakPodEditText"
+                style="@style/textSerMelkiy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/tvOpisPlusTovar"
+                app:layout_constraintStart_toEndOf="@+id/tvopisMinusTovar"
+                app:layout_constraintTop_toBottomOf="@+id/etOpisInputCountTovar" />
+
+            <TextView
+                android:id="@+id/tvOpisanieOformit"
+                style="@style/textSerSredniy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/backgrbelizakruglzeleniy"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/oformit"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvOpisVesUpakPodEditText" />
+
+            <TextView
+                android:id="@+id/tvOpisRazmerniyRiad"
+                style="@style/textSerSredniy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/razmerniy_riad"
+                app:layout_constraintStart_toStartOf="@+id/tvOpisCenaTovara"
+                app:layout_constraintTop_toBottomOf="@+id/tvOpisanieOformit" />
+
+            <TextView
+                android:id="@+id/tvOpisZnahenieRazmernogoRiada"
+                style="@style/textSerSredniy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="R.font.gilroyExtraBold"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tvOpisRazmerniyRiad"
+                app:layout_constraintStart_toEndOf="@+id/tvOpisRazmerniyRiad" />
+
+            <TextView
+                android:id="@+id/tvOpisanieMestoVilova"
+                style="@style/textSerMelkiy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Место вылова:"
+                app:layout_constraintEnd_toStartOf="@+id/tvOpisanieZnahenieMestaVilova"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/tvOpisCenaTovara"
+                app:layout_constraintTop_toTopOf="@+id/barrier5" />
+
+            <TextView
+                android:id="@+id/tvOpisanieZnahenieMestaVilova"
+                style="@style/textSerMelkiy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="где_выловлено"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tvOpisanieMestoVilova"
+                app:layout_constraintStart_toEndOf="@+id/tvOpisanieMestoVilova" />
+
+            <TextView
+                android:id="@+id/tvOpisTypeFasovki"
+                style="@style/textSerMelkiy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:text="тип фасовки"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvOpisCenaTovara"
+                app:layout_constraintTop_toTopOf="@+id/barrier6" />
+
+            <TextView
+                android:id="@+id/tvOpisanieTovaraRaskaz"
+                style="@style/textSerOpisaniePohtiMelkiy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:paddingBottom="80dp"
+                android:text="расказ_о_товаре"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvOpisCenaTovara"
+                app:layout_constraintTop_toBottomOf="@+id/tvOpisTypeFasovki" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

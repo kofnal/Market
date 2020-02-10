@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recZakazTovari"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/conLayZakazBottom"
+            app:layout_constraintTop_toBottomOf="@+id/liLayTovariVZakaze"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conLayInfoDateNoZakaza"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="8dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/coLayTextOpis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="0dp">
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/nomer_zakaza"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/vremia_zakaza"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView21" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/canLayDateOpis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/coLayTextOpis"
+                app:layout_constraintStart_toEndOf="@+id/coLayTextOpis"
+                app:layout_constraintTop_toTopOf="@+id/coLayTextOpis">
+
+                <TextView
+                    android:id="@+id/tvNoZakaza"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123"
+                    android:textColor="@color/herniy"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="8dp" />
+
+                <TextView
+                    android:id="@+id/tvVremZakaza"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="123"
+                    android:textColor="@color/herniy"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNoZakaza" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageButton
+                android:id="@+id/ibDel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/canLayDateOpis"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bt_delete" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <LinearLayout
+            android:id="@+id/liLayTovariVZakaze"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/conLayInfoDateNoZakaza">
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conLayZakazBottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/liLayTovariVZakaze">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/coLayTextOpis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="0dp">
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/itogo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/canLayDateOpis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/coLayTextOpis"
+                app:layout_constraintStart_toEndOf="@+id/coLayTextOpis"
+                app:layout_constraintTop_toTopOf="@+id/coLayTextOpis">
+
+                <TextView
+                    android:id="@+id/tvItogoPoZakazu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="TextView"
+                    android:textColor="@color/red_main"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

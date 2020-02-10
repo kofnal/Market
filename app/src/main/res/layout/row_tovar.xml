@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conLayInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivTovar"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvKKorzine"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="32dp"
+                android:gravity="right"
+                android:text="@string/zakazat"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivTovar" />
+
+            <TextView
+                android:id="@+id/tvSkidkaTov"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/layout_bg"
+
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="TextView"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/darker_gray"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/ivTovar"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/ibKupit"
+                android:layout_width="@dimen/shirina_poley_vvoda"
+                android:layout_height="@dimen/shirina_poley_vvoda"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/backgrbelizakruglsiniy"
+                app:layout_constraintBottom_toTopOf="@+id/tvKKorzine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRowTowarNaimenovanie"
+                app:srcCompat="@drawable/korzina" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/tvKKorzine"
+                app:layout_constraintEnd_toStartOf="@+id/ibKupit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRowTowarNaimenovanie"
+                app:layout_constraintVertical_bias="0.0">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/conlayCenaBezSkidki"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvRub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/rub"
+                        android:textColor="@color/colorCena2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvRowTovarCena"
+                        app:layout_constraintStart_toEndOf="@+id/tvRowTovarCena"
+                        app:layout_constraintTop_toTopOf="@+id/tvRowTovarCena" />
+
+                    <TextView
+                        android:id="@+id/tvRowTovarCena"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="10 000"
+                        android:textColor="@color/colorCena2"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/conlayCena2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/conlayCenaBezSkidki">
+
+                    <TextView
+                        android:id="@+id/tvCenaSoSkidkoy"
+                        style="@style/textOrangSredniy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="8 000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        style="@style/textOrangSredniy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/rub"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvCenaSoSkidkoy"
+                        app:layout_constraintStart_toEndOf="@+id/tvCenaSoSkidkoy"
+                        app:layout_constraintTop_toTopOf="@+id/tvCenaSoSkidkoy" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvRowTowarNaimenovanie"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="left|center_vertical"
+                android:maxLines="3"
+                android:paddingLeft="20dp"
+                android:text="ertgxc"
+                android:textColor="@color/colorNazvanie"
+                android:textSize="@dimen/shrift_sredniy"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSkidkaTov" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layotstup"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/otstup_mejdu_panelkami_micro"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@color/colorCena2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/ivTovar"
+            android:layout_width="140dp"
+            android:layout_height="@dimen/razmerfoto"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/layotstup"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#ff4081</color>
+    <color name="colorCena">#4a5256</color>
+    <color name="colorCena2">#969696</color>
+    <color name="colorNazvanie">#0072bc</color>
+    <color name="fon_color">#f2f2f2</color>
+    <color name="herniy">#000000</color>
+    <color name="seriy_riba">#fdfdfe</color>
+    <color name="color_red_main">#fd0001</color>
+    <color name="red_main">#fd0001</color>
+    <color name="green_main">#00fd72</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="kategorii_font">#fdcc06</color>
+    <color name="jeltiy_kurier_fon">#fddc57</color>
+    <color name="bejeviy_kurier_fon">#d9ad01</color>
+    <color name="red_text">#cf0001</color>
+
 </resources>
