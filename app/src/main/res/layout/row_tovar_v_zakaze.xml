@@ -21,7 +21,7 @@
             app:srcCompat="@color/fon_color" />
 
         <ImageView
-            android:id="@+id/ivTovar"
+            android:id="@+id/ivRowTovarFoto"
             android:layout_width="@dimen/imageViewSmal"
             android:layout_height="@dimen/imageViewSmal"
             android:layout_marginStart="8dp"
@@ -43,7 +43,7 @@
             android:textSize="@dimen/shrift_sredniy"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/ivTovar"
+            app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
@@ -55,7 +55,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivTovar"
+            app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
             app:layout_constraintTop_toBottomOf="@+id/tvRowTowarNaimenovanie">
 
             <TextView
@@ -121,7 +121,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivTovar"
+            app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

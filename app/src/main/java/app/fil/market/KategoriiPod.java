@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,6 +31,7 @@ import java.util.Map;
 
 public class KategoriiPod extends AppCompatActivity {
     ScrollView scrollView;
+    RecyclerView recyclerView;
     RequestQueue requestQueue;
     ImageButton ibKorzina;
     String korzCount="";
@@ -38,12 +40,13 @@ public class KategoriiPod extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tovari);
+        setContentView(R.layout.activity_kategorii_pod);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         tvCountKorzina=findViewById(R.id.tvKorzinaCount);
         TovariActivity.setStartCountKorzina(tvCountKorzina);
         scrollView= findViewById(R.id.linerLayTovari);
         ibKorzina =findViewById(R.id.ibOpisanieKorzina);
+        recyclerView =findViewById(R.id.recyclerView);
         final Intent intentKorzinaActivity=new Intent(this,KorzinaActivity.class);
         ibKorzina.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +62,7 @@ public class KategoriiPod extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonObject= new JSONObject(response.toString());
+                            JSONObject jsonObject= new JSONObject(response);
                             System.out.println("KotegoriiPodActivity jsonObj from SQL Server -"+jsonObject);
                             JSONArray jsonArray = jsonObject.getJSONArray("serv");
                             JSONArray jsonArrayKorzina = jsonObject.getJSONArray("korzina");
@@ -85,7 +88,7 @@ public class KategoriiPod extends AppCompatActivity {
                                 String foto = Utils.BASE_IP+jsonRow.getString("foto");
                                 View item = layoutInflater.inflate(R.layout.row_kategoria, linLayout, false);
                                 TextView nameServ = item.findViewById(R.id.tVKat);
-                                ImageView imageView=item.findViewById(R.id.ivTovar);
+                                ImageView imageView=item.findViewById(R.id.ivRowTovarFoto);
                                 Picasso.get().load(foto).into(imageView);
                                 nameServ.setText(nazvanie);
                                 item.setOnClickListener(new View.OnClickListener() {

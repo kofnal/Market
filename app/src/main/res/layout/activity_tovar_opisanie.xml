@@ -55,32 +55,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <android.support.constraint.Barrier
-                android:id="@+id/barrier6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="tvOpisanieZnahenieMestaVilova,tvOpisanieMestoVilova"
-                tools:layout_editor_absoluteY="567dp" />
 
-            <android.support.constraint.Barrier
-                android:id="@+id/barrier5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="textView18,tvOpisRazmerniyRiad"
-                tools:layout_editor_absoluteY="497dp">
-
-
-            </android.support.constraint.Barrier>
-
-            <android.support.constraint.Barrier
-                android:id="@+id/barrier4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="etOpisInputCountTovar,tvOpisVKorzinu"
-                tools:layout_editor_absoluteY="567dp" />
 
             <ImageView
                 android:id="@+id/ivOpisTovar"
@@ -97,7 +72,7 @@
                 style="@style/textOrangKrupn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ivOpisTovar" />
 
@@ -138,7 +113,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/ves_upakovki"
                 app:layout_constraintStart_toStartOf="@+id/tvOpisCenaTovara"
-                app:layout_constraintTop_toTopOf="@+id/barrier3" />
+                app:layout_constraintTop_toBottomOf="@+id/tvOpisTovaraCenaZaEdinicu" />
 
             <TextView
                 android:id="@+id/tvOpisZnahenieVesaUpakovki"
@@ -150,13 +125,6 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/tvOpisVesUpak"
                 app:layout_constraintStart_toEndOf="@+id/tvOpisVesUpak" />
 
-            <android.support.constraint.Barrier
-                android:id="@+id/barrier3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="tvOpisZaEdinicuIzmer,tvOpisCenaTovara,tvOpisTovaraCenaZaEdinicu"
-                tools:layout_editor_absoluteY="497dp" />
 
             <TextView
                 android:id="@+id/tvopisMinusTovar"
@@ -264,12 +232,12 @@
                 style="@style/textSerMelkiy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="Место вылова:"
                 app:layout_constraintEnd_toStartOf="@+id/tvOpisanieZnahenieMestaVilova"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/tvOpisCenaTovara"
-                app:layout_constraintTop_toTopOf="@+id/barrier5" />
+                app:layout_constraintTop_toBottomOf="@+id/tvOpisRazmerniyRiad" />
 
             <TextView
                 android:id="@+id/tvOpisanieZnahenieMestaVilova"
@@ -286,12 +254,12 @@
                 style="@style/textSerMelkiy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:text="тип фасовки"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tvOpisCenaTovara"
-                app:layout_constraintTop_toTopOf="@+id/barrier6" />
+                app:layout_constraintTop_toBottomOf="@+id/tvOpisanieMestoVilova" />
 
             <TextView
                 android:id="@+id/tvOpisanieTovaraRaskaz"

@@ -94,17 +94,19 @@ public class TovariActivity extends AppCompatActivity {
                             System.out.println("TovariActivityActivity tovarRow showSQL() "+jsonObject);
                             JSONArray jsonArray = jsonObject.getJSONArray("tovar");
                             JSONArray jsonArrayKorzina = jsonObject.getJSONArray("korzina");
-                            if(jsonArrayKorzina.length()>0) {JSONObject jsKorz = jsonArrayKorzina.getJSONObject(0);}
-//                            final String[] korzCount = {jsKorz.getString("SUM(korzina.kolihestvo)")};
-//                            if(!korzCount[0].equals("null")){
-//                                MainActivity.userStatic.setkorzina_count_INT(Integer.parseInt(korzCount[0]), tvCountKorzina);
-//                                tvCountKorzina.setVisibility(View.VISIBLE);
-//                                tvCountKorzina.setText(MainActivity.userStatic.getKorzinaCountStr());
-//                            }
-//                            else {
-//                                MainActivity.userStatic.setkorzina_count_INT(0, tvCountKorzina);
-//                                tvCountKorzina.setVisibility(View.INVISIBLE);
-//                            }
+                            if(jsonArrayKorzina.length()>0) {JSONObject jsKorz = jsonArrayKorzina.getJSONObject(0);
+                                final String[] korzCount = {jsKorz.getString("SUM(korzina.kolihestvo)")};
+                            if(!korzCount[0].equals("null")){
+                                MainActivity.userStatic.setkorzina_count_INT(Integer.parseInt(korzCount[0]), tvCountKorzina);
+                                tvCountKorzina.setVisibility(View.VISIBLE);
+                                tvCountKorzina.setText(MainActivity.userStatic.getKorzinaCountStr());
+                            }
+                            else {
+                                MainActivity.userStatic.setkorzina_count_INT(0, tvCountKorzina);
+                                tvCountKorzina.setVisibility(View.INVISIBLE);
+                            }
+                            }
+//
 //                            LinearLayout linLayout = findViewById(R.id.linLayTovariVertical);
 //                            LayoutInflater layoutInflater = getLayoutInflater();
 //                            linLayout.removeAllViews();
@@ -138,8 +140,9 @@ public class TovariActivity extends AppCompatActivity {
                                         jsonRow.getString("raskazotovare")
 
                                 );
+                                System.out.println("Ceni create foto = "+ceniObjRowTovar.getFoto());
                                 ceniList.add(ceniObjRowTovar);
-//                                View item = layoutInflater.inflate(R.layout.row_tovar, linLayout, false);
+//                                View item = layoutInflater.inflate(R.layout.row_tovar2, linLayout, false);
 //                                TextView tvNazvanie = item.findViewById(R.id.tvRowTowarNaimenovanie);
 //                                TextView tvCena = item.findViewById(R.id.tvRowTovarCena);
 //                                TextView tvRub = item.findViewById(R.id.tvRub);
@@ -234,40 +237,7 @@ public class TovariActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-    void buySQL (final String tovar, final String pokupatel){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.BUY_KOLVO_TOVAR,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject= new JSONObject(response);
-                            System.out.println("Tovari activ buy SQL = "+jsonObject.toString());
-                            JSONArray jsonArray = jsonObject.getJSONArray("serv");
 
-                        } catch (JSONException e) {
-
-                            System.out.println("\n ERR"+response);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> parameters = new HashMap<String,String>();
-                parameters.put("tovar", tovar);
-                parameters.put("kolvo", "1");
-                parameters.put("pokupatel", pokupatel);
-                System.out.println("Tovari activ buy SQL parametrs = "+parameters);
-                return parameters;
-            }
-        }                ;
-        requestQueue.add(stringRequest);
-    }
     void createIntent(Ceni ceniObj){
         Intent intent=new Intent(getApplicationContext(), TovarOpisanie.class);
         intent.putExtra("ceniObj", ceniObj);

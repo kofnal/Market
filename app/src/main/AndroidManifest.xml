@@ -31,9 +31,6 @@
             android:name=".KorzinaActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".SpisokTovarov"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
             android:name=".ZakazActivity"
             android:windowSoftInputMode="stateHidden" />
     </application>

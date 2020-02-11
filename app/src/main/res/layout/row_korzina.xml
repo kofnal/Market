@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivTovar"
+        android:id="@+id/ivRowTovarFoto"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginStart="8dp"
@@ -38,7 +38,7 @@
         android:paddingLeft="20dp"
         android:text="ertgxc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivTovar"
+        app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -58,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/etRowKorzinaKolihestvoTovara"
         app:layout_constraintEnd_toStartOf="@+id/etRowKorzinaKolihestvoTovara"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/ivTovar"
+        app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
         app:layout_constraintTop_toTopOf="@+id/etRowKorzinaKolihestvoTovara" />
 
     <TextView
@@ -90,7 +90,7 @@
         android:text="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivTovar" />
+        app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/conCena"
@@ -102,29 +102,29 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/etRowKorzinaKolihestvoTovara"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivTovar"
+        app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
         app:layout_constraintTop_toBottomOf="@+id/tvRowTowarNaimenovanie">
 
         <TextView
             android:id="@+id/tvRowTovarRub2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvRowTovarCena"
-            android:layout_alignBottom="@+id/tvRowTovarCena"
+            android:layout_alignBaseline="@+id/tvRowTovarCenaBezSkidki"
+            android:layout_alignBottom="@+id/tvRowTovarCenaBezSkidki"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/tvRowTovarCena"
+            android:layout_toEndOf="@+id/tvRowTovarCenaBezSkidki"
             android:gravity="center_vertical"
             android:text="руб."
             android:textColor="@color/kategorii_font"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvRowTovarCena"
-            app:layout_constraintStart_toEndOf="@+id/tvRowTovarCena"
-            app:layout_constraintTop_toTopOf="@+id/tvRowTovarCena" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvRowTovarCenaBezSkidki"
+            app:layout_constraintStart_toEndOf="@+id/tvRowTovarCenaBezSkidki"
+            app:layout_constraintTop_toTopOf="@+id/tvRowTovarCenaBezSkidki" />
 
         <TextView
-            android:id="@+id/tvRowTovarCena"
+            android:id="@+id/tvRowTovarCenaBezSkidki"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -134,7 +134,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivTovar"
+            app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

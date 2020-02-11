@@ -74,7 +74,8 @@ public class KorzinaActivity extends AppCompatActivity implements View.OnClickLi
         jsObjTempToSQL = new JSONObject();
         jsArrTempToSQL = new JSONArray();
         scrollView = (ScrollView) findViewById(R.id.scrolTovari);
-        tvKorzinaCount = findViewById(R.id.tvKorzinaCount);
+        tvKorzinaCount = findViewById(R.id.tvKorzCountVibrannix);
+        tvKorzinaCount.setVisibility(View.GONE);
         mainCheckBox = findViewById(R.id.chMain);
         constraintLayoutBotom = findViewById(R.id.conLayKorzinaBottom);
         btKupit = findViewById(R.id.btKupit);
@@ -151,9 +152,9 @@ public class KorzinaActivity extends AppCompatActivity implements View.OnClickLi
                                         jsonRow.getString("raskazotovare")
                                         );
                                 final View item = layoutInflater.inflate(R.layout.row_korzina, linLayout, false);
-                                ImageView ivTovar = item.findViewById(R.id.ivTovar);
+                                ImageView ivTovar = item.findViewById(R.id.ivRowTovarFoto);
                                 TextView tvRowTowarNaimenovanie = (TextView) item.findViewById(R.id.tvRowTowarNaimenovanie);
-                                TextView tvRowTovarCena = (TextView) item.findViewById(R.id.tvRowTovarCena);
+                                TextView tvRowTovarCena = (TextView) item.findViewById(R.id.tvRowTovarCenaBezSkidki);
                                 final EditText etRowKorzinaKolihestvoTovara = (EditText) item.findViewById(R.id.etRowKorzinaKolihestvoTovara);
                                 final CheckBox chKorzina = item.findViewById(R.id.chKorzina);
 
@@ -395,7 +396,7 @@ public class KorzinaActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private String stringKorzinaKOplateSkolkoVsego() {
-        return Utils.getStringFromDoubleFormated(doubleK_OplateSkolkoVsego) + " руб.";
+        return Utils.getStringFromDoubleFormated2Zerro(doubleK_OplateSkolkoVsego) + " руб.";
     }
 
     void krasniyShethik() {

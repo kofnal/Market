@@ -44,7 +44,7 @@ public class Utils {
     public static int intentRequestCODKategoriiPodToTovariActivityDlia_KolihestvaV_Korzine_NOT=1210;
     public static int intentRequestCODTovarActivToOpisanie=122;
 
-    public static String getStringFromDoubleFormated(Double cena){
+    public static String getStringFromDoubleFormated2Zerro(Double cena){
         String cenaFormat="";
         if(cena % 1 == 0 ){ //целое число
              cenaFormat = String.format("%, .0f", cena);
@@ -54,6 +54,9 @@ public class Utils {
              System.out.println("Doubl format else="+cenaFormat);
         }
         return  cenaFormat;
+    }
+    public static String getStringFromDoubleFormated0Zerro(Double cena){
+        return  String.format("%, .0f", cena);
     }
 
 

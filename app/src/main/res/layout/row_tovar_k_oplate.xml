@@ -17,7 +17,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/ivTovar"
+            app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -114,7 +114,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
-            android:id="@+id/ivTovar"
+            android:id="@+id/ivRowTovarFoto"
             android:layout_width="140dp"
             android:layout_height="140dp"
             app:layout_constraintStart_toStartOf="parent"

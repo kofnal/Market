@@ -143,7 +143,7 @@ public class Ceni implements Parcelable {
             return cenaZaOdinKg;
     }
     public String getCenaStr() {
-        return Utils.getStringFromDoubleFormated(cenaZaOdinKg);
+        return Utils.getStringFromDoubleFormated2Zerro(cenaZaOdinKg);
     }
 
     public Double getCenaZaUpakovky() {
@@ -159,10 +159,13 @@ public class Ceni implements Parcelable {
     }
 
     public String getCenaZaUpakovkyStr() {
-        return Utils.getStringFromDoubleFormated(cenaZaUpakovky);
+        return Utils.getStringFromDoubleFormated2Zerro(cenaZaUpakovky);
     }
     public Double getSkidka() {
         return skidka;
+    }
+    public String getSkidkaStr() {
+        return Utils.getStringFromDoubleFormated0Zerro(skidka);
     }
     public boolean getIsSelected() {
         return vibranLi;
@@ -198,7 +201,7 @@ public class Ceni implements Parcelable {
         return cenaFinalSkidkaZaOdinKg;
     }
     public String getCenaFinalSoSkidkoyStr() {
-        return Utils.getStringFromDoubleFormated(cenaFinalSkidkaZaOdinKg);
+        return Utils.getStringFromDoubleFormated2Zerro(cenaFinalSkidkaZaOdinKg);
     }
     public void setVibranLi(boolean vibranLi) {
         this.vibranLi = vibranLi;

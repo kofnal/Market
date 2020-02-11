@@ -113,6 +113,7 @@ public class UserInfoPrefs {
     public String getTelStr(){return prefs.getString(  KEY_TEL_STRING_TAG , "");}
     public String getAdresStr(){return prefs.getString(  KEY_ADRES_TAG , "");}
     public String getKomentStr(){return prefs.getString(  KEY_KOMENT_TAG , "");}
+//    public String getKorzinaCountStr(){return "2";}
     public String getKorzinaCountStr(){return prefs.getString(  KEY_KORZINA_COUNT_TAG , "");}
     public String getSqlId(){
         System.out.println("UserInfoPrefs GetSQL ID = " + prefs.getString(KEY_ID_SQL_TAG, ""));
