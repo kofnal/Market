@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,27 +43,30 @@ class LoadingViewHolder extends RecyclerView.ViewHolder {
 
     public LoadingViewHolder(View itemView) {
         super(itemView);
-        progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+        progressBar = itemView.findViewById(R.id.progressBar);
     }
 }
 
 class ItemViewHolder extends RecyclerView.ViewHolder {
 
-    TextView tvRowTowarNaimenovanie, tvRowTovarCenaBezSkidki, tvRowTovarCenaSoSkidkoy, tvRowTovarSkidka;
+    TextView tvRowTowarNaimenovanie, tvRowTovarCenaBezSkidki, tvRowTovarCenaSoSkidkoy, tvRowTovarSkidka, tvRowTovarKKorzine;
     ConstraintLayout conlayCenaBezSkidki, conLayRowTovar, conlayIbKupit;
     ImageView ivRowTovarFoto;
+    ImageButton ibRowTovarKupitObj;
 
 
     public ItemViewHolder(View itemView) {
         super(itemView);
         tvRowTowarNaimenovanie = itemView.findViewById(R.id.tvRowTowarNaimenovanie);
-        tvRowTovarCenaBezSkidki = itemView.findViewById(R.id.tvRowTovarCenaBezSkidki);
+        tvRowTovarCenaBezSkidki = itemView.findViewById(R.id.tvRowKorzinaCena);
         tvRowTovarCenaSoSkidkoy = itemView.findViewById(R.id.tvRowTovarCenaSoSkidkoy);
         tvRowTovarSkidka = itemView.findViewById(R.id.tvRowTovarSkidka);
+        tvRowTovarKKorzine = itemView.findViewById(R.id.tvRowTovarKKorzine);
         conlayIbKupit = itemView.findViewById(R.id.conlayIbKupit);
         conlayCenaBezSkidki = itemView.findViewById(R.id.conlayCenaBezSkidki);
         conLayRowTovar = itemView.findViewById(R.id.conLayRowTovar);
         ivRowTovarFoto = itemView.findViewById(R.id.ivRowTovarFoto);
+        ibRowTovarKupitObj = itemView.findViewById(R.id.ibRowTovarKupit);
     }
 }
 
@@ -72,15 +76,20 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     ILoadMore loadMore;
     boolean isLoading;
     Activity activity;
-    List<Ceni> items;
+    ImageButton ibOpisanieKorzina;
+    TextView tvCountKorzinaObj;
+    ArrayList<Ceni> itemsObj;
     int visibleThreshold = 9;
     int lastVisibleItem;
     int totalItemCount;
+    public static ArrayList<String> deletedItemsSQLId=new ArrayList<>();
 
 
-    public TovariSpisokAdapter(RecyclerView recyclerView, Activity activity, List<Ceni> items) {
+    public TovariSpisokAdapter(RecyclerView recyclerView, Activity activity, ArrayList<Ceni> items, ImageButton ibOpisanieKorzina, TextView tvCountKorzina) {
         this.activity = activity;
-        this.items = items;
+        this.itemsObj = items;
+        this.ibOpisanieKorzina = ibOpisanieKorzina;
+        this.tvCountKorzinaObj = tvCountKorzina;
 
 
         final LinearLayoutManager linearLayoutManager
@@ -109,7 +118,7 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
 
     @Override
     public int getItemViewType(int position) {
-        return items.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return itemsObj.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     public void setLoadMore(ILoadMore loadMore) {
@@ -131,7 +140,7 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            final Ceni item = items.get(position);
+            final Ceni item = itemsObj.get(position);
             final ItemViewHolder viewHolder = (ItemViewHolder) holder;
 
             viewHolder.tvRowTowarNaimenovanie.setText(item.getNaimenovanie());
@@ -159,7 +168,27 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
             viewHolder.conlayIbKupit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    buySQL(item.getId_sql_tovara_v_baze());
+                    item.setKolihestvo(item.getKolihestvo()+1);
+                    viewHolder.ibRowTovarKupitObj.setBackgroundResource(R.drawable.backgrbelizakruglzeleniy);
+                    viewHolder.tvRowTovarKKorzine.setVisibility(View.VISIBLE);
+//                    MainActivity.userStatic.setkorzina_count_INT(MainActivity.userStatic.getKorzina_count_INT()+1);
+MainActivity.userStatic.setKorzinaCountStr(Integer.toString(MainActivity.userStatic.getKorzina_kountInt()+1), tvCountKorzinaObj);
+                }
+            });
+
+            if(item.getIsSelected()){
+                System.out.println("IF   setBackgroundResource id="+item.getId_sql_tovara_v_baze()+", sel="+item.getIsSelected());
+                viewHolder.ibRowTovarKupitObj.setBackgroundResource(R.drawable.backgrbelizakruglzeleniy);
+                viewHolder.tvRowTovarKKorzine.setVisibility(View.VISIBLE);
+            } else{
+                System.out.println("ELSE setBackgroundResource id="+item.getId_sql_tovara_v_baze()+", sel="+item.getIsSelected());
+                viewHolder.ibRowTovarKupitObj.setBackgroundResource(R.drawable.backgrbelizakruglsiniy);
+                viewHolder.tvRowTovarKKorzine.setVisibility(View.GONE);
+            }
+            viewHolder.tvRowTovarKKorzine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ibOpisanieKorzina.performClick();
                 }
             });
         } else if (holder instanceof LoadingViewHolder) {
@@ -168,41 +197,6 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
         }
     }
 
-    void buySQL (final String tovar){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.BUY_KOLVO_TOVAR,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject= new JSONObject(response);
-                            System.out.println("Tovari spisok adapter buy SQL = "+jsonObject.toString());
-                            JSONArray jsonArray = jsonObject.getJSONArray("serv");
-
-                        } catch (JSONException e) {
-
-                            System.out.println("\n ERR"+response);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> parameters = new HashMap<String,String>();
-                parameters.put("tovar", tovar);
-                parameters.put("kolvo", "1");
-                parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
-                System.out.println("Tovari spisok adapter buy SQL parametrs = "+parameters);
-                return parameters;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(activity.getApplicationContext());
-        requestQueue.add(stringRequest);
-    }
 
     public void setLoaded() {
         isLoading = false;
@@ -210,7 +204,7 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return itemsObj.size();
     }
 
     @Override

@@ -47,12 +47,12 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="@string/rub"
-                app:layout_constraintBottom_toBottomOf="@+id/tvRowTovarCenaBezSkidki"
-                app:layout_constraintStart_toEndOf="@+id/tvRowTovarCenaBezSkidki"
-                app:layout_constraintTop_toTopOf="@+id/tvRowTovarCenaBezSkidki" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvRowKorzinaCena"
+                app:layout_constraintStart_toEndOf="@+id/tvRowKorzinaCena"
+                app:layout_constraintTop_toTopOf="@+id/tvRowKorzinaCena" />
 
             <TextView
-                android:id="@+id/tvRowTovarCenaBezSkidki"
+                android:id="@+id/tvRowKorzinaCena"
                 style="@style/textSerSredniy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,13 +106,20 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tvKKorzine"
+        android:id="@+id/tvRowTovarKKorzine"
+        style="@style/textZeleniySredniy"
         android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:gravity="right"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="8dp"
         android:text="@string/zakazat"
         android:textStyle="bold"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layotstup"
@@ -161,9 +168,9 @@
         app:layout_constraintTop_toBottomOf="@+id/tvRowTovarSkidka" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
         app:layout_constraintTop_toBottomOf="@+id/tvRowTowarNaimenovanie">
@@ -187,7 +194,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/conlayIbKupit"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:background="#00962626"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

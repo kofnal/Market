@@ -55,12 +55,12 @@
                 android:layout_weight="1"
                 android:text="@string/rub"
                 android:textColor="@color/herniy"
-                app:layout_constraintBottom_toBottomOf="@+id/tvRowTovarCenaBezSkidki"
-                app:layout_constraintStart_toEndOf="@+id/tvRowTovarCenaBezSkidki"
-                app:layout_constraintTop_toTopOf="@+id/tvRowTovarCenaBezSkidki" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvRowKorzinaCena"
+                app:layout_constraintStart_toEndOf="@+id/tvRowKorzinaCena"
+                app:layout_constraintTop_toTopOf="@+id/tvRowKorzinaCena" />
 
             <TextView
-                android:id="@+id/tvRowTovarCenaBezSkidki"
+                android:id="@+id/tvRowKorzinaCena"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"

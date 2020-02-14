@@ -88,4 +88,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/red_text</item>
     </style>
+
+    <style name="textZeleniySredniy">
+        <item name="android:textSize">@dimen/shrift_sredniy</item>
+        <!--<item name="fontFamily">@font/gilroyextrabold</item>-->
+        <item name="android:textColor">@color/zeleniy</item>
+    </style>
 </resources>

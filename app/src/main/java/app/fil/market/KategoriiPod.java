@@ -29,6 +29,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.fil.market.korzina.KorzinaActivity;
+
 public class KategoriiPod extends AppCompatActivity {
     ScrollView scrollView;
     RecyclerView recyclerView;
@@ -43,17 +45,19 @@ public class KategoriiPod extends AppCompatActivity {
         setContentView(R.layout.activity_kategorii_pod);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         tvCountKorzina=findViewById(R.id.tvKorzinaCount);
-        TovariActivity.setStartCountKorzina(tvCountKorzina);
+//        TovariActivity.setStartCountKorzina(tvCountKorzina);
         scrollView= findViewById(R.id.linerLayTovari);
         ibKorzina =findViewById(R.id.ibOpisanieKorzina);
         recyclerView =findViewById(R.id.recyclerView);
-        final Intent intentKorzinaActivity=new Intent(this,KorzinaActivity.class);
+        MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
+        final Intent intentKorzinaActivity=new Intent(this, KorzinaActivity.class);
         ibKorzina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(intentKorzinaActivity);
             }
         });
+        //MainActivity.userStatic.setKorzinaCountStr(tvCountKorzina);
         showSQL();
     }
     void showSQL (){
@@ -137,13 +141,9 @@ public class KategoriiPod extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        tvCountKorzina.setText(MainActivity.userStatic.getKorzinaCountStr());
-        System.out.println("onResult KategoriiPod in KategoriiActivity = "+MainActivity.userStatic.getKorzinaCountStr());
+MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
+        //MainActivity.userStatic.setKorzinaCountStr(tvCountKorzina);
         super.onActivityResult(requestCode, resultCode, data);
     }
-    @Override
-    protected void onResume() {
-        MainActivity.userStatic.setKorzinaCountStr(MainActivity.userStatic.getKorzinaCountStr(), tvCountKorzina);
-        super.onResume();
-    }
+
 }

@@ -28,10 +28,10 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".KategoriiPod" />
         <activity
-            android:name=".KorzinaActivity"
+            android:name=".korzina.KorzinaActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ZakazActivity"
+            android:name=".Zakaz_Activity"
             android:windowSoftInputMode="stateHidden" />
     </application>
 

@@ -23,22 +23,21 @@
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/chKorzina"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvRowTowarNaimenovanie" />
 
     <TextView
         android:id="@+id/tvRowTowarNaimenovanie"
         style="@style/textHerniySredniy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:gravity="left|center_vertical"
+        android:gravity="center"
         android:maxLines="3"
         android:paddingLeft="20dp"
         android:text="ertgxc"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivRowTovarFoto"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -67,13 +66,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:paddingBottom="12dp"
+        android:layout_marginStart="8dp"
         android:paddingLeft="12dp"
-        android:paddingRight="24dp"
         android:paddingTop="12dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="12dp"
         android:text="+"
         app:layout_constraintBottom_toBottomOf="@+id/etRowKorzinaKolihestvoTovara"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/etRowKorzinaKolihestvoTovara"
         app:layout_constraintTop_toTopOf="@+id/etRowKorzinaKolihestvoTovara" />
 
@@ -81,8 +82,9 @@
         android:id="@+id/etRowKorzinaKolihestvoTovara"
         android:layout_width="@dimen/shirinaPanelek"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:gravity="center"
         android:imeOptions="actionDone"
@@ -106,25 +108,25 @@
         app:layout_constraintTop_toBottomOf="@+id/tvRowTowarNaimenovanie">
 
         <TextView
-            android:id="@+id/tvRowTovarRub2"
+            android:id="@+id/tvRowKorzinaRub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvRowTovarCenaBezSkidki"
-            android:layout_alignBottom="@+id/tvRowTovarCenaBezSkidki"
+            android:layout_alignBaseline="@+id/tvRowKorzinaCena"
+            android:layout_alignBottom="@+id/tvRowKorzinaCena"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/tvRowTovarCenaBezSkidki"
+            android:layout_toEndOf="@+id/tvRowKorzinaCena"
             android:gravity="center_vertical"
             android:text="руб."
             android:textColor="@color/kategorii_font"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvRowTovarCenaBezSkidki"
-            app:layout_constraintStart_toEndOf="@+id/tvRowTovarCenaBezSkidki"
-            app:layout_constraintTop_toTopOf="@+id/tvRowTovarCenaBezSkidki" />
+            app:layout_constraintBottom_toBottomOf="@+id/tvRowKorzinaCena"
+            app:layout_constraintStart_toEndOf="@+id/tvRowKorzinaCena"
+            app:layout_constraintTop_toTopOf="@+id/tvRowKorzinaCena" />
 
         <TextView
-            android:id="@+id/tvRowTovarCenaBezSkidki"
+            android:id="@+id/tvRowKorzinaCena"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

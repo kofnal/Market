@@ -29,12 +29,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.fil.market.user.Pokupatel;
+
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    RequestQueue requestQueue;
-    public static UserInfoPrefs userStatic;
+    public  static RequestQueue requestQueue;
+    public static Pokupatel userStatic;
     Intent intent;
-    TextView tvMainLog;
+    TextView tvMainLog, tvTemp;
     Button btMain;
 
     @Override
@@ -46,9 +48,10 @@ public class MainActivity extends AppCompatActivity {
 //        intent=new Intent(this, SpisokTovarov.class);
         intent=new Intent(this, KategoriiPod.class);
         tvMainLog=findViewById(R.id.tvMainLog);
+        tvTemp=findViewById(R.id.tvTemp);
         btMain=findViewById(R.id.btMain);
         // Check if user is signed in (non-null) and update UI accordingly.
-        userStatic=new UserInfoPrefs(this);
+        userStatic=new Pokupatel(this);
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null){
             anonimnVxod();
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         System.out.println("MainActiv1 onStop");
+        userStatic.wreateDataToPrefs();
         super.onStop();
     }
     @Override
@@ -118,11 +122,14 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject= new JSONObject(response.toString());
                             System.out.println("jsObj Main Insert Anonim user UID "+jsonObject);
-                            JSONObject jsID = (JSONObject) jsonObject.get("sql_id");
-                            String id_sql = jsID.getString("id");
+
+                            String id_sql = jsonObject.getString("sql_id");
+                            String korzina_sum = jsonObject.getString("korzina_sum");
+
+                            MainActivity.userStatic.setKorzinaCountStr(korzina_sum, tvTemp);
                             System.out.println("jsID Main Get ID "+id_sql);
-                            userStatic.setIdSQL(id_sql);
-                            userStatic.setIdGoog(mAuth.getUid());
+                            userStatic.setId_sql(id_sql);
+                            userStatic.setId_goog(mAuth.getUid());
                             startActivity(intent);
                             finish();
                         }

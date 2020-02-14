@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KorzinaActivity">
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    tools:context=".korzina.KorzinaActivity">
 
     <Button
         android:id="@+id/btKorzinaK_Pokupkam"
@@ -35,8 +36,8 @@
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:background="@android:color/background_dark"
             android:gravity="left|center_vertical"
@@ -54,9 +55,9 @@
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_weight="0.1"
             android:background="@color/herniy"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,14 +69,15 @@
             android:id="@+id/ibKorzinaDelTovari"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_weight="0.1"
             android:background="@color/herniy"
-            android:paddingBottom="12dp"
             android:paddingLeft="12dp"
-            android:paddingRight="12dp"
             android:paddingTop="12dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="12dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -85,12 +87,12 @@
             android:id="@+id/chMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_weight="0.1"
             android:buttonTint="@color/colorAccent"
-            android:checked="false"
+            android:checked="true"
             android:gravity="center"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -115,32 +117,13 @@
             tools:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:id="@+id/scrolTovari"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:paddingLeft="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/conLayKorzinaBottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layTop">
-
-        <LinearLayout
-            android:id="@+id/linerLayKorzina"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:orientation="vertical" />
-
-    </ScrollView>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/conLayKorzinaBottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/shirinaPanelek"
         android:background="@drawable/bg_png"
         android:scaleType="fitCenter"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
@@ -174,10 +157,10 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/layout_bg"
             android:text="@string/kupit"
             android:textColor="@android:color/background_light"
@@ -187,5 +170,15 @@
             app:layout_constraintStart_toEndOf="@+id/linearLayout3"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvKorzina"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/conLayKorzinaBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layTop" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

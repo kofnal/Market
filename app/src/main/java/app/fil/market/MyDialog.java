@@ -7,7 +7,7 @@ import android.widget.TextView;
 public class MyDialog {
     Activity activity;
     TextView txt_Message;
-    Dialog dialog;
+    public Dialog dialog;
     public MyDialog(Activity activity) {
         this.activity = activity;
     }

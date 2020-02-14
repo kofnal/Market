@@ -19,7 +19,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
-            android:layout_toEndOf="@+id/tvRowTovarCenaBezSkidki"
+            android:layout_toEndOf="@+id/tvRowKorzinaCena"
             android:gravity="center_vertical"
             android:text="@string/izmenit"
             android:textAllCaps="true"
@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvRowTovarCenaBezSkidki"
+            android:id="@+id/tvRowKorzinaCena"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

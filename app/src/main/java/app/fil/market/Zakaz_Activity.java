@@ -26,7 +26,7 @@ import java.util.Map;
 
 import app.fil.market.ceni_i_skidki.Ceni;
 
-public class ZakazActivity extends AppCompatActivity {
+public class Zakaz_Activity extends AppCompatActivity {
     EditText etZakazEmail, etZakazTelefon, etZakazFIO, etZakazAdresDostavki, etZakazKommentZakaza, etZakazVvediPromo;
     TextView tvZakazOformitButt, tvKorzCountTemp;
     RequestQueue requestQueue;
@@ -62,11 +62,11 @@ public class ZakazActivity extends AppCompatActivity {
                     jsObjTovarRow.put("cena_tovar", listCeniFromKorzinaActivity.get(i).getCenaZaUpakovky());
                     jsObjTovarRow.put("kolihestvo", listCeniFromKorzinaActivity.get(i).getKolihestvo());
                     jsObjTovarRow.put("id_sql_tovara_v_korzine_pokupatelia", listCeniFromKorzinaActivity.get(i).getId_sql_tovara_v_korzine_pokupatelia());
-                    System.out.println("ZakazActivity Sozdanie JSON Objekta Na Server " + listCeniFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
+                    System.out.println("Zakaz_Activity Sozdanie JSON Objekta Na Server " + listCeniFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
                     jsTovari.put(i, jsObjTovarRow);
                     totalCenaZakaza=totalCenaZakaza+listCeniFromKorzinaActivity.get(i).getCenaFinalSoSkidkoy()*listCeniFromKorzinaActivity.get(i).getKolihestvo();
                 } catch (JSONException e) {
-                    System.out.println("ERROR ZakazActivity Sozdanie JSON Objekta Na Server " + e.toString());
+                    System.out.println("ERROR Zakaz_Activity Sozdanie JSON Objekta Na Server " + e.toString());
                     e.printStackTrace();
                 }
             }
@@ -95,11 +95,11 @@ public class ZakazActivity extends AppCompatActivity {
         });
     }
     private void saveDataFromEditTextInPrefData() {
-        MainActivity.userStatic.setEmailStr(etZakazEmail.getText().toString());
-        MainActivity.userStatic.setTelStr(etZakazTelefon.getText().toString());
-        MainActivity.userStatic.setFioStr(etZakazFIO.getText().toString());
-        MainActivity.userStatic.setAdresStr(etZakazAdresDostavki.getText().toString());
-        MainActivity.userStatic.setKomentStr(etZakazKommentZakaza.getText().toString());
+        MainActivity.userStatic.setEmail(etZakazEmail.getText().toString());
+        MainActivity.userStatic.setTel(etZakazTelefon.getText().toString());
+        MainActivity.userStatic.setFioUser(etZakazFIO.getText().toString());
+        MainActivity.userStatic.setAdres_string(etZakazAdresDostavki.getText().toString());
+        MainActivity.userStatic.setKoment_string(etZakazKommentZakaza.getText().toString());
     }
     @Override
     protected void onPause() {
@@ -107,28 +107,28 @@ public class ZakazActivity extends AppCompatActivity {
         super.onPause();
     }
     private void setTextAllEditText() {
-        etZakazEmail.setText(MainActivity.userStatic.getEmailStr());
-        etZakazTelefon.setText(MainActivity.userStatic.getTelStr());
-        etZakazFIO.setText(MainActivity.userStatic.getFioStr());
-        etZakazAdresDostavki.setText(MainActivity.userStatic.getAdresStr());
-        etZakazKommentZakaza.setText(MainActivity.userStatic.getKomentStr());
+        etZakazEmail.setText(MainActivity.userStatic.getEmail());
+        etZakazTelefon.setText(MainActivity.userStatic.getTel());
+        etZakazFIO.setText(MainActivity.userStatic.getFioUser());
+        etZakazAdresDostavki.setText(MainActivity.userStatic.getAdres_string());
+        etZakazKommentZakaza.setText(MainActivity.userStatic.getKoment_string());
     }
 void sendZakaz(final JSONObject jsonArray){
     StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.SEND_ZAKAZ,
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    System.out.println("ZakazActivity get server response from SendZakaz() - "+response);
+                    System.out.println("Zakaz_Activity get server response from SendZakaz() - "+response);
                     try {
                         JSONObject jsonObject = new JSONObject(response);
-                        System.out.println("ZakazActivity get server response from SendZakaz() - "+jsonObject);
+                        System.out.println("Zakaz_Activity get server response from SendZakaz() - "+jsonObject);
                         setResult(Utils.intentResultCODKorzinaToZakazPosleOtpravkiZakaza_OK);
-                        MainActivity.userStatic.setkorzina_count_INT(0, tvKorzCountTemp);
-                        System.out.println("sendZakaz INT "+Integer.toString(MainActivity.userStatic.getKorzina_count_INT())+" =korzcount");
-                        System.out.println("sendZakaz String"+MainActivity.userStatic.getKorzinaCountStr()+" =korzcount");
+                        MainActivity.userStatic.setKorzinaCountStr(0, tvKorzCountTemp);
+                        System.out.println("sendZakaz INT "+Integer.toString(MainActivity.userStatic.getKorzina_kountInt())+" =korzcount");
+//                        System.out.println("sendZakaz String"+MainActivity.userStatic.getKorzinaCountStr()+" =korzcount");
                         finish();
                     }catch (JSONException e){
-                        System.out.println("\n ERR senZakaz ZakazActivity "+response);
+                        System.out.println("\n ERR senZakaz Zakaz_Activity "+response);
                     }
                 }
             }, new Response.ErrorListener() {

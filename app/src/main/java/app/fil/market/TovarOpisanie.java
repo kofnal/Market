@@ -27,8 +27,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.fil.market.ceni_i_skidki.Ceni;
+import app.fil.market.korzina.KorzinaActivity;
 
 public class TovarOpisanie extends AppCompatActivity {
+    String TAGclass="TovarOpisanie ";
     RequestQueue requestQueue;
     TextView tvOpisVKorzinu, tvKorzinaCount, tvOpisanieOformit, tvopisMinusTovar;
     EditText etKolvo;
@@ -38,6 +40,7 @@ public class TovarOpisanie extends AppCompatActivity {
             tvOpisanieZnahenieMestaVilova, tvOpisTypeFasovki, tvOpisanieTovaraRaskaz, tvOpisTovaraCenaZaEdinicu, tvOpisVesUpakPodEditText,
             tvOpisRazmerniyRiad, tvOpisanieMestoVilova;
     ImageView ivOpisTovar;
+    Ceni ceniObjFromTovariActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +68,12 @@ public class TovarOpisanie extends AppCompatActivity {
         tvOpisVesUpakPodEditText=findViewById(R.id.tvOpisVesUpakPodEditText);
         tvOpisRazmerniyRiad=findViewById(R.id.tvOpisRazmerniyRiad);
         tvOpisanieMestoVilova=findViewById(R.id.tvOpisanieMestoVilova);
+        TextView tvOpisPlusTovar= findViewById(R.id.tvOpisPlusTovar);
+        MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvKorzinaCount);
 
-        final Ceni ceniObjFromTovariActivity = getIntent().getParcelableExtra("ceniObj");
+         ceniObjFromTovariActivity = getIntent().getParcelableExtra("ceniObj");
         System.out.println("Tovari Opisanie Activity Ceni obj = "+ceniObjFromTovariActivity.getNaimenovanie());
-        TovariActivity.setStartCountKorzina(tvKorzinaCount);
+//        TovariActivity.setStartCountKorzina(tvKorzinaCount);
         tvopisMinusTovar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +81,6 @@ public class TovarOpisanie extends AppCompatActivity {
                 etKolvo.setText(Integer.toString(tvopisMinusTovarTemp));
             }
         });
-        TextView tvOpisPlusTovar= findViewById(R.id.tvOpisPlusTovar);
         tvOpisPlusTovar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +93,7 @@ public class TovarOpisanie extends AppCompatActivity {
             public void onClick(View v) {
                 buySQL(ceniObjFromTovariActivity.getId_sql_tovara_v_baze(), etKolvo.getText().toString(),
                         MainActivity.userStatic.getSqlId());
+
             }
         });
         ibOpisanieKorzina.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +126,7 @@ public class TovarOpisanie extends AppCompatActivity {
         if(ceniObjFromTovariActivity.getMestovilova().equals("")) tvOpisanieMestoVilova.setVisibility(View.GONE);
     }
     void buySQL (final String tovar, final String kolvo, final String pokupatel){
+        final String TAGmetod="buySQL ";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.BUY_KOLVO_TOVAR,
                 new Response.Listener<String>() {
                     @Override
@@ -129,36 +135,48 @@ public class TovarOpisanie extends AppCompatActivity {
                             JSONObject jsonObject= new JSONObject(response);
                             JSONObject jsTotalKorzinaPos=jsonObject.getJSONObject("count");
                             String pos_korzina = jsTotalKorzinaPos.getString("pos_korzina");
-                            System.out.println("Total pos korzina = "+pos_korzina);
+                            System.out.println("Total pos korzina = "+pos_korzina+", js="+response);
                             MainActivity.userStatic.setKorzinaCountStr(pos_korzina, tvKorzinaCount);
-                            tvKorzinaCount.setVisibility(View.VISIBLE);
+
                             tvOpisanieOformit.setVisibility(View.VISIBLE);
                         } catch (JSONException e) {
 
-                            System.out.println("\n ERR"+response);
+                            System.out.println("\n ERR pars Json"+TAGclass+TAGmetod+e.toString());
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                System.out.println("\n ERR Volley"+TAGclass+TAGmetod+error.toString());
             }
         })
         {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> parameters = new HashMap<String,String>();
+                int kolvoInt = 1;
+                if(kolvo.matches("[-+]?\\d+")){
+                    kolvoInt=Integer.valueOf(kolvo);
+                    System.out.println("\n if param to SQL "+TAGclass+TAGmetod+parameters.toString());
+                }else{
+                    System.out.println("\n else param to SQL "+TAGclass+TAGmetod+parameters.toString());
+                }
                 parameters.put("tovar", tovar);
                 parameters.put("kolvo", kolvo);
+//                parameters.put("kolvo", Integer.toString(kolvoInt+ceniObjFromTovariActivity.getKolihestvo()));
                 parameters.put("pokupatel", pokupatel);
+
+
+
                 return parameters;
             }
         }                ;
         requestQueue.add(stringRequest);
     }
     @Override
-    protected void onResume() {
-        MainActivity.userStatic.setKorzinaCountStr(MainActivity.userStatic.getKorzinaCountStr(), tvKorzinaCount);
-        super.onResume();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvKorzinaCount);
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
 }
