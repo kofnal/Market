@@ -53,18 +53,18 @@ public class Zakaz_Activity extends AppCompatActivity {
 //        System.out.println("ZakazActiv arrlist size = "+Integer.toString(bundle.getStringArrayList("arrlist").size()));
         ArrayList<Ceni> listCeniFromKorzinaActivity =  bundle.getParcelableArrayList("ceniList");
         System.out.println("ZakazActiv listCeniFromKorzinaActivity size = "+ Integer.toString(listCeniFromKorzinaActivity.size())+
-        " , "+listCeniFromKorzinaActivity.get(0).getId_sql_tovara_v_baze()+", "+listCeniFromKorzinaActivity.get(0).getCenaZaOdinKg());
+        " , "+listCeniFromKorzinaActivity.get(0).getId_sql_tovara_v_baze()+", "+listCeniFromKorzinaActivity.get(0).getCenaZaUpak());
         for(int i = 0; i<listCeniFromKorzinaActivity.size(); i++){
             if(listCeniFromKorzinaActivity.get(i).getIsSelected()) {
                 JSONObject jsObjTovarRow = new JSONObject();
                 try {
                     jsObjTovarRow.put("id_tovar_sql", listCeniFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
-                    jsObjTovarRow.put("cena_tovar", listCeniFromKorzinaActivity.get(i).getCenaZaUpakovky());
+                    jsObjTovarRow.put("cena_tovar", listCeniFromKorzinaActivity.get(i).getCenaZaOdinKg());
                     jsObjTovarRow.put("kolihestvo", listCeniFromKorzinaActivity.get(i).getKolihestvo());
                     jsObjTovarRow.put("id_sql_tovara_v_korzine_pokupatelia", listCeniFromKorzinaActivity.get(i).getId_sql_tovara_v_korzine_pokupatelia());
                     System.out.println("Zakaz_Activity Sozdanie JSON Objekta Na Server " + listCeniFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
                     jsTovari.put(i, jsObjTovarRow);
-                    totalCenaZakaza=totalCenaZakaza+listCeniFromKorzinaActivity.get(i).getCenaFinalSoSkidkoy()*listCeniFromKorzinaActivity.get(i).getKolihestvo();
+                    totalCenaZakaza=totalCenaZakaza+listCeniFromKorzinaActivity.get(i).getCenaFinalSoSkidkoyZaUpak()*listCeniFromKorzinaActivity.get(i).getKolihestvo();
                 } catch (JSONException e) {
                     System.out.println("ERROR Zakaz_Activity Sozdanie JSON Objekta Na Server " + e.toString());
                     e.printStackTrace();
@@ -76,7 +76,7 @@ public class Zakaz_Activity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.println("listCeniObj - "+ Double.toString(listCeniFromKorzinaActivity.get(0).getCenaZaOdinKg()));
+        System.out.println("listCeniObj - "+ Double.toString(listCeniFromKorzinaActivity.get(0).getCenaZaUpak()));
         System.out.println("listCeniObj jsObjKorzina.toString() - "+jsObjKorzina.toString());
         //etZakazTelefon.setText(bundle.getStringArrayList("arrlist").get(0));
         etZakazTelefon.setOnTouchListener(new View.OnTouchListener() {
@@ -91,6 +91,7 @@ public class Zakaz_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 sendZakaz(jsObjKorzina);
                 saveDataFromEditTextInPrefData();
+                tvZakazOformitButt.setVisibility(View.GONE);
             }
         });
     }

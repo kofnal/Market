@@ -139,11 +139,25 @@ public class KategoriiPod extends AppCompatActivity {
             System.out.println("put extra v podkatActivity v create intent "+id);
             startActivityForResult(intent, Utils.intentRequestCODKategoriiPodToTovariActivityDlia_KolihestvaV_Korzine);
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
-        //MainActivity.userStatic.setKorzinaCountStr(tvCountKorzina);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
+//        //MainActivity.userStatic.setKorzinaCountStr(tvCountKorzina);
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
 
+    @Override
+    protected void onResume() {
+        if(tvCountKorzina!=null){
+            MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
+        }
+        super.onResume();
+
+    }
+    @Override
+    protected void onDestroy() {
+        System.out.println("KategoriiPod onDestroy");
+        MainActivity.userStatic.wreateDataToPrefs();
+        super.onDestroy();
+    }
 }

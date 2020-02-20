@@ -110,14 +110,14 @@ public class TovarOpisanie extends AppCompatActivity {
         });
         tvNazvanie.setText(ceniObjFromTovariActivity.getNaimenovanie());
         Picasso.get().load(ceniObjFromTovariActivity.getFoto()).into(ivOpisTovar);
-        tvOpisCenaTovara.setText(ceniObjFromTovariActivity.getCenaFinalSoSkidkoyStr());
+        tvOpisCenaTovara.setText(ceniObjFromTovariActivity.getCenaZaOdinKgStr());
         tvOpisZnahenieVesaUpakovki.setText(ceniObjFromTovariActivity.getKolihestvoV_Upakovke()+" "+
                 ceniObjFromTovariActivity.getEdinica_izmerenia_upakovki());
         tvOpisZnahenieRazmernogoRiada.setText(ceniObjFromTovariActivity.getZnahrazmriada());
         tvOpisanieZnahenieMestaVilova.setText(ceniObjFromTovariActivity.getMestovilova());
         tvOpisTypeFasovki.setText(ceniObjFromTovariActivity.getSostoianieTovara());
         tvOpisanieTovaraRaskaz.setText(ceniObjFromTovariActivity.getRaskazotovare());
-        tvOpisTovaraCenaZaEdinicu.setText("("+ceniObjFromTovariActivity.getCenaZaUpakovkyStr()+" руб. за "+
+        tvOpisTovaraCenaZaEdinicu.setText("("+ceniObjFromTovariActivity.getCenaFinalSoSkidkoyZaUpakStr()+" руб. за "+
                 ceniObjFromTovariActivity.getTypeUpakovki()+")");
         tvOpisVesUpakPodEditText.setText("("+ceniObjFromTovariActivity.getKolihestvoV_Upakovke()+" "+
                 ceniObjFromTovariActivity.getEdinica_izmerenia_upakovki()+")");

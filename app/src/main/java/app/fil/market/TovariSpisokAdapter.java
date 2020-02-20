@@ -16,23 +16,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import app.fil.market.Model.ILoadMore;
 import app.fil.market.ceni_i_skidki.Ceni;
@@ -154,7 +140,7 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
                 viewHolder.tvRowTovarSkidka.setVisibility(View.GONE);
                 viewHolder.conlayCenaBezSkidki.setVisibility(View.GONE);
             }
-            viewHolder.tvRowTovarCenaSoSkidkoy.setText(item.getCenaFinalSoSkidkoyStr());
+            viewHolder.tvRowTovarCenaSoSkidkoy.setText(item.getCenaFinalSoSkidkoyZaUpakStr());
             Picasso.get().load(item.getFoto()).into(viewHolder.ivRowTovarFoto);
 
             final Intent intentTovarOpisanie = new Intent(viewHolder.conLayRowTovar.getContext(), TovarOpisanie.class);
@@ -168,7 +154,8 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
             viewHolder.conlayIbKupit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    item.setKolihestvo(item.getKolihestvo()+1);
+                    item.setKolihestvoAndSendToSQL(item.getKolihestvo()+1);
+                    item.setVibranLi(true);
                     viewHolder.ibRowTovarKupitObj.setBackgroundResource(R.drawable.backgrbelizakruglzeleniy);
                     viewHolder.tvRowTovarKKorzine.setVisibility(View.VISIBLE);
 //                    MainActivity.userStatic.setkorzina_count_INT(MainActivity.userStatic.getKorzina_count_INT()+1);

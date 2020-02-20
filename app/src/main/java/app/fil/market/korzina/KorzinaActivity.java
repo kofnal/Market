@@ -54,7 +54,7 @@ public class KorzinaActivity extends AppCompatActivity {
     RecyclerView rvKorzina;
     KorzinaAdapter korzinaAdapter;
     ArrayList<Ceni> tovariList = new ArrayList<>();
-    int countShowToastOt70rub;
+    int countShowToastOt70rub=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

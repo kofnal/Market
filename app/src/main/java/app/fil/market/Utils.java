@@ -30,33 +30,51 @@ public class Utils {
     public static final String insertAnonimUserWithGoogleUID = BASE_IP + "insertAnonimUserWithGoogleUID.php";
 
 
-
     public static final String bndlStaticidTovaraFromSql = "idTovaraFromSql";
-    public static String bndlStaticCountTovaraV_Korzine="countTovaraV_Korzine";
+    public static String bndlStaticCountTovaraV_Korzine = "countTovaraV_Korzine";
 
-    public static int etKolihestvoTovarovV_Korzine_ACTION_ID=6;
-    public static int intentRequestCODKorzinaToZakazPosleOtpravkiZakaza=120;
-    public static int intentResultCODKorzinaToZakazPosleOtpravkiZakaza_OK=1201;
-    public static int intentResultCODKorzinaToZakazPosleOtpravkiZakaza_NOT=1200;
+    public static int etKolihestvoTovarovV_Korzine_ACTION_ID = 6;
+    public static int intentRequestCODKorzinaToZakazPosleOtpravkiZakaza = 120;
+    public static int intentResultCODKorzinaToZakazPosleOtpravkiZakaza_OK = 1201;
+    public static int intentResultCODKorzinaToZakazPosleOtpravkiZakaza_NOT = 1200;
 
-    public static int intentRequestCODKategoriiPodToTovariActivityDlia_KolihestvaV_Korzine=121;
-    public static int intentRequestCODKategoriiPodToTovariActivityDlia_KolihestvaV_Korzine_OK=1211;
-    public static int intentRequestCODKategoriiPodToTovariActivityDlia_KolihestvaV_Korzine_NOT=1210;
-    public static int intentRequestCODTovarActivToOpisanie=122;
+    public static int intentRequestCODKategoriiPodToTovariActivityDlia_KolihestvaV_Korzine = 121;
+    public static int intentRequestCODKategoriiPodToTovariActivityDlia_KolihestvaV_Korzine_OK = 1211;
+    public static int intentRequestCODKategoriiPodToTovariActivityDlia_KolihestvaV_Korzine_NOT = 1210;
+    public static int intentRequestCODTovarActivToOpisanie = 122;
 
-    public static String getStringFromDoubleFormated2Zerro(Double cena){
-        String cenaFormat="";
-        if(cena % 1 == 0 ){ //целое число
-             cenaFormat = String.format("%, .0f", cena);
-            System.out.println("Doubl format if= "+cenaFormat);
-        } else{
-             cenaFormat = String.format("%, .2f", cena);
-             System.out.println("Doubl format else="+cenaFormat);
+    public static String getStringFromDoubleFormated2Zerro(Double cena) {
+//        String value = "1, 2, 3, 4";
+        String cenaFormat = "";
+        if (cena % 1 == 0) { //целое число
+            cenaFormat = String.format("%, .0f", cena);
+            System.out.println("Doubl format if= " + cenaFormat);
+        } else {
+            cenaFormat = String.format("%, .2f", cena);
+            System.out.println("Doubl format else=" + cenaFormat);
         }
-        return  cenaFormat;
+        String[] split = cenaFormat.split(",");
+//        String size = Integer.toString(split.length);
+//        String oneCifra = split[0];
+//        String secCifra = split[1];
+//        String cap = name(0, 1).toUpperCase() + name.substring(1);
+//        return  "leng="+size+","+cenaFormat
+//                +"-"+oneCifra+"-"
+////                +secCifra
+//                ;
+        if (split.length == 1) {
+            return split[0];
+        } else {
+            if(split[1].equals("00")){
+                return split[0];
+            }else{
+                return cenaFormat;
+            }
+        }
     }
-    public static String getStringFromDoubleFormated0Zerro(Double cena){
-        return  String.format("%, .0f", cena);
+
+    public static String getStringFromDoubleFormated0Zerro(Double cena) {
+        return String.format("%, .0f", cena);
     }
 
 

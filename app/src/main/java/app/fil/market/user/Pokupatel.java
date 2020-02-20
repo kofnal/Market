@@ -104,21 +104,34 @@ public void wreateDataToPrefs(){
     }
 
     public void setKorzinaCountStr(int korzina_kountInt, TextView tv) {
+        setKorzinaCountStr(korzina_kountInt);
+        updateTextViewTotalKorzinaCount(tv);
+    }
+    public void setKorzinaCountStr(int korzina_kountInt) {
         this.korzina_kountInt = korzina_kountInt;
-        updateTextViewTotalKorzinaCount(tv);
+        user.setKorzinaCountStr(Integer.toString(korzina_kountInt));
+        System.out.println("setKorzinaCount = "+korzina_kountInt);
     }
+
     public void setKorzinaCountStr(String korzina_kountStr, TextView tv) {
-        if (korzina_kountStr.matches("[-+]?\\d+")){
-            this.korzina_kountInt = Integer.valueOf(korzina_kountStr);
-        }else{
-            this.korzina_kountInt=0;
-        }
+        setKorzinaCountStr(korzina_kountStr);
         updateTextViewTotalKorzinaCount(tv);
     }
+    public void setKorzinaCountStr(String korzina_kountStr) {
+        if (korzina_kountStr.matches("[-+]?\\d+")){
+            setKorzinaCountStr(Integer.valueOf(korzina_kountStr));
+        }else{
+            setKorzinaCountStr(0);
+        }
+        System.out.println("setKorzinaCount = "+korzina_kountInt);
+    }
+
+
     public void updateTextViewTotalKorzinaCount(TextView tv){
         if (korzina_kountInt>0){
             tv.setVisibility(View.VISIBLE);
             tv.setText(Integer.toString(korzina_kountInt));
+            System.out.println("setKorzinaCount "+"updateTextViewTotalKorzinaCount="+korzina_kountInt);
         } else{
             tv.setVisibility(View.GONE);
         }

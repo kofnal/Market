@@ -121,6 +121,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     if(itemsObj.get(i).getIsSelected()){
                         delTovarIzKorzini(itemsObj.get(i).getId_sql_tovara_v_korzine_pokupatelia());
                         delListItems.add(i);
+                        MainActivity.userStatic.setKorzinaCountStr(Integer.toString(MainActivity.userStatic.getKorzina_kountInt()-itemsObj.get(i).getKolihestvo()));
                         TovariSpisokAdapter.deletedItemsSQLId.add(itemsObj.get(i).getId_sql_tovara_v_baze());
                     }
                 }
@@ -134,7 +135,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 mainCheckBox.setChecked(false);
                 if(itemsObj.size()==0) {
                     btKorzinaK_Pokupkam.setVisibility(View.VISIBLE);
-                    conLayKorzinaBottom.setVisibility(View.GONE);
+                    conLayKorzinaBottom.setVisibility(View.INVISIBLE);
                 }
                 for(Ceni itL: itemsObj){
                     itL.setVibranLi(true);
@@ -165,7 +166,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             viewHolder.tvRowTowarNaimenovanie.setText(item.getNaimenovanie());
             Picasso.get().load(item.getFoto()).into(viewHolder.ivRowTovarFoto);
-            viewHolder.tvRowKorzinaCena.setText(item.getCenaZaUpakovkyStr());
+            viewHolder.tvRowKorzinaCena.setText(item.getCenaFinalSoSkidkoyZaUpakStr());
             viewHolder.etRowKorzinaKolihestvoTovara.setText(item.getKolihestvoStr());
 
             if (chMainNeverSelfPres == 0)//chMain never presed
@@ -225,7 +226,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     System.out.println("Focus change " + b);
                     if (b) {//нажали на editText
                         viewHolder.etRowKorzinaKolihestvoTovara.setText("");
-                        conLayKorzinaBottom.setVisibility(View.GONE);
+                        conLayKorzinaBottom.setVisibility(View.INVISIBLE);
                     } else//убрался фокус с editText
                     {
                         conLayKorzinaBottom.setVisibility(View.VISIBLE);
@@ -254,23 +255,24 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View view) {
                     if(item.getKolihestvo()>1){
-                        item.setKolihestvo(item.getKolihestvo()-1);
+                        item.setKolihestvoAndSendToSQL(item.getKolihestvo()-1);
                         viewHolder.etRowKorzinaKolihestvoTovara.setText(item.getKolihestvoStr());
                         item.setVibranLi(true);
                         viewHolder.chKorzina.setChecked(true);
                         rashetTotalK_oplate();
+                        MainActivity.userStatic.setKorzinaCountStr(MainActivity.userStatic.getKorzina_kountInt()-1);
                     }
                 }
             });
             viewHolder.tvTovarRowPlusOdinTovar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    item.setKolihestvo(item.getKolihestvo()+1);
+                    item.setKolihestvoAndSendToSQL(item.getKolihestvo()+1);
                     viewHolder.etRowKorzinaKolihestvoTovara.setText(item.getKolihestvoStr());
                     item.setVibranLi(true);
                     viewHolder.chKorzina.setChecked(true);
                     rashetTotalK_oplate();
-                    MainActivity.userStatic.setKorzinaCountStr(MainActivity.userStatic.getKorzina_kountInt()+1, tvCountKorzinaObj);
+                    MainActivity.userStatic.setKorzinaCountStr(MainActivity.userStatic.getKorzina_kountInt()+1);
 
                 }
             });
@@ -286,7 +288,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         totalK_OplateDoubl = 0.0;
         for (int i = 0; i < itemsObj.size(); i++) {
             if (itemsObj.get(i).getIsSelected()) {
-                totalK_OplateDoubl = totalK_OplateDoubl + itemsObj.get(i).getCenaZaUpakovky() *
+                totalK_OplateDoubl = totalK_OplateDoubl + itemsObj.get(i).getCenaFinalSoSkidkoyZaUpak()*
                         itemsObj.get(i).getKolihestvo();
             }
         }
@@ -305,6 +307,8 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
+                            String sum_korzina=jsonObject.getString("sum_korzina");
+                            MainActivity.userStatic.setKorzinaCountStr(sum_korzina);
                             System.out.println("Ceni delTovarIzKorzini = " + jsonObject.toString());
 
                         } catch (JSONException e) {

@@ -1,15 +1,12 @@
 package app.fil.market.ceni_i_skidki;
-import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,29 +24,26 @@ public class Ceni implements Parcelable {
     String foto;
     String id_sql_tovara_v_baze;
     String id_sql_tovara_v_korzine_pokupatelia;
-    int kolihestvo=1;
+    int kolihestvo=0;
     Double kolvovupakovke=1.0;
+    Double cenaZaUpak =0.0 ;//SQL
+    Double skidka =0.0 ;    //SQL
+    Double cenaFinalSoSkidkoZaUpak =0.0 ; //SQL
     Double cenaZaOdinKg =0.0 ;
-    Double cenaZaUpakovky =0.0 ;
-    Double skidka =0.0 ;
-    Double cenaSoSkidkoy=0.0;
-    Double cenaFinalSkidkaZaOdinKg =0.0 ;
-    boolean vibranLiObj=false;
+    Double cenaSoSkidkoyZaUpak =0.0;
+    boolean vibranLiObj=false; //SQL
     String znahrazmriada = " ";
     String mestovilova = " ";
     String typeUpakovki = " ";
     String edinica_izmerenia_upakovki = " ";
     String sostoianieTovara = " ";
     String raskazotovare = " ";
-
     //for KorzinaActivity
-
-
     public Ceni(String naimenovanie,
                 String fotoStr,
-                String cenaZaOdinKgStr,
+                String cenaStr,
                 String skidkaStr,
-                String cenaSoSkidkoyStr,
+                String cenaSoSkidkoyZaUpakStr,
                 String vibranLiStr,
                 String id_sql_tovara_v_bazeStr,
                 String id_sql_tovara_v_korzine_pokupatelia,
@@ -59,25 +53,25 @@ public class Ceni implements Parcelable {
         this.naimenovanie = naimenovanie;
         this.id_sql_tovara_v_korzine_pokupatelia = id_sql_tovara_v_korzine_pokupatelia;
         this.id_sql_tovara_v_baze = id_sql_tovara_v_bazeStr;
-        if (!cenaZaOdinKg.equals("null"))
-            this.cenaZaOdinKg = Double.parseDouble(cenaZaOdinKgStr);
+        if (!cenaZaUpak.equals("null"))
+            this.cenaZaUpak = Double.parseDouble(cenaStr);
         if (!skidka.equals("null"))
             this.skidka = Double.parseDouble(skidkaStr);
-        if (!cenaFinalSkidkaZaOdinKg.equals("null"))
-            this.cenaFinalSkidkaZaOdinKg = Double.parseDouble(cenaSoSkidkoyStr);
-        if (cenaZaOdinKg > 0.0) {
-            if (cenaFinalSkidkaZaOdinKg == 0.0 & skidka > 0.0) cenaFinalSkidkaZaOdinKg = cenaZaOdinKg *(1-skidka/100);
-            if ((cenaFinalSkidkaZaOdinKg > 0.0 & skidka == 0.0)||(cenaFinalSkidkaZaOdinKg > 0.0 & skidka > 0.0)) {
-                skidka=100.0- cenaFinalSkidkaZaOdinKg / cenaZaOdinKg *100;
+        if (!cenaFinalSoSkidkoZaUpak.equals("null"))
+            this.cenaFinalSoSkidkoZaUpak = Double.parseDouble(cenaSoSkidkoyZaUpakStr);
+        if (cenaZaUpak > 0.0) {
+            if (cenaFinalSoSkidkoZaUpak == 0.0 & skidka > 0.0) cenaFinalSoSkidkoZaUpak = cenaZaUpak *(1-skidka/100);
+            if ((cenaFinalSoSkidkoZaUpak > 0.0 & skidka == 0.0)||(cenaFinalSoSkidkoZaUpak > 0.0 & skidka > 0.0)) {
+                skidka=100.0- cenaFinalSoSkidkoZaUpak / cenaZaUpak *100;
                 System.out.println("kambal "+ Double.toString(skidka));
             }
-            if (cenaFinalSkidkaZaOdinKg > 0.0 & skidka > 0.0) skidka=100.0- cenaFinalSkidkaZaOdinKg / cenaZaOdinKg *100;
-            if (cenaFinalSkidkaZaOdinKg == 0.0 & skidka == 0.0) {
+            if (cenaFinalSoSkidkoZaUpak > 0.0 & skidka > 0.0) skidka=100.0- cenaFinalSoSkidkoZaUpak / cenaZaUpak *100;
+            if (cenaFinalSoSkidkoZaUpak == 0.0 & skidka == 0.0) {
                 skidka = 0.0;
-                cenaFinalSkidkaZaOdinKg = cenaZaOdinKg;
+                cenaFinalSoSkidkoZaUpak = cenaZaUpak;
             }
-        } else{ // cenaZaOdinKg<0.0
-            cenaZaOdinKg = cenaFinalSkidkaZaOdinKg /(1-skidka/100);
+        } else{ // cenaZaUpak<0.0
+            cenaZaUpak = cenaFinalSoSkidkoZaUpak /(1-skidka/100);
         }
         this.foto= Utils.BASE_IP + fotoStr;
         if(!vibranLiStr.equals("null")){
@@ -87,67 +81,101 @@ public class Ceni implements Parcelable {
             vibranLiObj=false;
         }
         if(!kolihestvoStr.equals("null")) kolihestvo= Integer.valueOf(kolihestvoStr);
-        else kolihestvo=0;
+
         if(!kolvovupakovkeStr.equals("null")) kolvovupakovke= Double.valueOf(kolvovupakovkeStr);
         else kolvovupakovke=1.0;
-        cenaZaUpakovky=cenaFinalSkidkaZaOdinKg*kolvovupakovke;
-//        System.out.println(Double.toString(cenaZaOdinKg)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSkidkaZaOdinKg)+", "
+        cenaZaOdinKg = cenaFinalSoSkidkoZaUpak /kolvovupakovke;
+//        System.out.println(Double.toString(cenaZaUpak)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSoSkidkoZaUpak)+", "
 //                + Boolean.toString(vibranLi)+", "+ id_sql_tovara_v_baze +" - create objekt Ceni in Double");
-//        System.out.println(Double.toString(cenaZaOdinKg)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSkidkaZaOdinKg)+"sadfghjgfdafsdghfkkmyntrhg");
+//        System.out.println(Double.toString(cenaZaUpak)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSoSkidkoZaUpak)+"sadfghjgfdafsdghfkkmyntrhg");
 //        System.out.println("Ceni Id SQL "+" ID tovara v baze="+id_sql_tovara_v_baze+", "+
 //                "ID tovara v korzinePokupatelia="+id_sql_tovara_v_korzine_pokupatelia);
     }
 
     //for TovariActivity
-    public Ceni(String naimenovanieStr, String fotoStr, String cenaStr, String skidkaStr, String cenaSkidkaStr, String vibranLiStr, String id_sql_tovara_v_baze_Str,
-                String id_sql_tovara_v_korzine_pokupatelia_Str, String kolihestvoStr, String kolvovupakovkeStr,
-                String znahrazmriadaStr, String mestovilovaStr, String  typeUpakovkiStr, String sostoianieTovaraStr,
-                String edinica_izmerenia_upakovkiStr,  String raskazotovareStr){
-        System.out.println(cenaStr+", "+skidkaStr+", "+cenaSkidkaStr+", "+vibranLiStr+", "+id_sql_tovara_v_baze_Str+", "+id_sql_tovara_v_korzine_pokupatelia_Str+" - create objekt Ceni");
-        System.out.println(cenaStr+", "+skidkaStr+", "+cenaSkidkaStr+" - create objekt Ceni rashet skidki");
-        if (!cenaZaOdinKg.equals("null")) this.cenaZaOdinKg = Double.parseDouble(cenaStr);
-        if (!skidka.equals("null")) this.skidka = Double.parseDouble(skidkaStr);
-        if (!cenaFinalSkidkaZaOdinKg.equals("null")) this.cenaFinalSkidkaZaOdinKg = Double.parseDouble(cenaSkidkaStr);
-        if (cenaZaOdinKg > 0.0) {
-            if (cenaFinalSkidkaZaOdinKg == 0.0 & skidka > 0.0) cenaFinalSkidkaZaOdinKg = cenaZaOdinKg *(1-skidka/100);
-            if ((cenaFinalSkidkaZaOdinKg > 0.0 & skidka == 0.0)||(cenaFinalSkidkaZaOdinKg > 0.0 & skidka > 0.0)) {
-                skidka=100.0- cenaFinalSkidkaZaOdinKg / cenaZaOdinKg *100;
+    public Ceni(String naimenovanieStr,
+                String fotoStr,
+                String cenaStr,
+                String skidkaStr,
+                String cenaSoSkidkoyZaUpakStr,
+                String vibranLiStr,
+                String id_sql_tovara_v_baze_Str,
+                String id_sql_tovara_v_korzine_pokupatelia_Str,
+                String kolihestvoStr,
+                String kolvovupakovkeStr,
+                String znahrazmriadaStr,
+                String mestovilovaStr,
+                String typeUpakovkiStr,
+                String sostoianieTovaraStr,
+                String edinica_izmerenia_upakovkiStr,
+                String raskazotovareStr
+    ){
+        System.out.println("ceni konsruktor AA"+
+                "\n"+naimenovanieStr+",<000naimenovanieStr000 "+
+                "\n"+fotoStr+",<000fotoStr000 "+
+                "\n"+cenaStr+",<000cenaStr000 "+
+                "\n"+skidkaStr+",<000skidkaStr000 "+
+                "\n"+cenaSoSkidkoyZaUpakStr+",<000cenaSoSkidkoyZaUpakStr000 "+
+                "\n"+vibranLiStr+",<000vibranLiStr000 "+
+                "\n"+id_sql_tovara_v_baze_Str+",<000id_sql_tovara_v_baze_Str000 "+
+                "\n"+id_sql_tovara_v_korzine_pokupatelia_Str+",<000id_sql_tovara_v_korzine_pokupatelia_Str000 "+
+                "\n"+kolihestvoStr+",<000kolihestvoStr000 "+
+                "\n"+kolvovupakovkeStr+",<000kolvovupakovkeStr000 "+
+                "\n"+znahrazmriadaStr+",<000znahrazmriadaStr000 "+
+                "\n"+mestovilovaStr+",<000mestovilovaStr000 "+
+                "\n"+typeUpakovkiStr+",<000typeUpakovkiStr000 "+
+                "\n"+sostoianieTovaraStr+",<000sostoianieTovaraStr000 "+
+                "\n"+edinica_izmerenia_upakovkiStr+",<000edinica_izmerenia_upakovkiStr000 "+
+                "\n"+raskazotovareStr+",<000raskazotovareStr000 "
+       );
+
+        System.out.println(cenaStr+", "+skidkaStr+", "+cenaSoSkidkoyZaUpakStr+", "+vibranLiStr+", "+id_sql_tovara_v_baze_Str+", "+id_sql_tovara_v_korzine_pokupatelia_Str+" - create objekt Ceni");
+        System.out.println(cenaStr+", "+skidkaStr+", "+cenaSoSkidkoyZaUpakStr+" - create objekt Ceni rashet skidki");
+        if (!cenaZaUpak.equals("null"))
+            this.cenaZaUpak = Double.parseDouble(cenaStr);
+        if (!skidka.equals("null"))
+            this.skidka = Double.parseDouble(skidkaStr);
+        if (!cenaFinalSoSkidkoZaUpak.equals("null"))
+            this.cenaFinalSoSkidkoZaUpak = Double.parseDouble(cenaSoSkidkoyZaUpakStr);
+        if (cenaZaUpak > 0.0) {
+            if (cenaFinalSoSkidkoZaUpak == 0.0 & skidka > 0.0) cenaFinalSoSkidkoZaUpak = cenaZaUpak *(1-skidka/100);
+            if ((cenaFinalSoSkidkoZaUpak > 0.0 & skidka == 0.0)||(cenaFinalSoSkidkoZaUpak > 0.0 & skidka > 0.0)) {
+                skidka=100.0- cenaFinalSoSkidkoZaUpak / cenaZaUpak *100;
                 System.out.println("kambal "+ Double.toString(skidka));
             }
-            if (cenaFinalSkidkaZaOdinKg > 0.0 & skidka > 0.0) skidka=100.0- cenaFinalSkidkaZaOdinKg / cenaZaOdinKg *100;
-            if (cenaFinalSkidkaZaOdinKg == 0.0 & skidka == 0.0) {
+            if (cenaFinalSoSkidkoZaUpak > 0.0 & skidka > 0.0) skidka=100.0- cenaFinalSoSkidkoZaUpak / cenaZaUpak *100;
+            if (cenaFinalSoSkidkoZaUpak == 0.0 & skidka == 0.0) {
                 skidka = 0.0;
-                cenaFinalSkidkaZaOdinKg = cenaZaOdinKg;
+                cenaFinalSoSkidkoZaUpak = cenaZaUpak;
             }
-        } else{ // cenaZaOdinKg<0.0
-            cenaZaOdinKg = cenaFinalSkidkaZaOdinKg /(1-skidka/100);
+        } else{ // cenaZaUpak<0.0
+            cenaZaUpak = cenaFinalSoSkidkoZaUpak /(1-skidka/100);
         }
-
-        naimenovanie=naimenovanieStr;
-        foto= Utils.BASE_IP + fotoStr;
+        this.foto= Utils.BASE_IP + fotoStr;
         if(!vibranLiStr.equals("null")){
             vibranLiObj= Boolean.valueOf(vibranLiStr);
         }
-        else {
+        else{
             vibranLiObj=false;
         }
-        id_sql_tovara_v_baze =id_sql_tovara_v_baze_Str;
-        id_sql_tovara_v_korzine_pokupatelia =id_sql_tovara_v_korzine_pokupatelia_Str;
         if(!kolihestvoStr.equals("null")) kolihestvo= Integer.valueOf(kolihestvoStr);
-        else kolihestvo=0;
+
         if(!kolvovupakovkeStr.equals("null")) kolvovupakovke= Double.valueOf(kolvovupakovkeStr);
         else kolvovupakovke=1.0;
-        cenaZaUpakovky=cenaFinalSkidkaZaOdinKg*kolvovupakovke;
+        cenaZaOdinKg = cenaFinalSoSkidkoZaUpak /kolvovupakovke;
 
-        znahrazmriada=znahrazmriadaStr;
-        mestovilova=mestovilovaStr;
-        typeUpakovki=typeUpakovkiStr;
-        edinica_izmerenia_upakovki=edinica_izmerenia_upakovkiStr;
-        sostoianieTovara =sostoianieTovaraStr;
-        raskazotovare=raskazotovareStr;
-        System.out.println(Double.toString(cenaZaOdinKg)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSkidkaZaOdinKg)+", "
+        this.naimenovanie=naimenovanieStr;
+        this.id_sql_tovara_v_korzine_pokupatelia=id_sql_tovara_v_korzine_pokupatelia_Str;
+        this.id_sql_tovara_v_baze=id_sql_tovara_v_baze_Str;
+        this.znahrazmriada=znahrazmriadaStr;
+        this.mestovilova=mestovilovaStr;
+        this.typeUpakovki=typeUpakovkiStr;
+        this.edinica_izmerenia_upakovki=edinica_izmerenia_upakovkiStr;
+        this.sostoianieTovara =sostoianieTovaraStr;
+        this.raskazotovare=raskazotovareStr;
+        System.out.println(Double.toString(cenaZaUpak)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSoSkidkoZaUpak)+", "
                 + Boolean.toString(vibranLiObj)+", "+ id_sql_tovara_v_baze +" - create objekt Ceni in Double");
-        System.out.println(Double.toString(cenaZaOdinKg)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSkidkaZaOdinKg)+"sadfghjgfdafsdghfkkmyntrhg");
+        System.out.println(Double.toString(cenaZaUpak)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSoSkidkoZaUpak)+"sadfghjgfdafsdghfkkmyntrhg");
         System.out.println("Ceni Id SQL "+" ID tovara v baze="+id_sql_tovara_v_baze+", "+
                 "ID tovara v korzinePokupatelia="+id_sql_tovara_v_korzine_pokupatelia);
     }
@@ -165,14 +193,14 @@ public class Ceni implements Parcelable {
             kolvovupakovke = in.readDouble();
         }
         if (in.readByte() == 0) {
+            cenaZaUpak = null;
+        } else {
+            cenaZaUpak = in.readDouble();
+        }
+        if (in.readByte() == 0) {
             cenaZaOdinKg = null;
         } else {
             cenaZaOdinKg = in.readDouble();
-        }
-        if (in.readByte() == 0) {
-            cenaZaUpakovky = null;
-        } else {
-            cenaZaUpakovky = in.readDouble();
         }
         if (in.readByte() == 0) {
             skidka = null;
@@ -180,14 +208,14 @@ public class Ceni implements Parcelable {
             skidka = in.readDouble();
         }
         if (in.readByte() == 0) {
-            cenaSoSkidkoy = null;
+            cenaSoSkidkoyZaUpak = null;
         } else {
-            cenaSoSkidkoy = in.readDouble();
+            cenaSoSkidkoyZaUpak = in.readDouble();
         }
         if (in.readByte() == 0) {
-            cenaFinalSkidkaZaOdinKg = null;
+            cenaFinalSoSkidkoZaUpak = null;
         } else {
-            cenaFinalSkidkaZaOdinKg = in.readDouble();
+            cenaFinalSoSkidkoZaUpak = in.readDouble();
         }
         vibranLiObj = in.readByte() != 0;
         znahrazmriada = in.readString();
@@ -218,15 +246,15 @@ public class Ceni implements Parcelable {
         return foto;
     }
 
-    public Double getCenaZaOdinKg() {
-            return cenaZaOdinKg;
+    public Double getCenaZaUpak() {
+            return cenaZaUpak;
     }
     public String getCenaStr() {
-        return Utils.getStringFromDoubleFormated2Zerro(cenaZaOdinKg);
+        return Utils.getStringFromDoubleFormated2Zerro(cenaZaUpak);
     }
 
-    public Double getCenaZaUpakovky() {
-        return cenaZaUpakovky;
+    public Double getCenaZaOdinKg() {
+        return cenaZaOdinKg;
     }
 
     public String getEdinica_izmerenia_upakovki() {
@@ -237,8 +265,8 @@ public class Ceni implements Parcelable {
         return typeUpakovki;
     }
 
-    public String getCenaZaUpakovkyStr() {
-        return Utils.getStringFromDoubleFormated2Zerro(cenaZaUpakovky);
+    public String getCenaZaOdinKgStr() {
+        return Utils.getStringFromDoubleFormated2Zerro(cenaZaOdinKg);
     }
     public Double getSkidka() {
         return skidka;
@@ -276,19 +304,18 @@ public class Ceni implements Parcelable {
     public String getRaskazotovare() {
         return raskazotovare;
     }
-    public void setKolihestvo(int kolihestvo) {
+    public void setKolihestvoAndSendToSQL(int kolihestvo) {
         this.kolihestvo = kolihestvo;
         buySQLKolvo(id_sql_tovara_v_baze, Integer.toString(kolihestvo));
     }
     public void setKolihestvoStr(String kolihestvoStr) {
-        this.kolihestvo = Integer.valueOf(kolihestvoStr);
-        buySQLKolvo(id_sql_tovara_v_baze, kolihestvoStr);
+        setKolihestvoAndSendToSQL(Integer.valueOf(kolihestvoStr));
     }
-    public Double getCenaFinalSoSkidkoy() {
-        return cenaFinalSkidkaZaOdinKg;
+    public Double getCenaFinalSoSkidkoyZaUpak() {
+        return cenaFinalSoSkidkoZaUpak;
     }
-    public String getCenaFinalSoSkidkoyStr() {
-        return Utils.getStringFromDoubleFormated2Zerro(cenaFinalSkidkaZaOdinKg);
+    public String getCenaFinalSoSkidkoyZaUpakStr() {
+        return Utils.getStringFromDoubleFormated2Zerro(cenaFinalSoSkidkoZaUpak);
     }
     public void setVibranLi(boolean vibranLi) {
         this.vibranLiObj = vibranLi;
@@ -336,7 +363,10 @@ public class Ceni implements Parcelable {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            System.out.println("Ceni sendSQLTovarVibran = " + jsonObject.toString());
+                            int idKorzina = jsonObject.getInt("idKorzina");
+                            MainActivity.userStatic.setKorzinaCountStr(idKorzina);
+                            System.out.println("Ceni sendSQLTovarVibran = " + jsonObject.toString()+"\n" +
+                                    "Main kol="+MainActivity.userStatic.getKorzina_kountInt());
                             JSONArray jsonArray = jsonObject.getJSONArray("count");
 
                         } catch (JSONException e) {
@@ -357,7 +387,7 @@ public class Ceni implements Parcelable {
                 parameters.put("tovar", tovarId_V_Baze_tovarov_SQL);
                 parameters.put("kolvo", kolvo);
                 parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
-                System.out.println("Ceni sendSQLTovarVibran  SQL parametrs = " + parameters);
+                System.out.println("Ceni sendSQLTovarVibran  SQL* parametrs = " + parameters);
 
 
 
@@ -386,17 +416,17 @@ public class Ceni implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeDouble(kolvovupakovke);
         }
+        if (cenaZaUpak == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeDouble(cenaZaUpak);
+        }
         if (cenaZaOdinKg == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeDouble(cenaZaOdinKg);
-        }
-        if (cenaZaUpakovky == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeDouble(cenaZaUpakovky);
         }
         if (skidka == null) {
             parcel.writeByte((byte) 0);
@@ -404,17 +434,17 @@ public class Ceni implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeDouble(skidka);
         }
-        if (cenaSoSkidkoy == null) {
+        if (cenaSoSkidkoyZaUpak == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeDouble(cenaSoSkidkoy);
+            parcel.writeDouble(cenaSoSkidkoyZaUpak);
         }
-        if (cenaFinalSkidkaZaOdinKg == null) {
+        if (cenaFinalSoSkidkoZaUpak == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeDouble(cenaFinalSkidkaZaOdinKg);
+            parcel.writeDouble(cenaFinalSoSkidkoZaUpak);
         }
         parcel.writeByte((byte) (vibranLiObj ? 1 : 0));
         parcel.writeString(znahrazmriada);

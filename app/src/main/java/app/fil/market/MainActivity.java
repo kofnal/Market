@@ -77,14 +77,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         System.out.println("MainActiv1 onStop");
-        userStatic.wreateDataToPrefs();
+
         super.onStop();
     }
-    @Override
-    protected void onDestroy() {
-        System.out.println("MainActiv1 onDestroy");
-        super.onDestroy();
-    }
+
     private void anonimnVxod() {
         tvMainLog.append(" anonimn vxod ");
         mAuth.signInAnonymously()

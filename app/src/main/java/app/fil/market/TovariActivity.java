@@ -100,13 +100,7 @@ public class TovariActivity extends AppCompatActivity {
                                     tvCountKorzina.setVisibility(View.INVISIBLE);
                                 }
                             }
-                            int razmerZaprosa = indexEnd - indexStart;
-                            if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
-                                Toast.makeText(TovariActivity.this, "Load data completed !", Toast.LENGTH_SHORT).show();
-                                System.out.println("if345dfs3 bolhe net");
-                            } else {
-                                System.out.println("ehe est 345dfs3");
-                            }
+
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonRow = jsonArray.getJSONObject(i);
                                 System.out.println("TovarActvity Tovar row " + jsonRow);
@@ -118,7 +112,7 @@ public class TovariActivity extends AppCompatActivity {
                                         jsonRow.getString("cenaskidka"),
                                         jsonRow.getString("selected"),
                                         jsonRow.getString("id"),
-                                        jsonRow.getString("id"),
+                                        jsonRow.getString("idk"),
                                         jsonRow.getString("kolihestvo"),
                                         jsonRow.getString("kolvovupakovke"),
                                         jsonRow.getString("znahrazmriada"),
@@ -131,7 +125,14 @@ public class TovariActivity extends AppCompatActivity {
                                 System.out.println("Ceni create foto = " + ceniObjRowTovar.getFoto());
                                 ceniList.add(ceniObjRowTovar);
                             }
-
+                            int razmerZaprosa = indexEnd - indexStart;
+                            if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
+                                if(ceniList.size()>razmerZaprosa)
+                                    Toast.makeText(TovariActivity.this, "Загружены все товары.", Toast.LENGTH_SHORT).show();
+                                System.out.println("if345dfs3 bolhe net");
+                            } else {
+                                System.out.println("ehe est 345dfs3");
+                            }
                             adapter.notifyDataSetChanged();
                             adapter.setLoaded();
                         } catch (JSONException e) {
@@ -160,13 +161,13 @@ public class TovariActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
+    protected void onResume() {
+        if(tvCountKorzina!=null){
+            MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
+        }
+        super.onResume();
 
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }
