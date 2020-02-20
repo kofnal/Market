@@ -1,4 +1,4 @@
-package app.fil.market;
+package app.fil.market.zakazi;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -24,7 +24,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import app.fil.market.ceni_i_skidki.Ceni;
+import app.fil.market.MainActivity;
+import app.fil.market.R;
+import app.fil.market.Model.Utils;
+import app.fil.market.tovari.TovarFromSQL;
 
 public class Zakaz_Activity extends AppCompatActivity {
     EditText etZakazEmail, etZakazTelefon, etZakazFIO, etZakazAdresDostavki, etZakazKommentZakaza, etZakazVvediPromo;
@@ -51,20 +54,20 @@ public class Zakaz_Activity extends AppCompatActivity {
         setTextAllEditText();
         final Bundle bundle = getIntent().getExtras();
 //        System.out.println("ZakazActiv arrlist size = "+Integer.toString(bundle.getStringArrayList("arrlist").size()));
-        ArrayList<Ceni> listCeniFromKorzinaActivity =  bundle.getParcelableArrayList("ceniList");
-        System.out.println("ZakazActiv listCeniFromKorzinaActivity size = "+ Integer.toString(listCeniFromKorzinaActivity.size())+
-        " , "+listCeniFromKorzinaActivity.get(0).getId_sql_tovara_v_baze()+", "+listCeniFromKorzinaActivity.get(0).getCenaZaUpak());
-        for(int i = 0; i<listCeniFromKorzinaActivity.size(); i++){
-            if(listCeniFromKorzinaActivity.get(i).getIsSelected()) {
+        ArrayList<TovarFromSQL> listTovarFromSQLFromKorzinaActivity =  bundle.getParcelableArrayList("tovarFromSQLList");
+        System.out.println("ZakazActiv listTovarFromSQLFromKorzinaActivity size = "+ Integer.toString(listTovarFromSQLFromKorzinaActivity.size())+
+        " , "+ listTovarFromSQLFromKorzinaActivity.get(0).getId_sql_tovara_v_baze()+", "+ listTovarFromSQLFromKorzinaActivity.get(0).getCenaZaUpak());
+        for(int i = 0; i< listTovarFromSQLFromKorzinaActivity.size(); i++){
+            if(listTovarFromSQLFromKorzinaActivity.get(i).getIsSelected()) {
                 JSONObject jsObjTovarRow = new JSONObject();
                 try {
-                    jsObjTovarRow.put("id_tovar_sql", listCeniFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
-                    jsObjTovarRow.put("cena_tovar", listCeniFromKorzinaActivity.get(i).getCenaZaOdinKg());
-                    jsObjTovarRow.put("kolihestvo", listCeniFromKorzinaActivity.get(i).getKolihestvo());
-                    jsObjTovarRow.put("id_sql_tovara_v_korzine_pokupatelia", listCeniFromKorzinaActivity.get(i).getId_sql_tovara_v_korzine_pokupatelia());
-                    System.out.println("Zakaz_Activity Sozdanie JSON Objekta Na Server " + listCeniFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
+                    jsObjTovarRow.put("id_tovar_sql", listTovarFromSQLFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
+                    jsObjTovarRow.put("cena_tovar", listTovarFromSQLFromKorzinaActivity.get(i).getCenaZaOdinKg());
+                    jsObjTovarRow.put("kolihestvo", listTovarFromSQLFromKorzinaActivity.get(i).getKolihestvo());
+                    jsObjTovarRow.put("id_sql_tovara_v_korzine_pokupatelia", listTovarFromSQLFromKorzinaActivity.get(i).getId_sql_tovara_v_korzine_pokupatelia());
+                    System.out.println("Zakaz_Activity Sozdanie JSON Objekta Na Server " + listTovarFromSQLFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
                     jsTovari.put(i, jsObjTovarRow);
-                    totalCenaZakaza=totalCenaZakaza+listCeniFromKorzinaActivity.get(i).getCenaFinalSoSkidkoyZaUpak()*listCeniFromKorzinaActivity.get(i).getKolihestvo();
+                    totalCenaZakaza=totalCenaZakaza+ listTovarFromSQLFromKorzinaActivity.get(i).getCenaFinalSoSkidkoyZaUpak()* listTovarFromSQLFromKorzinaActivity.get(i).getKolihestvo();
                 } catch (JSONException e) {
                     System.out.println("ERROR Zakaz_Activity Sozdanie JSON Objekta Na Server " + e.toString());
                     e.printStackTrace();
@@ -76,7 +79,7 @@ public class Zakaz_Activity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.println("listCeniObj - "+ Double.toString(listCeniFromKorzinaActivity.get(0).getCenaZaUpak()));
+        System.out.println("listCeniObj - "+ Double.toString(listTovarFromSQLFromKorzinaActivity.get(0).getCenaZaUpak()));
         System.out.println("listCeniObj jsObjKorzina.toString() - "+jsObjKorzina.toString());
         //etZakazTelefon.setText(bundle.getStringArrayList("arrlist").get(0));
         etZakazTelefon.setOnTouchListener(new View.OnTouchListener() {

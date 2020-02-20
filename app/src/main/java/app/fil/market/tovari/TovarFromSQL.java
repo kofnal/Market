@@ -1,4 +1,4 @@
-package app.fil.market.ceni_i_skidki;
+package app.fil.market.tovari;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -16,10 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.fil.market.MainActivity;
-import app.fil.market.Utils;
+import app.fil.market.Model.Utils;
 
 
-public class Ceni implements Parcelable {
+
+public class TovarFromSQL implements Parcelable {
     String naimenovanie;
     String foto;
     String id_sql_tovara_v_baze;
@@ -39,16 +40,16 @@ public class Ceni implements Parcelable {
     String sostoianieTovara = " ";
     String raskazotovare = " ";
     //for KorzinaActivity
-    public Ceni(String naimenovanie,
-                String fotoStr,
-                String cenaStr,
-                String skidkaStr,
-                String cenaSoSkidkoyZaUpakStr,
-                String vibranLiStr,
-                String id_sql_tovara_v_bazeStr,
-                String id_sql_tovara_v_korzine_pokupatelia,
-                String kolihestvoStr,
-                String kolvovupakovkeStr
+    public TovarFromSQL(String naimenovanie,
+                        String fotoStr,
+                        String cenaStr,
+                        String skidkaStr,
+                        String cenaSoSkidkoyZaUpakStr,
+                        String vibranLiStr,
+                        String id_sql_tovara_v_bazeStr,
+                        String id_sql_tovara_v_korzine_pokupatelia,
+                        String kolihestvoStr,
+                        String kolvovupakovkeStr
     ) {
         this.naimenovanie = naimenovanie;
         this.id_sql_tovara_v_korzine_pokupatelia = id_sql_tovara_v_korzine_pokupatelia;
@@ -86,29 +87,29 @@ public class Ceni implements Parcelable {
         else kolvovupakovke=1.0;
         cenaZaOdinKg = cenaFinalSoSkidkoZaUpak /kolvovupakovke;
 //        System.out.println(Double.toString(cenaZaUpak)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSoSkidkoZaUpak)+", "
-//                + Boolean.toString(vibranLi)+", "+ id_sql_tovara_v_baze +" - create objekt Ceni in Double");
+//                + Boolean.toString(vibranLi)+", "+ id_sql_tovara_v_baze +" - create objekt TovarFromSQL in Double");
 //        System.out.println(Double.toString(cenaZaUpak)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSoSkidkoZaUpak)+"sadfghjgfdafsdghfkkmyntrhg");
-//        System.out.println("Ceni Id SQL "+" ID tovara v baze="+id_sql_tovara_v_baze+", "+
+//        System.out.println("TovarFromSQL Id SQL "+" ID tovara v baze="+id_sql_tovara_v_baze+", "+
 //                "ID tovara v korzinePokupatelia="+id_sql_tovara_v_korzine_pokupatelia);
     }
 
     //for TovariActivity
-    public Ceni(String naimenovanieStr,
-                String fotoStr,
-                String cenaStr,
-                String skidkaStr,
-                String cenaSoSkidkoyZaUpakStr,
-                String vibranLiStr,
-                String id_sql_tovara_v_baze_Str,
-                String id_sql_tovara_v_korzine_pokupatelia_Str,
-                String kolihestvoStr,
-                String kolvovupakovkeStr,
-                String znahrazmriadaStr,
-                String mestovilovaStr,
-                String typeUpakovkiStr,
-                String sostoianieTovaraStr,
-                String edinica_izmerenia_upakovkiStr,
-                String raskazotovareStr
+    public TovarFromSQL(String naimenovanieStr,
+                        String fotoStr,
+                        String cenaStr,
+                        String skidkaStr,
+                        String cenaSoSkidkoyZaUpakStr,
+                        String vibranLiStr,
+                        String id_sql_tovara_v_baze_Str,
+                        String id_sql_tovara_v_korzine_pokupatelia_Str,
+                        String kolihestvoStr,
+                        String kolvovupakovkeStr,
+                        String znahrazmriadaStr,
+                        String mestovilovaStr,
+                        String typeUpakovkiStr,
+                        String sostoianieTovaraStr,
+                        String edinica_izmerenia_upakovkiStr,
+                        String raskazotovareStr
     ){
         System.out.println("ceni konsruktor AA"+
                 "\n"+naimenovanieStr+",<000naimenovanieStr000 "+
@@ -129,8 +130,8 @@ public class Ceni implements Parcelable {
                 "\n"+raskazotovareStr+",<000raskazotovareStr000 "
        );
 
-        System.out.println(cenaStr+", "+skidkaStr+", "+cenaSoSkidkoyZaUpakStr+", "+vibranLiStr+", "+id_sql_tovara_v_baze_Str+", "+id_sql_tovara_v_korzine_pokupatelia_Str+" - create objekt Ceni");
-        System.out.println(cenaStr+", "+skidkaStr+", "+cenaSoSkidkoyZaUpakStr+" - create objekt Ceni rashet skidki");
+        System.out.println(cenaStr+", "+skidkaStr+", "+cenaSoSkidkoyZaUpakStr+", "+vibranLiStr+", "+id_sql_tovara_v_baze_Str+", "+id_sql_tovara_v_korzine_pokupatelia_Str+" - create objekt TovarFromSQL");
+        System.out.println(cenaStr+", "+skidkaStr+", "+cenaSoSkidkoyZaUpakStr+" - create objekt TovarFromSQL rashet skidki");
         if (!cenaZaUpak.equals("null"))
             this.cenaZaUpak = Double.parseDouble(cenaStr);
         if (!skidka.equals("null"))
@@ -174,14 +175,14 @@ public class Ceni implements Parcelable {
         this.sostoianieTovara =sostoianieTovaraStr;
         this.raskazotovare=raskazotovareStr;
         System.out.println(Double.toString(cenaZaUpak)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSoSkidkoZaUpak)+", "
-                + Boolean.toString(vibranLiObj)+", "+ id_sql_tovara_v_baze +" - create objekt Ceni in Double");
+                + Boolean.toString(vibranLiObj)+", "+ id_sql_tovara_v_baze +" - create objekt TovarFromSQL in Double");
         System.out.println(Double.toString(cenaZaUpak)+", "+ Double.toString(skidka)+", "+ Double.toString(cenaFinalSoSkidkoZaUpak)+"sadfghjgfdafsdghfkkmyntrhg");
-        System.out.println("Ceni Id SQL "+" ID tovara v baze="+id_sql_tovara_v_baze+", "+
+        System.out.println("TovarFromSQL Id SQL "+" ID tovara v baze="+id_sql_tovara_v_baze+", "+
                 "ID tovara v korzinePokupatelia="+id_sql_tovara_v_korzine_pokupatelia);
     }
 
 
-    protected Ceni(Parcel in) {
+    protected TovarFromSQL(Parcel in) {
         naimenovanie = in.readString();
         foto = in.readString();
         id_sql_tovara_v_baze = in.readString();
@@ -226,15 +227,15 @@ public class Ceni implements Parcelable {
         raskazotovare = in.readString();
     }
 
-    public static final Creator<Ceni> CREATOR = new Creator<Ceni>() {
+    public static final Creator<TovarFromSQL> CREATOR = new Creator<TovarFromSQL>() {
         @Override
-        public Ceni createFromParcel(Parcel in) {
-            return new Ceni(in);
+        public TovarFromSQL createFromParcel(Parcel in) {
+            return new TovarFromSQL(in);
         }
 
         @Override
-        public Ceni[] newArray(int size) {
-            return new Ceni[size];
+        public TovarFromSQL[] newArray(int size) {
+            return new TovarFromSQL[size];
         }
     };
 
@@ -350,7 +351,7 @@ public class Ceni implements Parcelable {
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("idKorzina", tovarId_V_Korzine_klienta);
                 parameters.put("isSelected", Boolean.toString(vibranLiBool));
-                System.out.println("Ceni sendSQLTovarVibran SQL parametrs = " + parameters);
+                System.out.println("TovarFromSQL sendSQLTovarVibran SQL parametrs = " + parameters);
                 return parameters;
             }
         };
@@ -365,19 +366,19 @@ public class Ceni implements Parcelable {
                             JSONObject jsonObject = new JSONObject(response);
                             int idKorzina = jsonObject.getInt("idKorzina");
                             MainActivity.userStatic.setKorzinaCountStr(idKorzina);
-                            System.out.println("Ceni sendSQLTovarVibran = " + jsonObject.toString()+"\n" +
+                            System.out.println("TovarFromSQL sendSQLTovarVibran = " + jsonObject.toString()+"\n" +
                                     "Main kol="+MainActivity.userStatic.getKorzina_kountInt());
                             JSONArray jsonArray = jsonObject.getJSONArray("count");
 
                         } catch (JSONException e) {
 
-                            System.out.println("\n Ceni ERR sendSQLTovarVibran = " + response);
+                            System.out.println("\n TovarFromSQL ERR sendSQLTovarVibran = " + response);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("\n Ceni ERR sendSQLTovarVibran - " + error.toString());
+                System.out.println("\n TovarFromSQL ERR sendSQLTovarVibran - " + error.toString());
 
             }
         }) {
@@ -387,7 +388,7 @@ public class Ceni implements Parcelable {
                 parameters.put("tovar", tovarId_V_Baze_tovarov_SQL);
                 parameters.put("kolvo", kolvo);
                 parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
-                System.out.println("Ceni sendSQLTovarVibran  SQL* parametrs = " + parameters);
+                System.out.println("TovarFromSQL sendSQLTovarVibran  SQL* parametrs = " + parameters);
 
 
 

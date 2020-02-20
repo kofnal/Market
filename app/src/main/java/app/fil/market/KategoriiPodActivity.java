@@ -29,9 +29,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.fil.market.Model.Utils;
 import app.fil.market.korzina.KorzinaActivity;
+import app.fil.market.tovari.TovariActivity;
 
-public class KategoriiPod extends AppCompatActivity {
+public class KategoriiPodActivity extends AppCompatActivity {
     ScrollView scrollView;
     RecyclerView recyclerView;
     RequestQueue requestQueue;
@@ -156,7 +158,7 @@ public class KategoriiPod extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
-        System.out.println("KategoriiPod onDestroy");
+        System.out.println("KategoriiPodActivity onDestroy");
         MainActivity.userStatic.wreateDataToPrefs();
         super.onDestroy();
     }

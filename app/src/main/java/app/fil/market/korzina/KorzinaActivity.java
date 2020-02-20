@@ -32,13 +32,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import app.fil.market.KategoriiPod;
+import app.fil.market.KategoriiPodActivity;
 import app.fil.market.MainActivity;
 import app.fil.market.MyDialog;
 import app.fil.market.R;
-import app.fil.market.Utils;
-import app.fil.market.Zakaz_Activity;
-import app.fil.market.ceni_i_skidki.Ceni;
+import app.fil.market.Model.Utils;
+import app.fil.market.zakazi.Zakaz_Activity;
+import app.fil.market.tovari.TovarFromSQL;
 
 public class KorzinaActivity extends AppCompatActivity {
     RequestQueue requestQueue;
@@ -53,7 +53,7 @@ public class KorzinaActivity extends AppCompatActivity {
     JSONArray jsArrTempToSQL;
     RecyclerView rvKorzina;
     KorzinaAdapter korzinaAdapter;
-    ArrayList<Ceni> tovariList = new ArrayList<>();
+    ArrayList<TovarFromSQL> tovariList = new ArrayList<>();
     int countShowToastOt70rub=0;
 
     @Override
@@ -89,7 +89,7 @@ public class KorzinaActivity extends AppCompatActivity {
         btKorzinaK_Pokupkam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), KategoriiPod.class);
+                Intent intent = new Intent(getApplicationContext(), KategoriiPodActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -103,7 +103,7 @@ public class KorzinaActivity extends AppCompatActivity {
 
                     intent.putExtra("ceniList", korzinaAdapter.itemsObj);
 //                    System.out.println("KorzActiv arrlist size = " + Integer.toString(arrListIdTovarovK_ZakazuSQL.size()));
-//                    System.out.println("KorzActiv put Bundle Ceni Obj ID==" + listCeniObj.get(0).getId_sql_tovara_v_baze());
+//                    System.out.println("KorzActiv put Bundle TovarFromSQL Obj ID==" + listCeniObj.get(0).getId_sql_tovara_v_baze());
                     startActivityForResult(intent, Utils.intentRequestCODKorzinaToZakazPosleOtpravkiZakaza);
 
                 } else {
@@ -150,7 +150,7 @@ public class KorzinaActivity extends AppCompatActivity {
                                 }
                                 JSONObject jsonRow = jsArrTovarV_Korzine.getJSONObject(i);
                                 System.out.println("create objekt Cen in korzina");
-                                final Ceni ceniRowObj = new Ceni(
+                                final TovarFromSQL tovarFromSQLRowObj = new TovarFromSQL(
                                         jsonRow.getString("naimenovanie"),
                                         jsonRow.getString("foto"),
                                         jsonRow.getString("cena"),
@@ -162,7 +162,7 @@ public class KorzinaActivity extends AppCompatActivity {
                                         jsonRow.getString("kolihestvo"),
                                         jsonRow.getString("kolvovupakovke")
                                 );
-                                tovariList.add(i, ceniRowObj);
+                                tovariList.add(i, tovarFromSQLRowObj);
                             }
                             korzinaAdapter.notifyDataSetChanged();
 

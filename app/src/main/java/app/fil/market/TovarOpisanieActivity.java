@@ -26,11 +26,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import app.fil.market.ceni_i_skidki.Ceni;
+import app.fil.market.Model.Utils;
+import app.fil.market.tovari.TovarFromSQL;
 import app.fil.market.korzina.KorzinaActivity;
 
-public class TovarOpisanie extends AppCompatActivity {
-    String TAGclass="TovarOpisanie ";
+public class TovarOpisanieActivity extends AppCompatActivity {
+    String TAGclass="TovarOpisanieActivity ";
     RequestQueue requestQueue;
     TextView tvOpisVKorzinu, tvKorzinaCount, tvOpisanieOformit, tvopisMinusTovar;
     EditText etKolvo;
@@ -40,7 +41,7 @@ public class TovarOpisanie extends AppCompatActivity {
             tvOpisanieZnahenieMestaVilova, tvOpisTypeFasovki, tvOpisanieTovaraRaskaz, tvOpisTovaraCenaZaEdinicu, tvOpisVesUpakPodEditText,
             tvOpisRazmerniyRiad, tvOpisanieMestoVilova;
     ImageView ivOpisTovar;
-    Ceni ceniObjFromTovariActivity;
+    TovarFromSQL tovarFromSQLObjFromTovariActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +72,8 @@ public class TovarOpisanie extends AppCompatActivity {
         TextView tvOpisPlusTovar= findViewById(R.id.tvOpisPlusTovar);
         MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvKorzinaCount);
 
-         ceniObjFromTovariActivity = getIntent().getParcelableExtra("ceniObj");
-        System.out.println("Tovari Opisanie Activity Ceni obj = "+ceniObjFromTovariActivity.getNaimenovanie());
+         tovarFromSQLObjFromTovariActivity = getIntent().getParcelableExtra("ceniObj");
+        System.out.println("Tovari Opisanie Activity TovarFromSQL obj = "+ tovarFromSQLObjFromTovariActivity.getNaimenovanie());
 //        TovariActivity.setStartCountKorzina(tvKorzinaCount);
         tvopisMinusTovar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +92,7 @@ public class TovarOpisanie extends AppCompatActivity {
         tvOpisVKorzinu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buySQL(ceniObjFromTovariActivity.getId_sql_tovara_v_baze(), etKolvo.getText().toString(),
+                buySQL(tovarFromSQLObjFromTovariActivity.getId_sql_tovara_v_baze(), etKolvo.getText().toString(),
                         MainActivity.userStatic.getSqlId());
 
             }
@@ -108,22 +109,22 @@ public class TovarOpisanie extends AppCompatActivity {
                 startActivity(intentKorzina);
             }
         });
-        tvNazvanie.setText(ceniObjFromTovariActivity.getNaimenovanie());
-        Picasso.get().load(ceniObjFromTovariActivity.getFoto()).into(ivOpisTovar);
-        tvOpisCenaTovara.setText(ceniObjFromTovariActivity.getCenaZaOdinKgStr());
-        tvOpisZnahenieVesaUpakovki.setText(ceniObjFromTovariActivity.getKolihestvoV_Upakovke()+" "+
-                ceniObjFromTovariActivity.getEdinica_izmerenia_upakovki());
-        tvOpisZnahenieRazmernogoRiada.setText(ceniObjFromTovariActivity.getZnahrazmriada());
-        tvOpisanieZnahenieMestaVilova.setText(ceniObjFromTovariActivity.getMestovilova());
-        tvOpisTypeFasovki.setText(ceniObjFromTovariActivity.getSostoianieTovara());
-        tvOpisanieTovaraRaskaz.setText(ceniObjFromTovariActivity.getRaskazotovare());
-        tvOpisTovaraCenaZaEdinicu.setText("("+ceniObjFromTovariActivity.getCenaFinalSoSkidkoyZaUpakStr()+" руб. за "+
-                ceniObjFromTovariActivity.getTypeUpakovki()+")");
-        tvOpisVesUpakPodEditText.setText("("+ceniObjFromTovariActivity.getKolihestvoV_Upakovke()+" "+
-                ceniObjFromTovariActivity.getEdinica_izmerenia_upakovki()+")");
-        tvOpisZaEdinicuIzmer.setText("за 1 "+ceniObjFromTovariActivity.getEdinica_izmerenia_upakovki());
-        if(ceniObjFromTovariActivity.getZnahrazmriada().equals("")) tvOpisRazmerniyRiad.setVisibility(View.GONE);
-        if(ceniObjFromTovariActivity.getMestovilova().equals("")) tvOpisanieMestoVilova.setVisibility(View.GONE);
+        tvNazvanie.setText(tovarFromSQLObjFromTovariActivity.getNaimenovanie());
+        Picasso.get().load(tovarFromSQLObjFromTovariActivity.getFoto()).into(ivOpisTovar);
+        tvOpisCenaTovara.setText(tovarFromSQLObjFromTovariActivity.getCenaZaOdinKgStr());
+        tvOpisZnahenieVesaUpakovki.setText(tovarFromSQLObjFromTovariActivity.getKolihestvoV_Upakovke()+" "+
+                tovarFromSQLObjFromTovariActivity.getEdinica_izmerenia_upakovki());
+        tvOpisZnahenieRazmernogoRiada.setText(tovarFromSQLObjFromTovariActivity.getZnahrazmriada());
+        tvOpisanieZnahenieMestaVilova.setText(tovarFromSQLObjFromTovariActivity.getMestovilova());
+        tvOpisTypeFasovki.setText(tovarFromSQLObjFromTovariActivity.getSostoianieTovara());
+        tvOpisanieTovaraRaskaz.setText(tovarFromSQLObjFromTovariActivity.getRaskazotovare());
+        tvOpisTovaraCenaZaEdinicu.setText("("+ tovarFromSQLObjFromTovariActivity.getCenaFinalSoSkidkoyZaUpakStr()+" руб. за "+
+                tovarFromSQLObjFromTovariActivity.getTypeUpakovki()+")");
+        tvOpisVesUpakPodEditText.setText("("+ tovarFromSQLObjFromTovariActivity.getKolihestvoV_Upakovke()+" "+
+                tovarFromSQLObjFromTovariActivity.getEdinica_izmerenia_upakovki()+")");
+        tvOpisZaEdinicuIzmer.setText("за 1 "+ tovarFromSQLObjFromTovariActivity.getEdinica_izmerenia_upakovki());
+        if(tovarFromSQLObjFromTovariActivity.getZnahrazmriada().equals("")) tvOpisRazmerniyRiad.setVisibility(View.GONE);
+        if(tovarFromSQLObjFromTovariActivity.getMestovilova().equals("")) tvOpisanieMestoVilova.setVisibility(View.GONE);
     }
     void buySQL (final String tovar, final String kolvo, final String pokupatel){
         final String TAGmetod="buySQL ";
@@ -163,7 +164,7 @@ public class TovarOpisanie extends AppCompatActivity {
                 }
                 parameters.put("tovar", tovar);
                 parameters.put("kolvo", kolvo);
-//                parameters.put("kolvo", Integer.toString(kolvoInt+ceniObjFromTovariActivity.getKolihestvo()));
+//                parameters.put("kolvo", Integer.toString(kolvoInt+tovarFromSQLObjFromTovariActivity.getKolihestvo()));
                 parameters.put("pokupatel", pokupatel);
 
 

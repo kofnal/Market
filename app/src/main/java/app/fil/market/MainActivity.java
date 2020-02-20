@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.fil.market.Model.Utils;
 import app.fil.market.user.Pokupatel;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 //        intent=new Intent(this, SpisokTovarov.class);
-        intent=new Intent(this, KategoriiPod.class);
+        intent=new Intent(this, KategoriiPodActivity.class);
         tvMainLog=findViewById(R.id.tvMainLog);
         tvTemp=findViewById(R.id.tvTemp);
         btMain=findViewById(R.id.btMain);
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Fir user "+ currentUser.getUid());
         tvMainLog.append("\n updateUI \n");
 //        intent = new Intent(this, SpisokTovarov.class);
-        intent = new Intent(this, KategoriiPod.class);
+        intent = new Intent(this, KategoriiPodActivity.class);
         insertGoogleUIDIntoMySQL(currentUser.getUid());
     }
     void insertGoogleUIDIntoMySQL (final String google_id){

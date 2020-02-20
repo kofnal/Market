@@ -14,10 +14,10 @@ public class Pokupatel {
             private String adres_string=" ";
             private String koment_string=" ";
             private int korzina_kountInt=0;
-            UserInfoPrefs user;
+            PokupatelInfoPrefs user;
 
     public Pokupatel(Activity context) {
-        user = new UserInfoPrefs(context);
+        user = new PokupatelInfoPrefs(context);
         try {
             this.fioUser = user.getFioStr();
             this.email = user.getEmailStr();

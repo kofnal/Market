@@ -1,4 +1,4 @@
-package app.fil.market;
+package app.fil.market.tovari;
 
 
 import android.app.Activity;
@@ -20,8 +20,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import app.fil.market.MainActivity;
 import app.fil.market.Model.ILoadMore;
-import app.fil.market.ceni_i_skidki.Ceni;
+import app.fil.market.R;
+import app.fil.market.TovarOpisanieActivity;
 
 class LoadingViewHolder extends RecyclerView.ViewHolder {
 
@@ -64,14 +66,14 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     Activity activity;
     ImageButton ibOpisanieKorzina;
     TextView tvCountKorzinaObj;
-    ArrayList<Ceni> itemsObj;
+    ArrayList<TovarFromSQL> itemsObj;
     int visibleThreshold = 9;
     int lastVisibleItem;
     int totalItemCount;
     public static ArrayList<String> deletedItemsSQLId=new ArrayList<>();
 
 
-    public TovariSpisokAdapter(RecyclerView recyclerView, Activity activity, ArrayList<Ceni> items, ImageButton ibOpisanieKorzina, TextView tvCountKorzina) {
+    public TovariSpisokAdapter(RecyclerView recyclerView, Activity activity, ArrayList<TovarFromSQL> items, ImageButton ibOpisanieKorzina, TextView tvCountKorzina) {
         this.activity = activity;
         this.itemsObj = items;
         this.ibOpisanieKorzina = ibOpisanieKorzina;
@@ -126,7 +128,7 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            final Ceni item = itemsObj.get(position);
+            final TovarFromSQL item = itemsObj.get(position);
             final ItemViewHolder viewHolder = (ItemViewHolder) holder;
 
             viewHolder.tvRowTowarNaimenovanie.setText(item.getNaimenovanie());
@@ -143,7 +145,7 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
             viewHolder.tvRowTovarCenaSoSkidkoy.setText(item.getCenaFinalSoSkidkoyZaUpakStr());
             Picasso.get().load(item.getFoto()).into(viewHolder.ivRowTovarFoto);
 
-            final Intent intentTovarOpisanie = new Intent(viewHolder.conLayRowTovar.getContext(), TovarOpisanie.class);
+            final Intent intentTovarOpisanie = new Intent(viewHolder.conLayRowTovar.getContext(), TovarOpisanieActivity.class);
             viewHolder.conLayRowTovar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

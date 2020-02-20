@@ -9,7 +9,7 @@
     android:paddingTop="8dp"
     android:paddingRight="16dp"
     android:paddingBottom="8dp"
-    tools:context=".Zakaz_Activity">
+    tools:context=".zakazi.Zakaz_Activity">
 
     <TextView
         android:id="@+id/tvZakazOformlenie"

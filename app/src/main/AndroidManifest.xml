@@ -23,15 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TovariActivity" />
-        <activity android:name=".TovarOpisanie"
+        <activity android:name=".tovari.TovariActivity" />
+        <activity android:name=".TovarOpisanieActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".KategoriiPod" />
+        <activity android:name=".KategoriiPodActivity" />
         <activity
             android:name=".korzina.KorzinaActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".Zakaz_Activity"
+            android:name=".zakazi.Zakaz_Activity"
             android:windowSoftInputMode="stateHidden" />
     </application>
 

@@ -34,9 +34,9 @@ import java.util.Map;
 
 import app.fil.market.MainActivity;
 import app.fil.market.R;
-import app.fil.market.TovariSpisokAdapter;
-import app.fil.market.Utils;
-import app.fil.market.ceni_i_skidki.Ceni;
+import app.fil.market.tovari.TovariSpisokAdapter;
+import app.fil.market.Model.Utils;
+import app.fil.market.tovari.TovarFromSQL;
 
 class ItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -76,7 +76,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     Activity activity;
     TextView tvKorzinaKOplateSkolkoVsego, tvCountKorzinaObj;
     ImageButton ibKorzinaDelTovari;
-    ArrayList<Ceni> itemsObj;
+    ArrayList<TovarFromSQL> itemsObj;
     List<CheckBox> chBoxesList;
 
 
@@ -86,7 +86,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                           final ImageButton ibKorzinaDelTovari,
                           final CheckBox mainCheckBox,
                           final Button btKorzinaK_Pokupkam,
-                          final Activity activity, final ArrayList<Ceni> items) {
+                          final Activity activity, final ArrayList<TovarFromSQL> items) {
         this.activity = activity;
         this.itemsObj = items;
         this.tvKorzinaKOplateSkolkoVsego = tvKorzinaKOplateSkolkoVsego;
@@ -102,7 +102,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 for ( CheckBox chL: chBoxesList){
                     chL.setChecked(mainCheckBox.isChecked());
                 }
-                for (Ceni cnL: itemsObj){
+                for (TovarFromSQL cnL: itemsObj){
                     cnL.setVibranLi(mainCheckBox.isChecked());
                 }
             }
@@ -137,7 +137,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     btKorzinaK_Pokupkam.setVisibility(View.VISIBLE);
                     conLayKorzinaBottom.setVisibility(View.INVISIBLE);
                 }
-                for(Ceni itL: itemsObj){
+                for(TovarFromSQL itL: itemsObj){
                     itL.setVibranLi(true);
                 }
                 for (CheckBox chL: chBoxesList){
@@ -161,7 +161,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            final Ceni item = itemsObj.get(position);
+            final TovarFromSQL item = itemsObj.get(position);
             final ItemViewHolder viewHolder = (ItemViewHolder) holder;
 
             viewHolder.tvRowTowarNaimenovanie.setText(item.getNaimenovanie());
@@ -188,7 +188,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         mainCheckBox.setChecked(b);
                     }else{
                         boolean allTrue = true;
-                        for (Ceni cnL: itemsObj){
+                        for (TovarFromSQL cnL: itemsObj){
                             if(!cnL.getIsSelected()){
                                 allTrue=false;
                             }
@@ -309,17 +309,17 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             JSONObject jsonObject = new JSONObject(response);
                             String sum_korzina=jsonObject.getString("sum_korzina");
                             MainActivity.userStatic.setKorzinaCountStr(sum_korzina);
-                            System.out.println("Ceni delTovarIzKorzini = " + jsonObject.toString());
+                            System.out.println("TovarFromSQL delTovarIzKorzini = " + jsonObject.toString());
 
                         } catch (JSONException e) {
 
-                            System.out.println("\n Ceni ERR delTovarIzKorzini = " + response);
+                            System.out.println("\n TovarFromSQL ERR delTovarIzKorzini = " + response);
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("\n Ceni ERR delTovarIzKorzini - " + error.toString());
+                System.out.println("\n TovarFromSQL ERR delTovarIzKorzini - " + error.toString());
 
             }
         }) {
@@ -327,7 +327,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("idk", id_sql_tovara_v_korzine_pokupatelia);
-                System.out.println("Ceni delTovarIzKorzini  SQL parametrs = " + parameters);
+                System.out.println("TovarFromSQL delTovarIzKorzini  SQL parametrs = " + parameters);
 
                 return parameters;
             }

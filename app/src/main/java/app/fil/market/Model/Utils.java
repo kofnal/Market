@@ -1,4 +1,4 @@
-package app.fil.market;
+package app.fil.market.Model;
 
 public class Utils {
     public static final String BASE_IP = "http://34.65.239.89/googledrive/android/market/";

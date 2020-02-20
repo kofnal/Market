@@ -2,12 +2,8 @@ package app.fil.market.user;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.view.View;
-import android.widget.TextView;
 
-import app.fil.market.UserSession;
-
-public class UserInfoPrefs {
+public class PokupatelInfoPrefs {
     private static final String TAG = UserSession.class.getSimpleName();
     private static final String PREF_NAME_TAG = "userinfo";
     private static final String KEY_USERNAME_TAG = "fioUser";
@@ -27,13 +23,13 @@ public class UserInfoPrefs {
     SharedPreferences.Editor editor;
     Context ctx;
 
-    public UserInfoPrefs(Context ctx) {
+    public PokupatelInfoPrefs(Context ctx) {
         this.ctx = ctx;
         prefs = ctx.getSharedPreferences(PREF_NAME_TAG, ctx.MODE_PRIVATE);
         editor = prefs.edit();
     }
     public void setIdSQL(String idSQL){
-        System.out.println("UserInfoPrefs SETSQL ID = " +idSQL);
+        System.out.println("PokupatelInfoPrefs SETSQL ID = " +idSQL);
         editor.putString(KEY_ID_SQL_TAG, idSQL);
         editor.apply();
     }
@@ -122,7 +118,7 @@ public class UserInfoPrefs {
 //    public String getKorzinaCountStr(){return "2";}
     public String getKorzinaCountStr(){return prefs.getString(  KEY_KORZINA_COUNT_TAG , "");}
     public String getSqlId(){
-        System.out.println("UserInfoPrefs GetSQL ID = " + prefs.getString(KEY_ID_SQL_TAG, ""));
+        System.out.println("PokupatelInfoPrefs GetSQL ID = " + prefs.getString(KEY_ID_SQL_TAG, ""));
         return prefs.getString(KEY_ID_SQL_TAG, "");}
     public String getGoogId(){return prefs.getString(KEY_ID_GOOG_TAG, "");}
 

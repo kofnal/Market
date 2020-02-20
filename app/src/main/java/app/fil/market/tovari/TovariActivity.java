@@ -1,4 +1,4 @@
-package app.fil.market;
+package app.fil.market.tovari;
 
 
 import android.content.Intent;
@@ -28,12 +28,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.fil.market.MainActivity;
 import app.fil.market.Model.ILoadMore;
-import app.fil.market.ceni_i_skidki.Ceni;
+import app.fil.market.R;
+import app.fil.market.Model.Utils;
 import app.fil.market.korzina.KorzinaActivity;
 
 public class TovariActivity extends AppCompatActivity {
-    ArrayList<Ceni> ceniList = new ArrayList<>();
+    ArrayList<TovarFromSQL> tovarFromSQLList = new ArrayList<>();
     TovariSpisokAdapter adapter;
     RequestQueue requestQueue;
     ImageButton ibKorzina;
@@ -48,7 +50,7 @@ public class TovariActivity extends AppCompatActivity {
         tvCountKorzina = findViewById(R.id.tvKorzinaCount);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TovariSpisokAdapter(recyclerView, this, ceniList, ibKorzina, tvCountKorzina);
+        adapter = new TovariSpisokAdapter(recyclerView, this, tovarFromSQLList, ibKorzina, tvCountKorzina);
         recyclerView.setAdapter(adapter);
         MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -66,11 +68,11 @@ public class TovariActivity extends AppCompatActivity {
         adapter.setLoadMore(new ILoadMore() {
             @Override
             public void onLoadMore() {
-                ceniList.add(null);
-                adapter.notifyItemInserted(ceniList.size() - 1);
-                ceniList.remove(ceniList.size() - 1);
-                adapter.notifyItemRemoved(ceniList.size());
-                int index = ceniList.size();
+                tovarFromSQLList.add(null);
+                adapter.notifyItemInserted(tovarFromSQLList.size() - 1);
+                tovarFromSQLList.remove(tovarFromSQLList.size() - 1);
+                adapter.notifyItemRemoved(tovarFromSQLList.size());
+                int index = tovarFromSQLList.size();
                 int end = index + countLoadItems;
                 showSQL(index, end);
             }
@@ -104,7 +106,7 @@ public class TovariActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonRow = jsonArray.getJSONObject(i);
                                 System.out.println("TovarActvity Tovar row " + jsonRow);
-                                final Ceni ceniObjRowTovar = new Ceni(
+                                final TovarFromSQL tovarFromSQLObjRowTovar = new TovarFromSQL(
                                         jsonRow.getString("naimenovanie"),
                                         jsonRow.getString("foto"),
                                         jsonRow.getString("cena"),
@@ -122,12 +124,12 @@ public class TovariActivity extends AppCompatActivity {
                                         jsonRow.getString("edinica_izmerenia_upakovki"),
                                         jsonRow.getString("raskazotovare")
                                 );
-                                System.out.println("Ceni create foto = " + ceniObjRowTovar.getFoto());
-                                ceniList.add(ceniObjRowTovar);
+                                System.out.println("TovarFromSQL create foto = " + tovarFromSQLObjRowTovar.getFoto());
+                                tovarFromSQLList.add(tovarFromSQLObjRowTovar);
                             }
                             int razmerZaprosa = indexEnd - indexStart;
                             if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
-                                if(ceniList.size()>razmerZaprosa)
+                                if(tovarFromSQLList.size()>razmerZaprosa)
                                     Toast.makeText(TovariActivity.this, "Загружены все товары.", Toast.LENGTH_SHORT).show();
                                 System.out.println("if345dfs3 bolhe net");
                             } else {
