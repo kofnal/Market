@@ -15,7 +15,7 @@ public class MyDialog {
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.custom_progress_dialog);
+        dialog.setContentView(R.layout.dialog_70rub);
         txt_Message = dialog.findViewById(R.id.tvDialogBolee70rub);
         txt_Message.setText(message);
         //if you want to dimiss the dialog

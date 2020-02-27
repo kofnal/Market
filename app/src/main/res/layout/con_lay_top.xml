@@ -26,7 +26,7 @@
         app:srcCompat="@drawable/korzina" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/tvBokovI_Find"
         android:layout_width="0dp"
         android:layout_height="@dimen/shirina_poley_vvoda"
         android:layout_marginBottom="8dp"
@@ -41,16 +41,18 @@
         android:textSize="@dimen/shrift_melkiy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ibOpisanieKorzina"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toEndOf="@+id/ibMenu"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_weight="0.1"
         android:background="@color/herniy"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

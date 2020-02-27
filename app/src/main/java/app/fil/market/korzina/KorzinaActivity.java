@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import app.fil.market.KategoriiPodActivity;
+import app.fil.market.PodKategoriiActivity;
 import app.fil.market.MainActivity;
 import app.fil.market.MyDialog;
 import app.fil.market.R;
@@ -89,7 +89,7 @@ public class KorzinaActivity extends AppCompatActivity {
         btKorzinaK_Pokupkam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), KategoriiPodActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PodKategoriiActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -101,7 +101,7 @@ public class KorzinaActivity extends AppCompatActivity {
                 System.out.println("btKupit " + korzinaAdapter.itemsObj.size());
                 if (korzinaAdapter.totalK_OplateDoubl >= 70.0) {
 
-                    intent.putExtra("ceniList", korzinaAdapter.itemsObj);
+                    intent.putExtra(Utils.tovarsFromSQLList, korzinaAdapter.itemsObj);
 //                    System.out.println("KorzActiv arrlist size = " + Integer.toString(arrListIdTovarovK_ZakazuSQL.size()));
 //                    System.out.println("KorzActiv put Bundle TovarFromSQL Obj ID==" + listCeniObj.get(0).getId_sql_tovara_v_baze());
                     startActivityForResult(intent, Utils.intentRequestCODKorzinaToZakazPosleOtpravkiZakaza);
@@ -149,7 +149,7 @@ public class KorzinaActivity extends AppCompatActivity {
                                     mainCheckBox.setVisibility(View.VISIBLE);
                                 }
                                 JSONObject jsonRow = jsArrTovarV_Korzine.getJSONObject(i);
-                                System.out.println("create objekt Cen in korzina");
+                                System.out.println("create objekt Cen in korzina "+jsonRow);
                                 final TovarFromSQL tovarFromSQLRowObj = new TovarFromSQL(
                                         jsonRow.getString("naimenovanie"),
                                         jsonRow.getString("foto"),

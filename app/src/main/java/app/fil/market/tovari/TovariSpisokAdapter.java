@@ -24,6 +24,7 @@ import app.fil.market.MainActivity;
 import app.fil.market.Model.ILoadMore;
 import app.fil.market.R;
 import app.fil.market.TovarOpisanieActivity;
+import app.fil.market.ui.tovari.TovariFragment;
 
 class LoadingViewHolder extends RecyclerView.ViewHolder {
 
@@ -66,18 +67,18 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     Activity activity;
     ImageButton ibOpisanieKorzina;
     TextView tvCountKorzinaObj;
-    ArrayList<TovarFromSQL> itemsObj;
     int visibleThreshold = 9;
     int lastVisibleItem;
     int totalItemCount;
     public static ArrayList<String> deletedItemsSQLId=new ArrayList<>();
 
 
-    public TovariSpisokAdapter(RecyclerView recyclerView, Activity activity, ArrayList<TovarFromSQL> items, ImageButton ibOpisanieKorzina, TextView tvCountKorzina) {
+    public TovariSpisokAdapter(RecyclerView recyclerView, Activity activity,
+                               ImageButton ibOpisanieKorzina, TextView tvCountKorzina) {
         this.activity = activity;
-        this.itemsObj = items;
         this.ibOpisanieKorzina = ibOpisanieKorzina;
         this.tvCountKorzinaObj = tvCountKorzina;
+        System.out.println("TovariSpisokAdapter Konstruktor");
 
 
         final LinearLayoutManager linearLayoutManager
@@ -93,20 +94,19 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
 
                     if (loadMore != null) {
                         loadMore.onLoadMore();
-
                         System.out.println("Scrol listener last==loadMore.onLoadMore();");
                     }
                     isLoading = true;
-
                     System.out.println("Scrol listener last== isLoading = true");
                 }
             }
         });
+        System.out.println("TovariAdapter constructor Array size="+TovariFragment.tovarFromSQLList.size());
     }
 
     @Override
     public int getItemViewType(int position) {
-        return itemsObj.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return TovariFragment.tovarFromSQLList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     public void setLoadMore(ILoadMore loadMore) {
@@ -115,6 +115,7 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        System.out.println("onCreateViewHolder");
         if (viewType == VIEW_TYPE_ITEM) {
             View view = LayoutInflater.from(activity).inflate(R.layout.row_tovar, parent, false);
             return new ItemViewHolder(view);
@@ -127,11 +128,14 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        System.out.println("Tovari Adapter onBindViewHolder ="+position);
         if (holder instanceof ItemViewHolder) {
-            final TovarFromSQL item = itemsObj.get(position);
+            final TovarFromSQL item = TovariFragment.tovarFromSQLList.get(position);
             final ItemViewHolder viewHolder = (ItemViewHolder) holder;
 
-            viewHolder.tvRowTowarNaimenovanie.setText(item.getNaimenovanie());
+            viewHolder.tvRowTowarNaimenovanie.setText(
+//                    Integer.toString(position+1)+" "+
+                            item.getNaimenovanie());
             if(item.getSkidka()>0){
                 viewHolder.tvRowTovarCenaBezSkidki.setText(item.getCenaStr());
                 viewHolder.tvRowTovarCenaBezSkidki.setPaintFlags(viewHolder.tvRowTovarCenaBezSkidki.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -184,6 +188,7 @@ MainActivity.userStatic.setKorzinaCountStr(Integer.toString(MainActivity.userSta
             LoadingViewHolder loadingHolder = (LoadingViewHolder) holder;
             loadingHolder.progressBar.setIndeterminate(true);
         }
+        System.out.println("TovariAdapter onBindViewHolder Array size="+TovariFragment.tovarFromSQLList.size());
     }
 
 
@@ -193,7 +198,7 @@ MainActivity.userStatic.setKorzinaCountStr(Integer.toString(MainActivity.userSta
 
     @Override
     public int getItemCount() {
-        return itemsObj.size();
+        return TovariFragment.tovarFromSQLList.size();
     }
 
     @Override

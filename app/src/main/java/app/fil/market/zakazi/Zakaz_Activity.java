@@ -54,7 +54,7 @@ public class Zakaz_Activity extends AppCompatActivity {
         setTextAllEditText();
         final Bundle bundle = getIntent().getExtras();
 //        System.out.println("ZakazActiv arrlist size = "+Integer.toString(bundle.getStringArrayList("arrlist").size()));
-        ArrayList<TovarFromSQL> listTovarFromSQLFromKorzinaActivity =  bundle.getParcelableArrayList("tovarFromSQLList");
+        ArrayList<TovarFromSQL> listTovarFromSQLFromKorzinaActivity =  bundle.getParcelableArrayList(Utils.tovarsFromSQLList);
         System.out.println("ZakazActiv listTovarFromSQLFromKorzinaActivity size = "+ Integer.toString(listTovarFromSQLFromKorzinaActivity.size())+
         " , "+ listTovarFromSQLFromKorzinaActivity.get(0).getId_sql_tovara_v_baze()+", "+ listTovarFromSQLFromKorzinaActivity.get(0).getCenaZaUpak());
         for(int i = 0; i< listTovarFromSQLFromKorzinaActivity.size(); i++){

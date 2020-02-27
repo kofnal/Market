@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
-//        intent=new Intent(this, SpisokTovarov.class);
-        intent=new Intent(this, KategoriiPodActivity.class);
         tvMainLog=findViewById(R.id.tvMainLog);
         tvTemp=findViewById(R.id.tvTemp);
         btMain=findViewById(R.id.btMain);
@@ -106,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser currentUser) {
         System.out.println("Fir user "+ currentUser.getUid());
         tvMainLog.append("\n updateUI \n");
-//        intent = new Intent(this, SpisokTovarov.class);
-        intent = new Intent(this, KategoriiPodActivity.class);
+        intent = new Intent(this, BokovoeMenu.class);
+//        intent=new Intent(this, PodKategoriiActivity.class);
         insertGoogleUIDIntoMySQL(currentUser.getUid());
     }
     void insertGoogleUIDIntoMySQL (final String google_id){
@@ -128,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                             userStatic.setId_sql(id_sql);
                             userStatic.setId_goog(mAuth.getUid());
                             startActivity(intent);
-                            finish();
+                            //afinish();
                         }
                         catch (JSONException e) {
 

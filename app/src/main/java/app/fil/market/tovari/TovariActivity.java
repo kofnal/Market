@@ -33,14 +33,13 @@ import app.fil.market.Model.ILoadMore;
 import app.fil.market.R;
 import app.fil.market.Model.Utils;
 import app.fil.market.korzina.KorzinaActivity;
+import app.fil.market.ui.tovari.TovariFragment;
 
 public class TovariActivity extends AppCompatActivity {
-    ArrayList<TovarFromSQL> tovarFromSQLList = new ArrayList<>();
     TovariSpisokAdapter adapter;
-    RequestQueue requestQueue;
     ImageButton ibKorzina;
     TextView tvCountKorzina;
-    final int countLoadItems = 10;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +47,11 @@ public class TovariActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tovari);
         ibKorzina = findViewById(R.id.ibOpisanieKorzina);
         tvCountKorzina = findViewById(R.id.tvKorzinaCount);
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = findViewById(R.id.rvTovariFragm);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TovariSpisokAdapter(recyclerView, this, tovarFromSQLList, ibKorzina, tvCountKorzina);
+        adapter = new TovariSpisokAdapter(recyclerView, this,  ibKorzina, tvCountKorzina);
         recyclerView.setAdapter(adapter);
         MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         final Intent intentKorzina = new Intent(this, KorzinaActivity.class);
 
@@ -64,16 +62,16 @@ public class TovariActivity extends AppCompatActivity {
                 finish();
             }
         });
-        showSQL(0, countLoadItems);
+        showSQL(0, TovariFragment.countLoadItems);
         adapter.setLoadMore(new ILoadMore() {
             @Override
             public void onLoadMore() {
-                tovarFromSQLList.add(null);
-                adapter.notifyItemInserted(tovarFromSQLList.size() - 1);
-                tovarFromSQLList.remove(tovarFromSQLList.size() - 1);
-                adapter.notifyItemRemoved(tovarFromSQLList.size());
-                int index = tovarFromSQLList.size();
-                int end = index + countLoadItems;
+                TovariFragment.tovarFromSQLList.add(null);
+                adapter.notifyItemInserted(TovariFragment.tovarFromSQLList.size() - 1);
+                TovariFragment.tovarFromSQLList.remove(TovariFragment.tovarFromSQLList.size() - 1);
+                adapter.notifyItemRemoved(TovariFragment.tovarFromSQLList.size());
+                int index = TovariFragment.tovarFromSQLList.size();
+                int end = index + TovariFragment.countLoadItems;
                 showSQL(index, end);
             }
         });
@@ -125,11 +123,11 @@ public class TovariActivity extends AppCompatActivity {
                                         jsonRow.getString("raskazotovare")
                                 );
                                 System.out.println("TovarFromSQL create foto = " + tovarFromSQLObjRowTovar.getFoto());
-                                tovarFromSQLList.add(tovarFromSQLObjRowTovar);
+                                TovariFragment.tovarFromSQLList.add(tovarFromSQLObjRowTovar);
                             }
                             int razmerZaprosa = indexEnd - indexStart;
                             if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
-                                if(tovarFromSQLList.size()>razmerZaprosa)
+                                if(TovariFragment.tovarFromSQLList.size()>razmerZaprosa)
                                     Toast.makeText(TovariActivity.this, "Загружены все товары.", Toast.LENGTH_SHORT).show();
                                 System.out.println("if345dfs3 bolhe net");
                             } else {
@@ -156,12 +154,12 @@ public class TovariActivity extends AppCompatActivity {
                 parameters.put("vetka", id);
                 parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
                 parameters.put("indexstart", Integer.toString(indexStart));
-                parameters.put("count", Integer.toString(countLoadItems));
+                parameters.put("count", Integer.toString(TovariFragment.countLoadItems));
                 System.out.println("Otpravka na server iz " + id + ", tovar id  " + parameters.toString());
                 return parameters;
             }
         };
-        requestQueue.add(stringRequest);
+        MainActivity.requestQueue.add(stringRequest);
     }
     @Override
     protected void onResume() {

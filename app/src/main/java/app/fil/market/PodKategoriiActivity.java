@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,11 +32,11 @@ import app.fil.market.Model.Utils;
 import app.fil.market.korzina.KorzinaActivity;
 import app.fil.market.tovari.TovariActivity;
 
-public class KategoriiPodActivity extends AppCompatActivity {
-    ScrollView scrollView;
+public class PodKategoriiActivity extends AppCompatActivity {
+
     RecyclerView recyclerView;
     RequestQueue requestQueue;
-    ImageButton ibKorzina;
+    ImageButton ibKorzina, ibMenu;
     String korzCount="";
     TextView tvCountKorzina;
 
@@ -47,16 +46,22 @@ public class KategoriiPodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_kategorii_pod);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         tvCountKorzina=findViewById(R.id.tvKorzinaCount);
-//        TovariActivity.setStartCountKorzina(tvCountKorzina);
-        scrollView= findViewById(R.id.linerLayTovari);
         ibKorzina =findViewById(R.id.ibOpisanieKorzina);
-        recyclerView =findViewById(R.id.recyclerView);
+        recyclerView =findViewById(R.id.rvTovariFragm);
+        ibMenu =findViewById(R.id.ibMenu);
         MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
         final Intent intentKorzinaActivity=new Intent(this, KorzinaActivity.class);
         ibKorzina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(intentKorzinaActivity);
+            }
+        });
+        ibMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent bokovoeIntent = new Intent(getApplicationContext(), BokovoeMenu.class);
+                startActivity( bokovoeIntent);
             }
         });
         //MainActivity.userStatic.setKorzinaCountStr(tvCountKorzina);
@@ -106,12 +111,6 @@ public class KategoriiPodActivity extends AppCompatActivity {
                                 });
                                 linLayout.addView(item);
                             }
-                            scrollView.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                   // scrollView.fullScroll(View.FOCUS_DOWN);
-                                }
-                            });
                         } catch (JSONException e) {
                             System.out.println("\n ERR"+response.toString());
                         }
@@ -158,7 +157,7 @@ public class KategoriiPodActivity extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
-        System.out.println("KategoriiPodActivity onDestroy");
+        System.out.println("PodKategoriiActivity onDestroy");
         MainActivity.userStatic.wreateDataToPrefs();
         super.onDestroy();
     }

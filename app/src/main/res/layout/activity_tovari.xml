@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KategoriiPodActivity">
+    tools:context=".PodKategoriiActivity">
 
     <include
         android:id="@+id/conLayXmlTop"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="@+id/layTop" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rvTovariFragm"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/herniy"

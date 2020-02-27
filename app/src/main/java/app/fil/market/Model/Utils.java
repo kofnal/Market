@@ -30,6 +30,7 @@ public class Utils {
     public static final String insertAnonimUserWithGoogleUID = BASE_IP + "insertAnonimUserWithGoogleUID.php";
 
 
+    public static final String tovarsFromSQLList = "tovarsFromSQLList";
     public static final String bndlStaticidTovaraFromSql = "idTovaraFromSql";
     public static String bndlStaticCountTovaraV_Korzine = "countTovaraV_Korzine";
 

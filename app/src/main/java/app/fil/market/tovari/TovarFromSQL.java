@@ -56,9 +56,12 @@ public class TovarFromSQL implements Parcelable {
         this.id_sql_tovara_v_baze = id_sql_tovara_v_bazeStr;
         if (!cenaZaUpak.equals("null"))
             this.cenaZaUpak = Double.parseDouble(cenaStr);
+//            this.cenaZaUpak = Double.parseDouble("1.0");
         if (!skidka.equals("null"))
+//            this.skidka = Double.parseDouble("1.0");
             this.skidka = Double.parseDouble(skidkaStr);
         if (!cenaFinalSoSkidkoZaUpak.equals("null"))
+//            this.cenaFinalSoSkidkoZaUpak = Double.parseDouble("1.0");
             this.cenaFinalSoSkidkoZaUpak = Double.parseDouble(cenaSoSkidkoyZaUpakStr);
         if (cenaZaUpak > 0.0) {
             if (cenaFinalSoSkidkoZaUpak == 0.0 & skidka > 0.0) cenaFinalSoSkidkoZaUpak = cenaZaUpak *(1-skidka/100);

@@ -129,8 +129,8 @@ public void wreateDataToPrefs(){
 
     public void updateTextViewTotalKorzinaCount(TextView tv){
         if (korzina_kountInt>0){
-            tv.setVisibility(View.VISIBLE);
-            tv.setText(Integer.toString(korzina_kountInt));
+//            tv.setVisibility(View.VISIBLE);
+  //          tv.setText(Integer.toString(korzina_kountInt));
             System.out.println("setKorzinaCount "+"updateTextViewTotalKorzinaCount="+korzina_kountInt);
         } else{
             tv.setVisibility(View.GONE);
