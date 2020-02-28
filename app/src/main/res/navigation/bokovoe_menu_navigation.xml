@@ -15,23 +15,4 @@
         android:name="app.fil.market.ui.tovari.TovariFragment"
         tools:layout="@layout/fragment_tovari" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="app.fil.market.ui.slideshow.SlideshowFragment"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_tools"
-        android:name="app.fil.market.ui.tools.ToolsFragment"
-        tools:layout="@layout/fragment_tools" />
-
-    <fragment
-        android:id="@+id/nav_share"
-        android:name="app.fil.market.ui.share.ShareFragment"
-        tools:layout="@layout/fragment_share" />
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="app.fil.market.ui.send.SendFragment"
-        tools:layout="@layout/fragment_send" />
 </navigation>

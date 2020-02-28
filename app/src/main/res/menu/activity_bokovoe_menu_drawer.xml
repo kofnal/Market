@@ -2,18 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_store_white_24dp"
             android:title="@string/menu_home" />
     </group>
-
     <item android:title="@string/kontakti">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_telefon"
                 android:icon="@drawable/ic_call_white_24dp"
                 android:title="@string/menu_share" />
             <item
@@ -22,5 +20,4 @@
                 android:title="@string/chetverg_mail" />
         </menu>
     </item>
-
 </menu>
