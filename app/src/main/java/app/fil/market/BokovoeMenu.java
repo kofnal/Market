@@ -74,8 +74,8 @@ public class BokovoeMenu extends AppCompatActivity   {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto",getResources().getString(R.string.chetverg_mail), null));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
+//                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+//                emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
                 return true;
             }

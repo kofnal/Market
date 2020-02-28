@@ -175,6 +175,7 @@
         android:id="@+id/rvKorzina"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/conLayKorzinaBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
