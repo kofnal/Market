@@ -32,13 +32,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import app.fil.market.PodKategoriiActivity;
+import app.fil.market.BokovoeMenu;
 import app.fil.market.MainActivity;
 import app.fil.market.MyDialog;
 import app.fil.market.R;
 import app.fil.market.Model.Utils;
+import app.fil.market.ui.tovari.TovariFragment;
 import app.fil.market.zakazi.Zakaz_Activity;
-import app.fil.market.tovari.TovarFromSQL;
+import app.fil.market.ui.tovari.TovarFromSQL;
 
 public class KorzinaActivity extends AppCompatActivity {
     RequestQueue requestQueue;
@@ -53,8 +54,26 @@ public class KorzinaActivity extends AppCompatActivity {
     JSONArray jsArrTempToSQL;
     RecyclerView rvKorzina;
     KorzinaAdapter korzinaAdapter;
-    ArrayList<TovarFromSQL> tovariList = new ArrayList<>();
+    public static ArrayList<TovarFromSQL> tovariList2 = new ArrayList<>();
+    public static ArrayList<TovarFromSQL> tovariListBezOtpravlennogoZakaza = new ArrayList<>();
     int countShowToastOt70rub=0;
+
+    public static void obnovitDannieKorzini() {
+//        MainActivity.pokupatelStatic.setKorzinaCountStr(0);
+        KorzinaActivity.tovariList2=KorzinaActivity.tovariListBezOtpravlennogoZakaza;
+        for(int i = 0; i<TovariFragment.listTovarovSQLfromAdapterRV.size(); i++){
+
+            for(int y = 0; y<KorzinaActivity.tovariList2.size(); y++){
+               if( TovariFragment.listTovarovSQLfromAdapterRV.get(i).getId_sql_tovara_v_baze()==
+               KorzinaActivity.tovariList2.get(y).getId_sql_tovara_v_baze()){
+                   TovariFragment.listTovarovSQLfromAdapterRV.get(i).setEstLi_V_KorzineObj(true);
+               } else{
+                   TovariFragment.listTovarovSQLfromAdapterRV.get(i).setEstLi_V_KorzineObj(false);
+               }
+            }
+        }
+        TovariFragment.adapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +87,7 @@ public class KorzinaActivity extends AppCompatActivity {
         rvKorzina = findViewById(R.id.rvKorzina);
         tvKorzinaKOplateSkolkoVsego = findViewById(R.id.tvKorzinaKOplateSkolkoVsego);
         conLayKorzinaBottom = findViewById(R.id.conLayKorzinaBottom);
+        tovariList2.clear();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         jsObjTempToSQL = new JSONObject();
         jsArrTempToSQL = new JSONArray();
@@ -79,8 +99,7 @@ public class KorzinaActivity extends AppCompatActivity {
                 ibKorzinaDelTovari,
                 mainCheckBox,
                 btKorzinaK_Pokupkam,
-                this,
-                tovariList);
+                this);
         rvKorzina.setAdapter(korzinaAdapter);
 
 
@@ -89,22 +108,22 @@ public class KorzinaActivity extends AppCompatActivity {
         btKorzinaK_Pokupkam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PodKategoriiActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BokovoeMenu.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
-        final Intent intent = new Intent(this, Zakaz_Activity.class);
+        final Intent intentZakaz = new Intent(this, Zakaz_Activity.class);
         btKupit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("btKupit " + korzinaAdapter.itemsObj.size());
+                System.out.println("btKupit " + KorzinaActivity.tovariList2.size());
                 if (korzinaAdapter.totalK_OplateDoubl >= 70.0) {
 
-                    intent.putExtra(Utils.tovarsFromSQLList, korzinaAdapter.itemsObj);
 //                    System.out.println("KorzActiv arrlist size = " + Integer.toString(arrListIdTovarovK_ZakazuSQL.size()));
 //                    System.out.println("KorzActiv put Bundle TovarFromSQL Obj ID==" + listCeniObj.get(0).getId_sql_tovara_v_baze());
-                    startActivityForResult(intent, Utils.intentRequestCODKorzinaToZakazPosleOtpravkiZakaza);
+                    startActivity(intentZakaz);
+                    finish();
 
                 } else {
 
@@ -137,6 +156,7 @@ public class KorzinaActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            tovariList2.clear();
                             JSONObject jsonObject = new JSONObject(response);
                             System.out.println("jsObj Korzina " + jsonObject.toString());
                             JSONArray jsArrTovarV_Korzine = jsonObject.getJSONArray("korzina");
@@ -162,7 +182,7 @@ public class KorzinaActivity extends AppCompatActivity {
                                         jsonRow.getString("kolihestvo"),
                                         jsonRow.getString("kolvovupakovke")
                                 );
-                                tovariList.add(i, tovarFromSQLRowObj);
+                                tovariList2.add(i, tovarFromSQLRowObj);
                             }
                             korzinaAdapter.notifyDataSetChanged();
 
@@ -182,7 +202,7 @@ public class KorzinaActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
-                parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
+                parameters.put("pokupatel", MainActivity.pokupatelStatic.getSqlId());
                 System.out.println("Korzina showSQL send param " + parameters.toString());
                 return parameters;
             }

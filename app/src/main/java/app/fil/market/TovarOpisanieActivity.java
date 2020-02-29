@@ -27,8 +27,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import app.fil.market.Model.Utils;
-import app.fil.market.tovari.TovarFromSQL;
 import app.fil.market.korzina.KorzinaActivity;
+import app.fil.market.ui.tovari.TovariSpisokAdapter;
+import app.fil.market.ui.tovari.TovariFragment;
 
 public class TovarOpisanieActivity extends AppCompatActivity {
     String TAGclass="TovarOpisanieActivity ";
@@ -41,7 +42,8 @@ public class TovarOpisanieActivity extends AppCompatActivity {
             tvOpisanieZnahenieMestaVilova, tvOpisTypeFasovki, tvOpisanieTovaraRaskaz, tvOpisTovaraCenaZaEdinicu, tvOpisVesUpakPodEditText,
             tvOpisRazmerniyRiad, tvOpisanieMestoVilova;
     ImageView ivOpisTovar;
-    TovarFromSQL tovarFromSQLObjFromTovariActivity;
+//    TovarFromSQL tovarFromSQLObjFromTovariActivity;
+//    int indexTovaraDliOpisania;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +72,10 @@ public class TovarOpisanieActivity extends AppCompatActivity {
         tvOpisRazmerniyRiad=findViewById(R.id.tvOpisRazmerniyRiad);
         tvOpisanieMestoVilova=findViewById(R.id.tvOpisanieMestoVilova);
         TextView tvOpisPlusTovar= findViewById(R.id.tvOpisPlusTovar);
-        MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvKorzinaCount);
+        MainActivity.pokupatelStatic.updateTextViewTotalKorzinaCount();
 
-         tovarFromSQLObjFromTovariActivity = getIntent().getParcelableExtra("ceniObj");
-        System.out.println("Tovari Opisanie Activity TovarFromSQL obj = "+ tovarFromSQLObjFromTovariActivity.getNaimenovanie());
+//         indexTovaraDliOpisania = getIntent().getExtras().getInt("ceniObj");
+//        System.out.println("Tovari Opisanie Activity TovarFromSQL obj = "+ tovarFromSQLObjFromTovariActivity.getNaimenovanie());
 //        TovariActivity.setStartCountKorzina(tvKorzinaCount);
         tvopisMinusTovar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,8 +94,8 @@ public class TovarOpisanieActivity extends AppCompatActivity {
         tvOpisVKorzinu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buySQL(tovarFromSQLObjFromTovariActivity.getId_sql_tovara_v_baze(), etKolvo.getText().toString(),
-                        MainActivity.userStatic.getSqlId());
+                buySQL(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getId_sql_tovara_v_baze(), etKolvo.getText().toString(),
+                        MainActivity.pokupatelStatic.getSqlId());
 
             }
         });
@@ -109,22 +111,22 @@ public class TovarOpisanieActivity extends AppCompatActivity {
                 startActivity(intentKorzina);
             }
         });
-        tvNazvanie.setText(tovarFromSQLObjFromTovariActivity.getNaimenovanie());
-        Picasso.get().load(tovarFromSQLObjFromTovariActivity.getFoto()).into(ivOpisTovar);
-        tvOpisCenaTovara.setText(tovarFromSQLObjFromTovariActivity.getCenaZaOdinKgStr());
-        tvOpisZnahenieVesaUpakovki.setText(tovarFromSQLObjFromTovariActivity.getKolihestvoV_Upakovke()+" "+
-                tovarFromSQLObjFromTovariActivity.getEdinica_izmerenia_upakovki());
-        tvOpisZnahenieRazmernogoRiada.setText(tovarFromSQLObjFromTovariActivity.getZnahrazmriada());
-        tvOpisanieZnahenieMestaVilova.setText(tovarFromSQLObjFromTovariActivity.getMestovilova());
-        tvOpisTypeFasovki.setText(tovarFromSQLObjFromTovariActivity.getSostoianieTovara());
-        tvOpisanieTovaraRaskaz.setText(tovarFromSQLObjFromTovariActivity.getRaskazotovare());
-        tvOpisTovaraCenaZaEdinicu.setText("("+ tovarFromSQLObjFromTovariActivity.getCenaFinalSoSkidkoyZaUpakStr()+" руб. за "+
-                tovarFromSQLObjFromTovariActivity.getTypeUpakovki()+")");
-        tvOpisVesUpakPodEditText.setText("("+ tovarFromSQLObjFromTovariActivity.getKolihestvoV_Upakovke()+" "+
-                tovarFromSQLObjFromTovariActivity.getEdinica_izmerenia_upakovki()+")");
-        tvOpisZaEdinicuIzmer.setText("за 1 "+ tovarFromSQLObjFromTovariActivity.getEdinica_izmerenia_upakovki());
-        if(tovarFromSQLObjFromTovariActivity.getZnahrazmriada().equals("")) tvOpisRazmerniyRiad.setVisibility(View.GONE);
-        if(tovarFromSQLObjFromTovariActivity.getMestovilova().equals("")) tvOpisanieMestoVilova.setVisibility(View.GONE);
+        tvNazvanie.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getNaimenovanie());
+        Picasso.get().load(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getFoto()).into(ivOpisTovar);
+        tvOpisCenaTovara.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getCenaZaOdinKgStr());
+        tvOpisZnahenieVesaUpakovki.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getKolihestvoV_Upakovke()+" "+
+                TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getEdinica_izmerenia_upakovki());
+        tvOpisZnahenieRazmernogoRiada.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getZnahrazmriada());
+        tvOpisanieZnahenieMestaVilova.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getMestovilova());
+        tvOpisTypeFasovki.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getSostoianieTovara());
+        tvOpisanieTovaraRaskaz.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getRaskazotovare());
+        tvOpisTovaraCenaZaEdinicu.setText("("+ TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getCenaFinalSoSkidkoyZaUpakStr()+" руб. за "+
+                TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getTypeUpakovki()+")");
+        tvOpisVesUpakPodEditText.setText("("+ TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getKolihestvoV_Upakovke()+" "+
+                TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getEdinica_izmerenia_upakovki()+")");
+        tvOpisZaEdinicuIzmer.setText("за 1 "+ TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getEdinica_izmerenia_upakovki());
+        if(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getZnahrazmriada().equals("")) tvOpisRazmerniyRiad.setVisibility(View.GONE);
+        if(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getMestovilova().equals("")) tvOpisanieMestoVilova.setVisibility(View.GONE);
     }
     void buySQL (final String tovar, final String kolvo, final String pokupatel){
         final String TAGmetod="buySQL ";
@@ -137,7 +139,7 @@ public class TovarOpisanieActivity extends AppCompatActivity {
                             JSONObject jsTotalKorzinaPos=jsonObject.getJSONObject("count");
                             String pos_korzina = jsTotalKorzinaPos.getString("pos_korzina");
                             System.out.println("Total pos korzina = "+pos_korzina+", js="+response);
-                            MainActivity.userStatic.setKorzinaCountStr(pos_korzina, tvKorzinaCount);
+                            MainActivity.pokupatelStatic.setKorzinaCountStr(pos_korzina);
 
                             tvOpisanieOformit.setVisibility(View.VISIBLE);
                         } catch (JSONException e) {
@@ -176,7 +178,7 @@ public class TovarOpisanieActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvKorzinaCount);
+        MainActivity.pokupatelStatic.updateTextViewTotalKorzinaCount();
         super.onActivityResult(requestCode, resultCode, data);
     }
 

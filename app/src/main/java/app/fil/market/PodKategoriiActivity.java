@@ -49,7 +49,7 @@ public class PodKategoriiActivity extends AppCompatActivity {
         ibKorzina =findViewById(R.id.ibOpisanieKorzina);
         recyclerView =findViewById(R.id.rvTovariFragm);
         ibMenu =findViewById(R.id.ibMenu);
-        MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
+        MainActivity.pokupatelStatic.updateTextViewTotalKorzinaCount();
         final Intent intentKorzinaActivity=new Intent(this, KorzinaActivity.class);
         ibKorzina.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,7 @@ public class PodKategoriiActivity extends AppCompatActivity {
                 startActivity( bokovoeIntent);
             }
         });
-        //MainActivity.userStatic.setKorzinaCountStr(tvCountKorzina);
+        //MainActivity.pokupatelStatic.saveKorzinaCountStr(tvCountKorzina);
         showSQL();
     }
     void showSQL (){
@@ -82,7 +82,7 @@ public class PodKategoriiActivity extends AppCompatActivity {
                             System.out.println(jsonArrayKorzina);
                             System.out.println(korzCount);
                             tvCountKorzina.setText(korzCount);
-                            MainActivity.userStatic.setKorzinaCountStr(korzCount, tvCountKorzina);
+                            MainActivity.pokupatelStatic.setKorzinaCountStr(korzCount);
                             if(korzCount.equals("null")|korzCount.equals("0")){
                                 tvCountKorzina.setVisibility(View.INVISIBLE);
                             }
@@ -126,7 +126,7 @@ public class PodKategoriiActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> parameters = new HashMap<String,String>();
                     parameters.put("id_vetka", "1");
-                    parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
+                    parameters.put("pokupatel", MainActivity.pokupatelStatic.getSqlId());
                     System.out.println("Send param from PodkatClass "+parameters);
                 return parameters;
             }
@@ -142,15 +142,15 @@ public class PodKategoriiActivity extends AppCompatActivity {
     }
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
-//        //MainActivity.userStatic.setKorzinaCountStr(tvCountKorzina);
+//MainActivity.pokupatelStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
+//        //MainActivity.pokupatelStatic.saveKorzinaCountStr(tvCountKorzina);
 //        super.onActivityResult(requestCode, resultCode, data);
 //    }
 
     @Override
     protected void onResume() {
         if(tvCountKorzina!=null){
-            MainActivity.userStatic.updateTextViewTotalKorzinaCount(tvCountKorzina);
+            MainActivity.pokupatelStatic.updateTextViewTotalKorzinaCount();
         }
         super.onResume();
 
@@ -158,7 +158,7 @@ public class PodKategoriiActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         System.out.println("PodKategoriiActivity onDestroy");
-        MainActivity.userStatic.wreateDataToPrefs();
+        MainActivity.pokupatelStatic.wreateDataToPrefs();
         super.onDestroy();
     }
 }

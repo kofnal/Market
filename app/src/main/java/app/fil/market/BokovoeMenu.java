@@ -13,6 +13,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import app.fil.market.korzina.KorzinaActivity;
 
@@ -28,29 +31,27 @@ public class BokovoeMenu extends AppCompatActivity   {
 
     private AppBarConfiguration mAppBarConfiguration;
     NavController navController;
+    public static TextView tvKorzinaCount;
+    ImageView ivKorzina;
+    public static RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bokovoe_menu_all_includ);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        ImageView ivKorzina = findViewById(R.id.ivKorzina);
+        ivKorzina = findViewById(R.id.ivKorzina);
+        tvKorzinaCount = findViewById(R.id.tvKorzinaCount);
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ivKorzina.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentKorzina = new Intent(getApplicationContext(), KorzinaActivity.class);
-                startActivity(intentKorzina);
-            }
-        });
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
 //        // Passing each menu ID as a set of Ids because each
 //        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home,  R.id.nav_tovari)
+                R.id.nav_home,  R.id.nav_tovari, R.id.nav_opisanie_tovara)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -77,6 +78,7 @@ public class BokovoeMenu extends AppCompatActivity   {
 //                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
 //                emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
                 startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
@@ -90,5 +92,26 @@ public class BokovoeMenu extends AppCompatActivity   {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+    @Override
+    protected void onPause() {
+        System.out.println("BokovoeMenu onPause");
+        MainActivity.pokupatelStatic.wreateDataToPrefs();
+        super.onPause();
+    }
+public void ibKorzinaClick(View v ){
+//        System.out.println("ibKorzinaClick");
+        if(ivKorzina!=null){
+            Intent intentKorzina = new Intent(getApplicationContext(), KorzinaActivity.class);
+            startActivity(intentKorzina);
+        }
 
+}
+    @Override
+    protected void onResume() {
+        if(tvKorzinaCount!=null){
+//            tvKorzinaCount.setText(Integer.toString(MainActivity.pokupatelStatic.getKorzina_kountInt()));
+            System.out.println("BokovoeMenu onResume");
+        }
+        super.onResume();
+    }
 }

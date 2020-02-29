@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,18 +16,18 @@ import java.util.ArrayList;
 
 import app.fil.market.Model.ILoadMore;
 import app.fil.market.R;
-import app.fil.market.tovari.TovarFromSQL;
-import app.fil.market.tovari.TovariSpisokAdapter;
+import app.fil.market.ui.podkategorii.PodkategoriiFragment;
 
 public class TovariFragment extends Fragment {
 
     private TovariViewModel tovariViewModel;
-    TextView tvKorzinaCount;
-    ImageButton ibKorzina;
+//    TextView tvKorzinaCount;
     public static TovariSpisokAdapter adapter;
-    public static ArrayList<TovarFromSQL> tovarFromSQLList = new ArrayList<>();
+    public static ArrayList<TovarFromSQL> listTovarovSQLfromAdapterRV = new ArrayList<>();
     final public static int countLoadItems = 10;
-    String vetkaId;
+//    String vetkaId;
+    public static String vetkaIdprevios=" ";
+    public static boolean firstStart = true;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -37,32 +35,23 @@ public class TovariFragment extends Fragment {
         tovariViewModel =
                 ViewModelProviders.of(this).get(TovariViewModel.class);
         View root = inflater.inflate(R.layout.fragment_tovari, container, false);
-        tvKorzinaCount = getActivity().findViewById(R.id.tvKorzinaCount);
-        ibKorzina = getActivity().findViewById(R.id.ibOpisanieKorzina);
+//        tvKorzinaCount = getActivity().findViewById(R.id.tvKorzinaCount);
+//        ibKorzina = getActivity().findViewById(R.id.ibOpisanieKorzina);
         final RecyclerView rvTovariFragm = root.findViewById(R.id.rvTovariFragm);
         rvTovariFragm.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        adapter = new TovariSpisokAdapter(rvTovariFragm, getActivity(),  ibKorzina, tvKorzinaCount);
+        adapter = new TovariSpisokAdapter(rvTovariFragm, getActivity());
         rvTovariFragm.setAdapter(adapter);
-        tovarFromSQLList.clear();
-//        final TextView tvTemp=getActivity().findViewById(R.id.tvBokovI_Find);
-//        tvTemp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                adapter.notifyDataSetChanged();
-//                System.out.println("notifyDataSetChanged from tvTemp");
-//                tvTemp.setText(Integer.toString(adapter.getItemCount()));
-//            }
-//        });
+
         adapter.setLoadMore(new ILoadMore() {
             @Override
             public void onLoadMore() {
-                tovarFromSQLList.add(null);
-                adapter.notifyItemInserted(tovarFromSQLList.size() - 1);
-                tovarFromSQLList.remove(tovarFromSQLList.size() - 1);
-                adapter.notifyItemRemoved(tovarFromSQLList.size());
-                int index = tovarFromSQLList.size();
+                listTovarovSQLfromAdapterRV.add(null);
+                adapter.notifyItemInserted(listTovarovSQLfromAdapterRV.size() - 1);
+                listTovarovSQLfromAdapterRV.remove(listTovarovSQLfromAdapterRV.size() - 1);
+                adapter.notifyItemRemoved(listTovarovSQLfromAdapterRV.size());
+                int index = listTovarovSQLfromAdapterRV.size();
                 int end = index + countLoadItems;
-                tovariViewModel.showSQL(index, end, tvKorzinaCount,   rvTovariFragm, vetkaId);
+                tovariViewModel.showSQL(index, end,    rvTovariFragm);
             }
         });
 
@@ -73,9 +62,24 @@ public class TovariFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
-        vetkaId = getArguments().getString("vetka");
-        System.out.println("getArguments "+vetkaId);
-        tovariViewModel.showSQL(0,10, tvKorzinaCount,   rvTovariFragm, vetkaId);
+//        vetkaId = getArguments().getString("vetka");
+//        System.out.println("getArguments "+vetkaId);
+
+
+        if(firstStart){
+            tovariViewModel.showSQL(0,10,    rvTovariFragm);
+            firstStart = false;
+            vetkaIdprevios= PodkategoriiFragment.podkatVetkaId;
+            System.out.println("firstStart if");
+        } else if (!firstStart & PodkategoriiFragment.podkatVetkaId.equals(vetkaIdprevios)){
+            System.out.println("firstStart else if "+PodkategoriiFragment.podkatVetkaId+", "+vetkaIdprevios);
+
+        } else{
+            System.out.println("firstStart else "+PodkategoriiFragment.podkatVetkaId+", "+vetkaIdprevios+")");
+            listTovarovSQLfromAdapterRV.clear();
+            tovariViewModel.showSQL(0,10,    rvTovariFragm);
+            vetkaIdprevios=PodkategoriiFragment.podkatVetkaId;
+        }
         return root;
     }
 }

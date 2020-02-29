@@ -1,8 +1,7 @@
-package app.fil.market.tovari;
+package app.fil.market.ui.tovari;
 
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import app.fil.market.MainActivity;
 import app.fil.market.Model.ILoadMore;
 import app.fil.market.R;
-import app.fil.market.TovarOpisanieActivity;
-import app.fil.market.ui.tovari.TovariFragment;
 
 class LoadingViewHolder extends RecyclerView.ViewHolder {
 
@@ -65,20 +63,22 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     ILoadMore loadMore;
     boolean isLoading;
     Activity activity;
-    ImageButton ibOpisanieKorzina;
-    TextView tvCountKorzinaObj;
+//    ImageButton ibOpisanieKorzina;
+//    TextView tvCountKorzinaObj;
     int visibleThreshold = 9;
     int lastVisibleItem;
     int totalItemCount;
-    public static ArrayList<String> deletedItemsSQLId=new ArrayList<>();
+    public static ArrayList<String> deletedItemsSQLId = new ArrayList<>();
+    public static int indexTovaraDliaOpisanieFragment =0;
 
 
-    public TovariSpisokAdapter(RecyclerView recyclerView, Activity activity,
-                               ImageButton ibOpisanieKorzina, TextView tvCountKorzina) {
+    public TovariSpisokAdapter(RecyclerView recyclerView, Activity activity
+            //, ImageButton ibOpisanieKorzina
+    ) {
         this.activity = activity;
-        this.ibOpisanieKorzina = ibOpisanieKorzina;
-        this.tvCountKorzinaObj = tvCountKorzina;
-        System.out.println("TovariSpisokAdapter Konstruktor");
+//        this.ibOpisanieKorzina = ibOpisanieKorzina;
+//        this.tvCountKorzinaObj = tvCountKorzina;
+        System.out.println("PodkategoriiAdapter Konstruktor");
 
 
         final LinearLayoutManager linearLayoutManager
@@ -89,7 +89,7 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 super.onScrolled(recyclerView, dx, dy);
                 totalItemCount = linearLayoutManager.getItemCount();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
+                System.out.println("Scrol listener last==" + Integer.toString(lastVisibleItem));
                 if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
 
                     if (loadMore != null) {
@@ -101,12 +101,12 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
                 }
             }
         });
-        System.out.println("TovariAdapter constructor Array size="+TovariFragment.tovarFromSQLList.size());
+        System.out.println("TovariAdapter constructor Array size=" + TovariFragment.listTovarovSQLfromAdapterRV.size());
     }
 
     @Override
     public int getItemViewType(int position) {
-        return TovariFragment.tovarFromSQLList.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return TovariFragment.listTovarovSQLfromAdapterRV.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     public void setLoadMore(ILoadMore loadMore) {
@@ -119,7 +119,7 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
         if (viewType == VIEW_TYPE_ITEM) {
             View view = LayoutInflater.from(activity).inflate(R.layout.row_tovar, parent, false);
             return new ItemViewHolder(view);
-        } else if (viewType == VIEW_TYPE_LOADING){
+        } else if (viewType == VIEW_TYPE_LOADING) {
             View view = LayoutInflater.from(activity).inflate(R.layout.item_loading, parent, false);
             return new LoadingViewHolder(view);
         }
@@ -127,68 +127,81 @@ System.out.println("Scrol listener last=="+Integer.toString(lastVisibleItem));
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        System.out.println("Tovari Adapter onBindViewHolder ="+position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        System.out.println("Tovari Adapter onBindViewHolder =" + position);
         if (holder instanceof ItemViewHolder) {
-            final TovarFromSQL item = TovariFragment.tovarFromSQLList.get(position);
+            final TovarFromSQL item = TovariFragment.listTovarovSQLfromAdapterRV.get(position);
             final ItemViewHolder viewHolder = (ItemViewHolder) holder;
 
             viewHolder.tvRowTowarNaimenovanie.setText(
 //                    Integer.toString(position+1)+" "+
-                            item.getNaimenovanie());
-            if(item.getSkidka()>0){
+                    item.getNaimenovanie());
+            if (item.getSkidka() > 0) {
                 viewHolder.tvRowTovarCenaBezSkidki.setText(item.getCenaStr());
                 viewHolder.tvRowTovarCenaBezSkidki.setPaintFlags(viewHolder.tvRowTovarCenaBezSkidki.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                viewHolder.tvRowTovarSkidka.setText("СКИДКА "+item.getSkidkaStr()+" %");
+                viewHolder.tvRowTovarSkidka.setText("СКИДКА " + item.getSkidkaStr() + " %");
                 viewHolder.tvRowTovarSkidka.setVisibility(View.VISIBLE);
                 viewHolder.conlayCenaBezSkidki.setVisibility(View.VISIBLE);
-            } else{
+            } else {
                 viewHolder.tvRowTovarSkidka.setVisibility(View.GONE);
                 viewHolder.conlayCenaBezSkidki.setVisibility(View.GONE);
             }
             viewHolder.tvRowTovarCenaSoSkidkoy.setText(item.getCenaFinalSoSkidkoyZaUpakStr());
             Picasso.get().load(item.getFoto()).into(viewHolder.ivRowTovarFoto);
 
-            final Intent intentTovarOpisanie = new Intent(viewHolder.conLayRowTovar.getContext(), TovarOpisanieActivity.class);
+//            final Intent intentTovarOpisanie = new Intent(viewHolder.conLayRowTovar.getContext(), TovarOpisanieActivity.class);
             viewHolder.conLayRowTovar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    intentTovarOpisanie.putExtra("ceniObj", item);
-                    viewHolder.conLayRowTovar.getContext().startActivity(intentTovarOpisanie);
+                    indexTovaraDliaOpisanieFragment = position;
+//                    viewHolder.conLayRowTovar.getContext().startActivity(intentTovarOpisanie);
+
+
+
+
+
+
+
+//                    Bundle bundle= new Bundle();
+//                    bundle.putString("ceniObj",Integer.toString(position));
+
+
+                    Navigation.findNavController(activity, R.id.nav_host_fragment).navigate(R.id.nav_opisanie_tovara);
+                    System.out.println("navigate(R.id.nav_opisanie_tovara,");
                 }
             });
             viewHolder.conlayIbKupit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    item.setKolihestvoAndSendToSQL(item.getKolihestvo()+1);
-                    item.setVibranLi(true);
+                    item.setKolihestvoAndSendToSQL(item.getKolihestvo() + 1);
+                    item.setVibranLiAndSendSQL(true);
                     viewHolder.ibRowTovarKupitObj.setBackgroundResource(R.drawable.backgrbelizakruglzeleniy);
                     viewHolder.tvRowTovarKKorzine.setVisibility(View.VISIBLE);
-//                    MainActivity.userStatic.setkorzina_count_INT(MainActivity.userStatic.getKorzina_count_INT()+1);
-MainActivity.userStatic.setKorzinaCountStr(Integer.toString(MainActivity.userStatic.getKorzina_kountInt()+1), tvCountKorzinaObj);
+//                    MainActivity.pokupatelStatic.setkorzina_count_INT(MainActivity.pokupatelStatic.getKorzina_count_INT()+1);
+                    MainActivity.pokupatelStatic.setKorzinaCountStr(Integer.toString(MainActivity.pokupatelStatic.getKorzina_kountInt() + 1));
                 }
             });
 
-            if(item.getIsSelected()){
-                System.out.println("IF   setBackgroundResource id="+item.getId_sql_tovara_v_baze()+", sel="+item.getIsSelected());
+            if (item.estLi_V_KorzineObj) {
+                System.out.println("IF   setBackgroundResource id=" + item.getId_sql_tovara_v_baze() + ", sel=" + item.getIsSelected());
                 viewHolder.ibRowTovarKupitObj.setBackgroundResource(R.drawable.backgrbelizakruglzeleniy);
                 viewHolder.tvRowTovarKKorzine.setVisibility(View.VISIBLE);
-            } else{
-                System.out.println("ELSE setBackgroundResource id="+item.getId_sql_tovara_v_baze()+", sel="+item.getIsSelected());
+            } else {
+                System.out.println("ELSE setBackgroundResource id=" + item.getId_sql_tovara_v_baze() + ", sel=" + item.getIsSelected());
                 viewHolder.ibRowTovarKupitObj.setBackgroundResource(R.drawable.backgrbelizakruglsiniy);
                 viewHolder.tvRowTovarKKorzine.setVisibility(View.GONE);
             }
-            viewHolder.tvRowTovarKKorzine.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ibOpisanieKorzina.performClick();
-                }
-            });
+//            viewHolder.tvRowTovarKKorzine.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+////                    ibOpisanieKorzina.performClick();
+//                }
+//            });
         } else if (holder instanceof LoadingViewHolder) {
             LoadingViewHolder loadingHolder = (LoadingViewHolder) holder;
             loadingHolder.progressBar.setIndeterminate(true);
         }
-        System.out.println("TovariAdapter onBindViewHolder Array size="+TovariFragment.tovarFromSQLList.size());
+        System.out.println("TovariAdapter onBindViewHolder Array size=" + TovariFragment.listTovarovSQLfromAdapterRV.size());
     }
 
 
@@ -198,7 +211,7 @@ MainActivity.userStatic.setKorzinaCountStr(Integer.toString(MainActivity.userSta
 
     @Override
     public int getItemCount() {
-        return TovariFragment.tovarFromSQLList.size();
+        return TovariFragment.listTovarovSQLfromAdapterRV.size();
     }
 
     @Override

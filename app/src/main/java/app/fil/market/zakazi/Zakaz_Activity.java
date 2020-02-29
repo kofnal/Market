@@ -20,14 +20,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import app.fil.market.MainActivity;
 import app.fil.market.R;
 import app.fil.market.Model.Utils;
-import app.fil.market.tovari.TovarFromSQL;
+import app.fil.market.korzina.KorzinaActivity;
 
 public class Zakaz_Activity extends AppCompatActivity {
     EditText etZakazEmail, etZakazTelefon, etZakazFIO, etZakazAdresDostavki, etZakazKommentZakaza, etZakazVvediPromo;
@@ -52,26 +51,32 @@ public class Zakaz_Activity extends AppCompatActivity {
         etZakazEmail=findViewById(R.id.etZakazEmail);
         tvKorzCountTemp=findViewById(R.id.tvKorzCountTemp);
         setTextAllEditText();
-        final Bundle bundle = getIntent().getExtras();
+//        final Bundle bundle = getIntent().getExtras();
 //        System.out.println("ZakazActiv arrlist size = "+Integer.toString(bundle.getStringArrayList("arrlist").size()));
-        ArrayList<TovarFromSQL> listTovarFromSQLFromKorzinaActivity =  bundle.getParcelableArrayList(Utils.tovarsFromSQLList);
-        System.out.println("ZakazActiv listTovarFromSQLFromKorzinaActivity size = "+ Integer.toString(listTovarFromSQLFromKorzinaActivity.size())+
-        " , "+ listTovarFromSQLFromKorzinaActivity.get(0).getId_sql_tovara_v_baze()+", "+ listTovarFromSQLFromKorzinaActivity.get(0).getCenaZaUpak());
-        for(int i = 0; i< listTovarFromSQLFromKorzinaActivity.size(); i++){
-            if(listTovarFromSQLFromKorzinaActivity.get(i).getIsSelected()) {
+//        ArrayList<TovarFromSQL> listTovarFromSQLFromKorzinaActivity =  bundle.getParcelableArrayList(Utils.tovarsFromSQLList);
+        System.out.println("ZakazActiv listTovarFromSQLFromKorzinaActivity size = "+ Integer.toString(KorzinaActivity.tovariList2.size())+
+        " , "+ KorzinaActivity.tovariList2.get(0).getId_sql_tovara_v_baze()+", "+ KorzinaActivity.tovariList2.get(0).getCenaZaUpak());
+        KorzinaActivity.tovariListBezOtpravlennogoZakaza.clear();
+        for(int i = 0; i< KorzinaActivity.tovariList2.size(); i++){
+            if(KorzinaActivity.tovariList2.get(i).getIsSelected()) {
                 JSONObject jsObjTovarRow = new JSONObject();
                 try {
-                    jsObjTovarRow.put("id_tovar_sql", listTovarFromSQLFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
-                    jsObjTovarRow.put("cena_tovar", listTovarFromSQLFromKorzinaActivity.get(i).getCenaZaOdinKg());
-                    jsObjTovarRow.put("kolihestvo", listTovarFromSQLFromKorzinaActivity.get(i).getKolihestvo());
-                    jsObjTovarRow.put("id_sql_tovara_v_korzine_pokupatelia", listTovarFromSQLFromKorzinaActivity.get(i).getId_sql_tovara_v_korzine_pokupatelia());
-                    System.out.println("Zakaz_Activity Sozdanie JSON Objekta Na Server " + listTovarFromSQLFromKorzinaActivity.get(i).getId_sql_tovara_v_baze());
+                    jsObjTovarRow.put("id_tovar_sql", KorzinaActivity.tovariList2.get(i).getId_sql_tovara_v_baze());
+                    jsObjTovarRow.put("cena_tovar", KorzinaActivity.tovariList2.get(i).getCenaZaOdinKg());
+                    jsObjTovarRow.put("kolihestvo", KorzinaActivity.tovariList2.get(i).getKolihestvo());
+                    jsObjTovarRow.put("id_sql_tovara_v_korzine_pokupatelia",
+                            KorzinaActivity.tovariList2.get(i).getId_sql_tovara_v_korzine_pokupatelia());
+                    System.out.println("Zakaz_Activity Sozdanie JSON Objekta Na Server " +
+                            KorzinaActivity.tovariList2.get(i).getId_sql_tovara_v_baze());
                     jsTovari.put(i, jsObjTovarRow);
-                    totalCenaZakaza=totalCenaZakaza+ listTovarFromSQLFromKorzinaActivity.get(i).getCenaFinalSoSkidkoyZaUpak()* listTovarFromSQLFromKorzinaActivity.get(i).getKolihestvo();
+                    totalCenaZakaza=totalCenaZakaza+ KorzinaActivity.tovariList2.get(i).getCenaFinalSoSkidkoyZaUpak()*
+                            KorzinaActivity.tovariList2.get(i).getKolihestvo();
                 } catch (JSONException e) {
                     System.out.println("ERROR Zakaz_Activity Sozdanie JSON Objekta Na Server " + e.toString());
                     e.printStackTrace();
                 }
+            } else {
+                KorzinaActivity.tovariListBezOtpravlennogoZakaza.add(KorzinaActivity.tovariList2.get(i));
             }
         }
         try {
@@ -79,7 +84,7 @@ public class Zakaz_Activity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.println("listCeniObj - "+ Double.toString(listTovarFromSQLFromKorzinaActivity.get(0).getCenaZaUpak()));
+        System.out.println("listCeniObj - "+ Double.toString(KorzinaActivity.tovariList2.get(0).getCenaZaUpak()));
         System.out.println("listCeniObj jsObjKorzina.toString() - "+jsObjKorzina.toString());
         //etZakazTelefon.setText(bundle.getStringArrayList("arrlist").get(0));
         etZakazTelefon.setOnTouchListener(new View.OnTouchListener() {
@@ -93,17 +98,17 @@ public class Zakaz_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendZakaz(jsObjKorzina);
-                saveDataFromEditTextInPrefData();
+
                 tvZakazOformitButt.setVisibility(View.GONE);
             }
         });
     }
     private void saveDataFromEditTextInPrefData() {
-        MainActivity.userStatic.setEmail(etZakazEmail.getText().toString());
-        MainActivity.userStatic.setTel(etZakazTelefon.getText().toString());
-        MainActivity.userStatic.setFioUser(etZakazFIO.getText().toString());
-        MainActivity.userStatic.setAdres_string(etZakazAdresDostavki.getText().toString());
-        MainActivity.userStatic.setKoment_string(etZakazKommentZakaza.getText().toString());
+        MainActivity.pokupatelStatic.setEmail(etZakazEmail.getText().toString());
+        MainActivity.pokupatelStatic.setTel(etZakazTelefon.getText().toString());
+        MainActivity.pokupatelStatic.setFioUser(etZakazFIO.getText().toString());
+        MainActivity.pokupatelStatic.setAdres_string(etZakazAdresDostavki.getText().toString());
+        MainActivity.pokupatelStatic.setKoment_string(etZakazKommentZakaza.getText().toString());
     }
     @Override
     protected void onPause() {
@@ -111,11 +116,11 @@ public class Zakaz_Activity extends AppCompatActivity {
         super.onPause();
     }
     private void setTextAllEditText() {
-        etZakazEmail.setText(MainActivity.userStatic.getEmail());
-        etZakazTelefon.setText(MainActivity.userStatic.getTel());
-        etZakazFIO.setText(MainActivity.userStatic.getFioUser());
-        etZakazAdresDostavki.setText(MainActivity.userStatic.getAdres_string());
-        etZakazKommentZakaza.setText(MainActivity.userStatic.getKoment_string());
+        etZakazEmail.setText(MainActivity.pokupatelStatic.getEmail());
+        etZakazTelefon.setText(MainActivity.pokupatelStatic.getTel());
+        etZakazFIO.setText(MainActivity.pokupatelStatic.getFioUser());
+        etZakazAdresDostavki.setText(MainActivity.pokupatelStatic.getAdres_string());
+        etZakazKommentZakaza.setText(MainActivity.pokupatelStatic.getKoment_string());
     }
 void sendZakaz(final JSONObject jsonArray){
     StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.SEND_ZAKAZ,
@@ -125,11 +130,14 @@ void sendZakaz(final JSONObject jsonArray){
                     System.out.println("Zakaz_Activity get server response from SendZakaz() - "+response);
                     try {
                         JSONObject jsonObject = new JSONObject(response);
+                        //проверить вставку на сервер желательно
+
+                        KorzinaActivity.obnovitDannieKorzini();
                         System.out.println("Zakaz_Activity get server response from SendZakaz() - "+jsonObject);
                         setResult(Utils.intentResultCODKorzinaToZakazPosleOtpravkiZakaza_OK);
-                        MainActivity.userStatic.setKorzinaCountStr(0, tvKorzCountTemp);
-                        System.out.println("sendZakaz INT "+Integer.toString(MainActivity.userStatic.getKorzina_kountInt())+" =korzcount");
-//                        System.out.println("sendZakaz String"+MainActivity.userStatic.getKorzinaCountStr()+" =korzcount");
+
+                        System.out.println("sendZakaz INT "+Integer.toString(MainActivity.pokupatelStatic.getKorzina_kountInt())+" =korzcount");
+//                        System.out.println("sendZakaz String"+MainActivity.pokupatelStatic.getKorzinaCountStr()+" =korzcount");
                         finish();
                     }catch (JSONException e){
                         System.out.println("\n ERR senZakaz Zakaz_Activity "+response);
@@ -147,7 +155,7 @@ void sendZakaz(final JSONObject jsonArray){
             Map<String,String> parameters = new HashMap<String,String>();
             System.out.println("Zakaz Activity VOHLO jsonArray =   "+jsonArray);
             parameters.put("jsarr", jsonArray.toString());
-            parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
+            parameters.put("pokupatel", MainActivity.pokupatelStatic.getSqlId());
             parameters.put("idadres", "43");
             parameters.put("typedostavki", "pohta");
             parameters.put("zakaz_email_input_user", etZakazEmail.getText().toString());

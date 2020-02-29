@@ -34,8 +34,8 @@ import app.fil.market.user.Pokupatel;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    public  static RequestQueue requestQueue;
-    public static Pokupatel userStatic;
+    public  static RequestQueue requestQueue2;
+    public static Pokupatel pokupatelStatic;
     Intent intent;
     TextView tvMainLog, tvTemp;
     Button btMain;
@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue2 = Volley.newRequestQueue(getApplicationContext());
         tvMainLog=findViewById(R.id.tvMainLog);
         tvTemp=findViewById(R.id.tvTemp);
         btMain=findViewById(R.id.btMain);
         // Check if user is signed in (non-null) and update UI accordingly.
-        userStatic=new Pokupatel(this);
+        pokupatelStatic =new Pokupatel(getApplicationContext());
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null){
             anonimnVxod();
@@ -121,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
                             String id_sql = jsonObject.getString("sql_id");
                             String korzina_sum = jsonObject.getString("korzina_sum");
 
-                            MainActivity.userStatic.setKorzinaCountStr(korzina_sum, tvTemp);
+                            MainActivity.pokupatelStatic.setKorzinaCountStr(korzina_sum);
                             System.out.println("jsID Main Get ID "+id_sql);
-                            userStatic.setId_sql(id_sql);
-                            userStatic.setId_goog(mAuth.getUid());
+                            pokupatelStatic.setId_sql(id_sql);
+                            pokupatelStatic.setId_goog(mAuth.getUid());
                             startActivity(intent);
                             //afinish();
                         }
@@ -149,6 +149,6 @@ public class MainActivity extends AppCompatActivity {
                 return parameters;
             }
         };
-        requestQueue.add(stringRequest);
+        requestQueue2.add(stringRequest);
     }
 }

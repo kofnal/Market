@@ -5,6 +5,8 @@
     </style>
     <style name="AppThemeSec" parent="ThemeOverlay.AppCompat.Dark">
     </style>
+    <style name="AppThemeLight" parent="ThemeOverlay.AppCompat.Light">
+    </style>
 
 
 

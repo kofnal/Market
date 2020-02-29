@@ -9,6 +9,7 @@
     android:paddingTop="8dp"
     android:paddingRight="16dp"
     android:paddingBottom="8dp"
+    android:theme="@style/AppThemeLight"
     tools:context=".zakazi.Zakaz_Activity">
 
     <TextView
@@ -329,11 +330,12 @@
 
                 <TextView
                     android:id="@+id/tvZakazPoluhiSkidku"
-                    style="@style/textHerniyMelkiy"
+                    style="@style/textSerMelkiy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/poluhi_skidku"
+                    android:textColor="#00861A1A"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -545,6 +547,7 @@
         android:padding="8dp"
         android:text="@string/oform_zakaz"
         android:textAlignment="center"
+        android:textColor="@color/colorWhite"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

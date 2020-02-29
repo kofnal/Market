@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 public class PokupatelInfoPrefs {
     private static final String TAG = UserSession.class.getSimpleName();
     private static final String PREF_NAME_TAG = "userinfo";
-    private static final String KEY_USERNAME_TAG = "fioUser";
-    private static final String KEY_EMAIL_TAG = "email";
     private static final String KEY_ID_SQL_TAG = "id_sql";
     private static final String KEY_ID_GOOG_TAG = "id_goog";
     private static final String KEY_FIO_TAG = "fio_string";
@@ -28,40 +26,41 @@ public class PokupatelInfoPrefs {
         prefs = ctx.getSharedPreferences(PREF_NAME_TAG, ctx.MODE_PRIVATE);
         editor = prefs.edit();
     }
-    public void setIdSQL(String idSQL){
+    public void saveIdSQL(String idSQL){
         System.out.println("PokupatelInfoPrefs SETSQL ID = " +idSQL);
         editor.putString(KEY_ID_SQL_TAG, idSQL);
         editor.apply();
     }
-    public void setIdGoog(String idGoog){
+    public void saveIdGoog(String idGoog){
         editor.putString(KEY_ID_GOOG_TAG, idGoog);
         editor.apply();
     }
 
 
-    public void setFioStr(String fioStr){
+    public void saveFioStr(String fioStr){
+        System.out.println("PokupatelInfoPrefs saveFioStr = " +fioStr);
         editor.putString(KEY_FIO_TAG, fioStr);
         editor.apply();
     }
-    public void setEmailStr(String emailStr){
+    public void saveEmailStr(String emailStr){
         editor.putString(KEY_EMAIL_STRING_TAG, emailStr);
         editor.apply();
     }
-    public void setTelStr(String telStr){
+    public void saveTelStr(String telStr){
         editor.putString(KEY_TEL_STRING_TAG, telStr);
         editor.apply();
     }
-    public void setAdresStr(String adresStr){
+    public void saveAdresStr(String adresStr){
         editor.putString(KEY_ADRES_TAG, adresStr);
         editor.apply();
     }
-    public void setKomentStr(String komentStr){
+    public void saveKomentStr(String komentStr){
         editor.putString(KEY_KOMENT_TAG, komentStr);
         editor.apply();
     }
 
 //    public void setKorzinaCountStrWithTV(String korzinaCountStr, TextView tv){
-//        setKorzinaCountStr(korzinaCountStr);
+//        saveKorzinaCountStr(korzinaCountStr);
 //        if(korzina_count_INT>0){
 //            tv.setVisibility(View.VISIBLE);
 //            tv.setText(korzina_count_INT);
@@ -70,46 +69,46 @@ public class PokupatelInfoPrefs {
 //        }
 //
 //    }
-    public void setKorzinaCountStr(String korzinaCountStr) {
+    public void saveKorzinaCountStr(String korzinaCountStr) {
 
         editor.putString(KEY_KORZINA_COUNT_TAG, korzinaCountStr);
         editor.apply();
-//        System.out.println("sendZakaz "+"setKorzinaCountStr "+"count="+korzinaCountStr+" INT="+Integer.toString(korzina_count_INT));
+        System.out.println("saveKorzinaCountStr "+"count="+korzinaCountStr);
     }
-//    public void setKorzinaCountStr(String korzinaCountStr){
+//    public void saveKorzinaCountStr(String korzinaCountStr){
 //        try {
 //            //if(korzina_sum.matches("[-+]?\\d+")){
 //            if(!korzinaCountStr.equals("0")&&!korzinaCountStr.equals("null")&&!korzinaCountStr.equals("")&&korzinaCountStr!=null){
-//                System.out.println("sendZakaz "+"setKorzinaCountStr IF "+"count="+korzinaCountStr);
+//                System.out.println("sendZakaz "+"saveKorzinaCountStr IF "+"count="+korzinaCountStr);
 //                korzina_count_INT= Integer.valueOf(korzinaCountStr);
 //            }else if (korzinaCountStr.equals("0")){
-//                System.out.println("sendZakaz "+"setKorzinaCountStr ELSE IF "+"count="+korzinaCountStr);
+//                System.out.println("sendZakaz "+"saveKorzinaCountStr ELSE IF "+"count="+korzinaCountStr);
 //                korzina_count_INT= 0;
 //            }else{
-//                System.out.println("sendZakaz "+"setKorzinaCountStr ELSE "+"count="+korzinaCountStr);
+//                System.out.println("sendZakaz "+"saveKorzinaCountStr ELSE "+"count="+korzinaCountStr);
 //            }
 //        }catch (Exception e){
-//            System.out.println("sendZakaz "+"setKorzinaCountStr ERRO8R "+"count="+korzinaCountStr+" INT="+Integer.toString(korzina_count_INT)+" err-->"+e.toString());
+//            System.out.println("sendZakaz "+"saveKorzinaCountStr ERRO8R "+"count="+korzinaCountStr+" INT="+Integer.toString(korzina_count_INT)+" err-->"+e.toString());
 //
 //        }
 //        editor.putString(KEY_KORZINA_COUNT_TAG, korzinaCountStr);
 //        editor.apply();
-//        System.out.println("sendZakaz "+"setKorzinaCountStr "+"count="+korzinaCountStr+" INT="+Integer.toString(korzina_count_INT));
+//        System.out.println("sendZakaz "+"saveKorzinaCountStr "+"count="+korzinaCountStr+" INT="+Integer.toString(korzina_count_INT));
 //    }
-
-    public void setkorzina_count_INT(int korz_count){
-        setKorzinaCountStr(Integer.toString(korz_count));
-    }
+//
+//    public void setkorzina_count_INT(int korz_count){
+//        saveKorzinaCountStr(Integer.toString(korz_count));
+//    }
     public void clearUserInfo(){
         editor.clear();
         editor.commit();
     }
+//
+//    public String getKeyUsername(){
+//        return prefs.getString(KEY_USERNAME_TAG, "");}
 
-    public String getKeyUsername(){
-        return prefs.getString(KEY_USERNAME_TAG, "");}
 
-
-    public String getKeyEmail(){return prefs.getString(KEY_EMAIL_TAG, "");}
+//    public String getKeyEmail(){return prefs.getString(KEY_EMAIL_TAG, "");}
     public String getFioStr(){return prefs.getString(  KEY_FIO_TAG , "");}
     public String getEmailStr(){return prefs.getString( KEY_EMAIL_STRING_TAG , "");}
     public String getTelStr(){return prefs.getString(  KEY_TEL_STRING_TAG , "");}

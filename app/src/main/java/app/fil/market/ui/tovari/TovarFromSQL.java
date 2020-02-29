@@ -1,4 +1,4 @@
-package app.fil.market.tovari;
+package app.fil.market.ui.tovari;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,12 +16,15 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.fil.market.BokovoeMenu;
 import app.fil.market.MainActivity;
 import app.fil.market.Model.Utils;
 
 
 
-public class TovarFromSQL implements Parcelable {
+public class TovarFromSQL
+//        implements Parcelable
+{
     String naimenovanie;
     String foto;
     String id_sql_tovara_v_baze;
@@ -33,6 +37,7 @@ public class TovarFromSQL implements Parcelable {
     Double cenaZaOdinKg =0.0 ;
     Double cenaSoSkidkoyZaUpak =0.0;
     boolean vibranLiObj=false; //SQL
+    public boolean estLi_V_KorzineObj=false; //SQL
     String znahrazmriada = " ";
     String mestovilova = " ";
     String typeUpakovki = " ";
@@ -47,7 +52,7 @@ public class TovarFromSQL implements Parcelable {
                         String cenaSoSkidkoyZaUpakStr,
                         String vibranLiStr,
                         String id_sql_tovara_v_bazeStr,
-                        String id_sql_tovara_v_korzine_pokupatelia,
+                        String id_sql_tovara_v_korzine_pokupateliaStr,
                         String kolihestvoStr,
                         String kolvovupakovkeStr
     ) {
@@ -81,8 +86,11 @@ public class TovarFromSQL implements Parcelable {
         if(!vibranLiStr.equals("null")){
             vibranLiObj= Boolean.valueOf(vibranLiStr);
         }
+        if(id_sql_tovara_v_korzine_pokupateliaStr.equals("null")){
+            estLi_V_KorzineObj= false;
+        }
         else{
-            vibranLiObj=false;
+            estLi_V_KorzineObj=true;
         }
         if(!kolihestvoStr.equals("null")) kolihestvo= Integer.valueOf(kolihestvoStr);
 
@@ -162,6 +170,12 @@ public class TovarFromSQL implements Parcelable {
         else{
             vibranLiObj=false;
         }
+        if(id_sql_tovara_v_korzine_pokupatelia_Str.equals("null")){
+            estLi_V_KorzineObj= false;
+        }
+        else{
+            estLi_V_KorzineObj=true;
+        }
         if(!kolihestvoStr.equals("null")) kolihestvo= Integer.valueOf(kolihestvoStr);
 
         if(!kolvovupakovkeStr.equals("null")) kolvovupakovke= Double.valueOf(kolvovupakovkeStr);
@@ -185,62 +199,6 @@ public class TovarFromSQL implements Parcelable {
     }
 
 
-    protected TovarFromSQL(Parcel in) {
-        naimenovanie = in.readString();
-        foto = in.readString();
-        id_sql_tovara_v_baze = in.readString();
-        id_sql_tovara_v_korzine_pokupatelia = in.readString();
-        kolihestvo = in.readInt();
-        if (in.readByte() == 0) {
-            kolvovupakovke = null;
-        } else {
-            kolvovupakovke = in.readDouble();
-        }
-        if (in.readByte() == 0) {
-            cenaZaUpak = null;
-        } else {
-            cenaZaUpak = in.readDouble();
-        }
-        if (in.readByte() == 0) {
-            cenaZaOdinKg = null;
-        } else {
-            cenaZaOdinKg = in.readDouble();
-        }
-        if (in.readByte() == 0) {
-            skidka = null;
-        } else {
-            skidka = in.readDouble();
-        }
-        if (in.readByte() == 0) {
-            cenaSoSkidkoyZaUpak = null;
-        } else {
-            cenaSoSkidkoyZaUpak = in.readDouble();
-        }
-        if (in.readByte() == 0) {
-            cenaFinalSoSkidkoZaUpak = null;
-        } else {
-            cenaFinalSoSkidkoZaUpak = in.readDouble();
-        }
-        vibranLiObj = in.readByte() != 0;
-        znahrazmriada = in.readString();
-        mestovilova = in.readString();
-        typeUpakovki = in.readString();
-        edinica_izmerenia_upakovki = in.readString();
-        sostoianieTovara = in.readString();
-        raskazotovare = in.readString();
-    }
-
-    public static final Creator<TovarFromSQL> CREATOR = new Creator<TovarFromSQL>() {
-        @Override
-        public TovarFromSQL createFromParcel(Parcel in) {
-            return new TovarFromSQL(in);
-        }
-
-        @Override
-        public TovarFromSQL[] newArray(int size) {
-            return new TovarFromSQL[size];
-        }
-    };
 
     public String getNaimenovanie() {
         return naimenovanie;
@@ -321,11 +279,19 @@ public class TovarFromSQL implements Parcelable {
     public String getCenaFinalSoSkidkoyZaUpakStr() {
         return Utils.getStringFromDoubleFormated2Zerro(cenaFinalSoSkidkoZaUpak);
     }
-    public void setVibranLi(boolean vibranLi) {
+    public void setVibranLiAndSendSQL(boolean vibranLi) {
         this.vibranLiObj = vibranLi;
-        System.out.println("setVibranLi");
+        System.out.println("setVibranLiAndSendSQL");
         sendSQLTovarVibran(id_sql_tovara_v_korzine_pokupatelia, vibranLi);
 
+    }
+
+    public boolean isEstLi_V_KorzineObj() {
+        return estLi_V_KorzineObj;
+    }
+
+    public void setEstLi_V_KorzineObj(boolean estLi_V_KorzineObj) {
+        this.estLi_V_KorzineObj = estLi_V_KorzineObj;
     }
 
     void sendSQLTovarVibran(final String tovarId_V_Korzine_klienta, final boolean vibranLiBool) {
@@ -358,7 +324,7 @@ public class TovarFromSQL implements Parcelable {
                 return parameters;
             }
         };
-        MainActivity.requestQueue.add(stringRequest);
+        BokovoeMenu.requestQueue.add(stringRequest);
     }
     void buySQLKolvo(final String tovarId_V_Baze_tovarov_SQL, final String kolvo) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.BUY_KOLVO_TOVAR,
@@ -368,9 +334,9 @@ public class TovarFromSQL implements Parcelable {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             int idKorzina = jsonObject.getInt("idKorzina");
-                            MainActivity.userStatic.setKorzinaCountStr(idKorzina);
+                            MainActivity.pokupatelStatic.setKorzinaCountStr(idKorzina);
                             System.out.println("TovarFromSQL sendSQLTovarVibran = " + jsonObject.toString()+"\n" +
-                                    "Main kol="+MainActivity.userStatic.getKorzina_kountInt());
+                                    "Main kol="+MainActivity.pokupatelStatic.getKorzina_kountInt());
                             JSONArray jsonArray = jsonObject.getJSONArray("count");
 
                         } catch (JSONException e) {
@@ -390,7 +356,7 @@ public class TovarFromSQL implements Parcelable {
                 Map<String, String> parameters = new HashMap<String, String>();
                 parameters.put("tovar", tovarId_V_Baze_tovarov_SQL);
                 parameters.put("kolvo", kolvo);
-                parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
+                parameters.put("pokupatel", MainActivity.pokupatelStatic.getSqlId());
                 System.out.println("TovarFromSQL sendSQLTovarVibran  SQL* parametrs = " + parameters);
 
 
@@ -399,63 +365,7 @@ public class TovarFromSQL implements Parcelable {
             }
         };
 
-        MainActivity.requestQueue.add(stringRequest);
+        BokovoeMenu.requestQueue.add(stringRequest);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(naimenovanie);
-        parcel.writeString(foto);
-        parcel.writeString(id_sql_tovara_v_baze);
-        parcel.writeString(id_sql_tovara_v_korzine_pokupatelia);
-        parcel.writeInt(kolihestvo);
-        if (kolvovupakovke == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeDouble(kolvovupakovke);
-        }
-        if (cenaZaUpak == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeDouble(cenaZaUpak);
-        }
-        if (cenaZaOdinKg == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeDouble(cenaZaOdinKg);
-        }
-        if (skidka == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeDouble(skidka);
-        }
-        if (cenaSoSkidkoyZaUpak == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeDouble(cenaSoSkidkoyZaUpak);
-        }
-        if (cenaFinalSoSkidkoZaUpak == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeDouble(cenaFinalSoSkidkoZaUpak);
-        }
-        parcel.writeByte((byte) (vibranLiObj ? 1 : 0));
-        parcel.writeString(znahrazmriada);
-        parcel.writeString(mestovilova);
-        parcel.writeString(typeUpakovki);
-        parcel.writeString(edinica_izmerenia_upakovki);
-        parcel.writeString(sostoianieTovara);
-        parcel.writeString(raskazotovare);
-    }
 }

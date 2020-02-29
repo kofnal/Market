@@ -1,9 +1,6 @@
 package app.fil.market.ui.tovari;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
@@ -16,20 +13,19 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.fil.market.BokovoeMenu;
 import app.fil.market.MainActivity;
 import app.fil.market.Model.Utils;
-import app.fil.market.tovari.TovarFromSQL;
-import app.fil.market.tovari.TovariActivity;
-import app.fil.market.tovari.TovariSpisokAdapter;
+import app.fil.market.ui.podkategorii.PodkategoriiFragment;
 
 public class TovariViewModel extends ViewModel {
 
@@ -45,8 +41,8 @@ public class TovariViewModel extends ViewModel {
     public LiveData<String> getText() {
         return mText;
     }
-    void showSQL(final int indexStart, final int indexEnd, final TextView tvCountKorzina,
-                 final RecyclerView recyclerView, final String vetkaId) {
+    void showSQL(final int indexStart, final int indexEnd,
+                 final RecyclerView recyclerView) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.SHOW_TOVAR,
                 new Response.Listener<String>() {
                     @Override
@@ -62,13 +58,13 @@ public class TovariViewModel extends ViewModel {
                                 JSONObject jsKorz = jsonArrayKorzina.getJSONObject(0);
                                 final String[] korzCount = {jsKorz.getString("SUM(korzina.kolihestvo)")};
                                 if (!korzCount[0].equals("null")) {
-                                    MainActivity.userStatic.setKorzinaCountStr(Integer.parseInt(korzCount[0]), tvCountKorzina);
-                                    tvCountKorzina.setVisibility(View.VISIBLE);
-//                                    if (MainActivity.userStatic.getKorzinaCountStr() != null)
-//                                        tvCountKorzina.setText(MainActivity.userStatic.getKorzinaCountStr());
+                                    MainActivity.pokupatelStatic.setKorzinaCountStr(Integer.parseInt(korzCount[0]));
+                                    BokovoeMenu.tvKorzinaCount.setVisibility(View.VISIBLE);
+//                                    if (MainActivity.pokupatelStatic.getKorzinaCountStr() != null)
+//                                        tvCountKorzina.setText(MainActivity.pokupatelStatic.getKorzinaCountStr());
                                 } else {
-                                    MainActivity.userStatic.setKorzinaCountStr(0, tvCountKorzina);
-                                    tvCountKorzina.setVisibility(View.INVISIBLE);
+                                    MainActivity.pokupatelStatic.setKorzinaCountStr(0);
+                                    BokovoeMenu.tvKorzinaCount.setVisibility(View.INVISIBLE);
                                 }
                             }
 
@@ -94,13 +90,13 @@ public class TovariViewModel extends ViewModel {
                                         jsonRow.getString("edinica_izmerenia_upakovki"),
                                         jsonRow.getString("raskazotovare")
                                 );
-                                System.out.println("TovarFromSQL create foto = "+TovariFragment.tovarFromSQLList.size()+", " + tovarFromSQLObjRowTovar.getFoto());
-                                TovariFragment.tovarFromSQLList.add(tovarFromSQLObjRowTovar);
+                                System.out.println("TovarFromSQL create foto = "+TovariFragment.listTovarovSQLfromAdapterRV.size()+", " + tovarFromSQLObjRowTovar.getFoto());
+                                TovariFragment.listTovarovSQLfromAdapterRV.add(tovarFromSQLObjRowTovar);
                             }
                             int razmerZaprosa = indexEnd - indexStart;
                             if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
-                                if(TovariFragment.tovarFromSQLList.size()>razmerZaprosa)
-                                    Toast.makeText(tvCountKorzina.getContext(), "Загружены все товары.", Toast.LENGTH_SHORT).show();
+                                if(TovariFragment.listTovarovSQLfromAdapterRV.size()>razmerZaprosa)
+                                    Toast.makeText(BokovoeMenu.tvKorzinaCount.getContext(), "Загружены все товары.", Toast.LENGTH_SHORT).show();
                                 System.out.println("if345dfs3 bolhe net");
                             } else {
                                 System.out.println("ehe est 345dfs3");
@@ -124,14 +120,15 @@ public class TovariViewModel extends ViewModel {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<String, String>();
 
-                parameters.put("vetka", vetkaId);
-                parameters.put("pokupatel", MainActivity.userStatic.getSqlId());
+                parameters.put("vetka", PodkategoriiFragment.podkatVetkaId);
+                parameters.put("pokupatel", MainActivity.pokupatelStatic.getSqlId());
                 parameters.put("indexstart", Integer.toString(indexStart));
                 parameters.put("count", Integer.toString(countLoadItems));
-                System.out.println("Otpravka na server iz " + vetkaId + ", tovar id  " + parameters.toString());
+//                System.out.println("Otpravka na server iz " + vetkaId + ", tovar id  " + parameters.toString());
                 return parameters;
             }
         };
-        MainActivity.requestQueue.add(stringRequest);
+        Volley.newRequestQueue(BokovoeMenu.tvKorzinaCount.getContext()).add(stringRequest);
+
     }
 }

@@ -22,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -34,9 +35,9 @@ import java.util.Map;
 
 import app.fil.market.MainActivity;
 import app.fil.market.R;
-import app.fil.market.tovari.TovariSpisokAdapter;
+import app.fil.market.ui.tovari.TovariSpisokAdapter;
 import app.fil.market.Model.Utils;
-import app.fil.market.tovari.TovarFromSQL;
+import app.fil.market.ui.tovari.TovarFromSQL;
 
 class ItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -76,7 +77,6 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     Activity activity;
     TextView tvKorzinaKOplateSkolkoVsego, tvCountKorzinaObj;
     ImageButton ibKorzinaDelTovari;
-    ArrayList<TovarFromSQL> itemsObj;
     List<CheckBox> chBoxesList;
 
 
@@ -86,9 +86,8 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                           final ImageButton ibKorzinaDelTovari,
                           final CheckBox mainCheckBox,
                           final Button btKorzinaK_Pokupkam,
-                          final Activity activity, final ArrayList<TovarFromSQL> items) {
+                          final Activity activity) {
         this.activity = activity;
-        this.itemsObj = items;
         this.tvKorzinaKOplateSkolkoVsego = tvKorzinaKOplateSkolkoVsego;
         this.conLayKorzinaBottom = conLayKorzinaBottom;
         this.mainCheckBox = mainCheckBox;
@@ -102,8 +101,8 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 for ( CheckBox chL: chBoxesList){
                     chL.setChecked(mainCheckBox.isChecked());
                 }
-                for (TovarFromSQL cnL: itemsObj){
-                    cnL.setVibranLi(mainCheckBox.isChecked());
+                for (TovarFromSQL cnL: KorzinaActivity.tovariList2){
+                    cnL.setVibranLiAndSendSQL(mainCheckBox.isChecked());
                 }
             }
         });
@@ -117,28 +116,28 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             @Override
             public void onClick(View view) {
                 ArrayList <Integer> delListItems=new ArrayList();
-                for(int i=0; i<itemsObj.size(); i++){
-                    if(itemsObj.get(i).getIsSelected()){
-                        delTovarIzKorzini(itemsObj.get(i).getId_sql_tovara_v_korzine_pokupatelia());
+                for(int i=0; i<KorzinaActivity.tovariList2.size(); i++){
+                    if(KorzinaActivity.tovariList2.get(i).getIsSelected()){
+                        delTovarIzKorzini(KorzinaActivity.tovariList2.get(i).getId_sql_tovara_v_korzine_pokupatelia(), ibKorzinaDelTovari);
                         delListItems.add(i);
-                        MainActivity.userStatic.setKorzinaCountStr(Integer.toString(MainActivity.userStatic.getKorzina_kountInt()-itemsObj.get(i).getKolihestvo()));
-                        TovariSpisokAdapter.deletedItemsSQLId.add(itemsObj.get(i).getId_sql_tovara_v_baze());
+                        MainActivity.pokupatelStatic.setKorzinaCountStr(Integer.toString(MainActivity.pokupatelStatic.getKorzina_kountInt()-KorzinaActivity.tovariList2.get(i).getKolihestvo()));
+                        TovariSpisokAdapter.deletedItemsSQLId.add(KorzinaActivity.tovariList2.get(i).getId_sql_tovara_v_baze());
                     }
                 }
 
                 for(int i=0; i<delListItems.size(); i++){
-                   itemsObj.remove(delListItems.get(i)-i);
+                    KorzinaActivity.tovariList2.remove(delListItems.get(i)-i);
                    notifyItemRemoved(delListItems.get(i)-i);
-                    System.out.println("items size = "+itemsObj.size()+", i="+i+", pos items="+delListItems.get(i));
+                    System.out.println("items size = "+KorzinaActivity.tovariList2.size()+", i="+i+", pos items="+delListItems.get(i));
                 }
 
                 mainCheckBox.setChecked(false);
-                if(itemsObj.size()==0) {
+                if(KorzinaActivity.tovariList2.size()==0) {
                     btKorzinaK_Pokupkam.setVisibility(View.VISIBLE);
                     conLayKorzinaBottom.setVisibility(View.INVISIBLE);
                 }
-                for(TovarFromSQL itL: itemsObj){
-                    itL.setVibranLi(true);
+                for(TovarFromSQL itL: KorzinaActivity.tovariList2){
+                    itL.setVibranLiAndSendSQL(true);
                 }
                 for (CheckBox chL: chBoxesList){
                     chL.setChecked(true);
@@ -161,7 +160,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-            final TovarFromSQL item = itemsObj.get(position);
+            final TovarFromSQL item = KorzinaActivity.tovariList2.get(position);
             final ItemViewHolder viewHolder = (ItemViewHolder) holder;
 
             viewHolder.tvRowTowarNaimenovanie.setText(item.getNaimenovanie());
@@ -182,13 +181,13 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             viewHolder.chKorzina.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    item.setVibranLi(b);
+                    item.setVibranLiAndSendSQL(b);
                     rashetTotalK_oplate();
                     if(!b){
                         mainCheckBox.setChecked(b);
                     }else{
                         boolean allTrue = true;
-                        for (TovarFromSQL cnL: itemsObj){
+                        for (TovarFromSQL cnL: KorzinaActivity.tovariList2){
                             if(!cnL.getIsSelected()){
                                 allTrue=false;
                             }
@@ -208,12 +207,12 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         if(Integer.valueOf(viewHolder.etRowKorzinaKolihestvoTovara.getText().toString())>0) {
                             item.setKolihestvoStr(viewHolder.etRowKorzinaKolihestvoTovara.getText().toString());
                             System.out.println("Et set = (if)" + item.getKolihestvoStr() + ",  " + actionId + ",  ");
-                            item.setVibranLi(true);
+                            item.setVibranLiAndSendSQL(true);
                         }
                     } else {
                         System.out.println("Et set = (else)");
                     }
-                    item.setVibranLi(true);
+                    item.setVibranLiAndSendSQL(true);
                     viewHolder.chKorzina.setChecked(true);
                     rashetTotalK_oplate();
                     conLayKorzinaBottom.setVisibility(View.VISIBLE);
@@ -233,20 +232,20 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         if (viewHolder.etRowKorzinaKolihestvoTovara.getText().toString().matches("[-+]?\\d+")) { //ввели цифру число
                             if(Integer.valueOf(viewHolder.etRowKorzinaKolihestvoTovara.getText().toString())>0) {
                                 item.setKolihestvoStr(viewHolder.etRowKorzinaKolihestvoTovara.getText().toString());
-                                item.setVibranLi(true);
+                                item.setVibranLiAndSendSQL(true);
                                 System.out.println("Et set ()if et789= " + item.getKolihestvoStr());
                             }
                         } else { //ввели не цифру или ничего
                             viewHolder.etRowKorzinaKolihestvoTovara.setText(item.getKolihestvoStr());
                             System.out.println("Et set  ()else et789");
                         }
-                        item.setVibranLi(true);
+                        item.setVibranLiAndSendSQL(true);
                         viewHolder.chKorzina.setChecked(true);
                         rashetTotalK_oplate();
                     }
                 }
             });
-            if (position == itemsObj.size() - 1) {
+            if (position == KorzinaActivity.tovariList2.size() - 1) {
                 rashetTotalK_oplate();
                 conLayKorzinaBottom.setVisibility(View.VISIBLE);
                 ibKorzinaDelTovari.setVisibility(View.VISIBLE);
@@ -257,10 +256,10 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     if(item.getKolihestvo()>1){
                         item.setKolihestvoAndSendToSQL(item.getKolihestvo()-1);
                         viewHolder.etRowKorzinaKolihestvoTovara.setText(item.getKolihestvoStr());
-                        item.setVibranLi(true);
+                        item.setVibranLiAndSendSQL(true);
                         viewHolder.chKorzina.setChecked(true);
                         rashetTotalK_oplate();
-                        MainActivity.userStatic.setKorzinaCountStr(MainActivity.userStatic.getKorzina_kountInt()-1);
+                        MainActivity.pokupatelStatic.setKorzinaCountStr(MainActivity.pokupatelStatic.getKorzina_kountInt()-1);
                     }
                 }
             });
@@ -269,10 +268,10 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View view) {
                     item.setKolihestvoAndSendToSQL(item.getKolihestvo()+1);
                     viewHolder.etRowKorzinaKolihestvoTovara.setText(item.getKolihestvoStr());
-                    item.setVibranLi(true);
+                    item.setVibranLiAndSendSQL(true);
                     viewHolder.chKorzina.setChecked(true);
                     rashetTotalK_oplate();
-                    MainActivity.userStatic.setKorzinaCountStr(MainActivity.userStatic.getKorzina_kountInt()+1);
+                    MainActivity.pokupatelStatic.setKorzinaCountStr(MainActivity.pokupatelStatic.getKorzina_kountInt()+1);
 
                 }
             });
@@ -286,10 +285,10 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private void rashetTotalK_oplate() {
         totalK_OplateDoubl = 0.0;
-        for (int i = 0; i < itemsObj.size(); i++) {
-            if (itemsObj.get(i).getIsSelected()) {
-                totalK_OplateDoubl = totalK_OplateDoubl + itemsObj.get(i).getCenaFinalSoSkidkoyZaUpak()*
-                        itemsObj.get(i).getKolihestvo();
+        for (int i = 0; i < KorzinaActivity.tovariList2.size(); i++) {
+            if (KorzinaActivity.tovariList2.get(i).getIsSelected()) {
+                totalK_OplateDoubl = totalK_OplateDoubl + KorzinaActivity.tovariList2.get(i).getCenaFinalSoSkidkoyZaUpak()*
+                        KorzinaActivity.tovariList2.get(i).getKolihestvo();
             }
         }
         tvKorzinaKOplateSkolkoVsego.setText(Utils.getStringFromDoubleFormated2Zerro(totalK_OplateDoubl) + " руб.");
@@ -298,9 +297,9 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return itemsObj.size();
+        return KorzinaActivity.tovariList2.size();
     }
-    void delTovarIzKorzini(final String id_sql_tovara_v_korzine_pokupatelia) {
+    void delTovarIzKorzini(final String id_sql_tovara_v_korzine_pokupatelia, ImageButton ibKorzinaDelTovari) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.DEL_TOVAR,
                 new Response.Listener<String>() {
                     @Override
@@ -308,7 +307,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String sum_korzina=jsonObject.getString("sum_korzina");
-                            MainActivity.userStatic.setKorzinaCountStr(sum_korzina);
+                            MainActivity.pokupatelStatic.setKorzinaCountStr(sum_korzina);
                             System.out.println("TovarFromSQL delTovarIzKorzini = " + jsonObject.toString());
 
                         } catch (JSONException e) {
@@ -333,7 +332,7 @@ public class KorzinaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
         };
 
-        MainActivity.requestQueue.add(stringRequest);
+        Volley.newRequestQueue(ibKorzinaDelTovari.getContext()).add(stringRequest);
     }
 
 }
