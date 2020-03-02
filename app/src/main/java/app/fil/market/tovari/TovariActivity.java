@@ -31,6 +31,7 @@ import app.fil.market.Model.ILoadMore;
 import app.fil.market.R;
 import app.fil.market.Model.Utils;
 import app.fil.market.korzina.KorzinaActivity;
+import app.fil.market.ui.podkategorii.PodkategoriiFragment;
 import app.fil.market.ui.tovari.TovarFromSQL;
 import app.fil.market.ui.tovari.TovariFragment;
 import app.fil.market.ui.tovari.TovariSpisokAdapter;
@@ -66,13 +67,13 @@ public class TovariActivity extends AppCompatActivity {
         adapter.setLoadMore(new ILoadMore() {
             @Override
             public void onLoadMore() {
-                TovariFragment.listTovarovSQLfromAdapterRV.add(null);
-                adapter.notifyItemInserted(TovariFragment.listTovarovSQLfromAdapterRV.size() - 1);
-                TovariFragment.listTovarovSQLfromAdapterRV.remove(TovariFragment.listTovarovSQLfromAdapterRV.size() - 1);
-                adapter.notifyItemRemoved(TovariFragment.listTovarovSQLfromAdapterRV.size());
-                int index = TovariFragment.listTovarovSQLfromAdapterRV.size();
-                int end = index + TovariFragment.countLoadItems;
-                showSQL(index, end);
+//                TovariFragment.listTovarovSQLfromAdapterRV.add(null);
+//                adapter.notifyItemInserted(TovariFragment.listTovarovSQLfromAdapterRV.size() - 1);
+//                TovariFragment.listTovarovSQLfromAdapterRV.remove(TovariFragment.listTovarovSQLfromAdapterRV.size() - 1);
+//                adapter.notifyItemRemoved(TovariFragment.listTovarovSQLfromAdapterRV.size());
+//                int index = TovariFragment.listTovarovSQLfromAdapterRV.size();
+//                int end = index + TovariFragment.countLoadItems;
+//                showSQL(index, end);
             }
         });
     }
@@ -123,11 +124,11 @@ public class TovariActivity extends AppCompatActivity {
                                         jsonRow.getString("raskazotovare")
                                 );
                                 System.out.println("TovarFromSQL create foto = " + tovarFromSQLObjRowTovar.getFoto());
-                                TovariFragment.listTovarovSQLfromAdapterRV.add(tovarFromSQLObjRowTovar);
+                                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).add(tovarFromSQLObjRowTovar);
                             }
                             int razmerZaprosa = indexEnd - indexStart;
                             if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
-                                if(TovariFragment.listTovarovSQLfromAdapterRV.size()>razmerZaprosa)
+                                if(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size()>razmerZaprosa)
                                     Toast.makeText(TovariActivity.this, "Загружены все товары.", Toast.LENGTH_SHORT).show();
                                 System.out.println("if345dfs3 bolhe net");
                             } else {

@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import app.fil.market.MainActivity;
 import app.fil.market.R;
 import app.fil.market.korzina.KorzinaActivity;
+import app.fil.market.ui.podkategorii.PodkategoriiFragment;
 import app.fil.market.ui.tovari.TovariSpisokAdapter;
 import app.fil.market.ui.tovari.TovariFragment;
 
@@ -91,7 +92,7 @@ public class OpisanieTovaraFragment extends Fragment {
         tvOpisVKorzinu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                opisanieTovaraViewModel.buySQL(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getId_sql_tovara_v_baze(), etKolvo.getText().toString(),
+                opisanieTovaraViewModel.buySQL(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getId_sql_tovara_v_baze(), etKolvo.getText().toString(),
                         MainActivity.pokupatelStatic.getSqlId());
 
             }
@@ -108,22 +109,22 @@ public class OpisanieTovaraFragment extends Fragment {
                 startActivity(intentKorzina);
             }
         });
-        tvNazvanie.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getNaimenovanie());
-        Picasso.get().load(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getFoto()).into(ivOpisTovar);
-        tvOpisCenaTovara.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getCenaZaOdinKgStr());
-        tvOpisZnahenieVesaUpakovki.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getKolihestvoV_Upakovke()+" "+
-                TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getEdinica_izmerenia_upakovki());
-        tvOpisZnahenieRazmernogoRiada.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getZnahrazmriada());
-        tvOpisanieZnahenieMestaVilova.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getMestovilova());
-        tvOpisTypeFasovki.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getSostoianieTovara());
-        tvOpisanieTovaraRaskaz.setText(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getRaskazotovare());
-        tvOpisTovaraCenaZaEdinicu.setText("("+ TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getCenaFinalSoSkidkoyZaUpakStr()+" руб. за "+
-                TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getTypeUpakovki()+")");
-        tvOpisVesUpakPodEditText.setText("("+ TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getKolihestvoV_Upakovke()+" "+
-                TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getEdinica_izmerenia_upakovki()+")");
-        tvOpisZaEdinicuIzmer.setText("за 1 "+ TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getEdinica_izmerenia_upakovki());
-        if(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getZnahrazmriada().equals("")) tvOpisRazmerniyRiad.setVisibility(View.GONE);
-        if(TovariFragment.listTovarovSQLfromAdapterRV.get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getMestovilova().equals("")) tvOpisanieMestoVilova.setVisibility(View.GONE);
+        tvNazvanie.setText(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getNaimenovanie());
+        Picasso.get().load(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getFoto()).into(ivOpisTovar);
+        tvOpisCenaTovara.setText(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getCenaZaOdinKgStr());
+        tvOpisZnahenieVesaUpakovki.setText(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getKolihestvoV_Upakovke()+" "+
+                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getEdinica_izmerenia_upakovki());
+        tvOpisZnahenieRazmernogoRiada.setText(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getZnahrazmriada());
+        tvOpisanieZnahenieMestaVilova.setText(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getMestovilova());
+        tvOpisTypeFasovki.setText(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getSostoianieTovara());
+        tvOpisanieTovaraRaskaz.setText(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getRaskazotovare());
+        tvOpisTovaraCenaZaEdinicu.setText("("+ PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getCenaFinalSoSkidkoyZaUpakStr()+" руб. за "+
+                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getTypeUpakovki()+")");
+        tvOpisVesUpakPodEditText.setText("("+ PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getKolihestvoV_Upakovke()+" "+
+                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getEdinica_izmerenia_upakovki()+")");
+        tvOpisZaEdinicuIzmer.setText("за 1 "+ PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getEdinica_izmerenia_upakovki());
+        if(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getZnahrazmriada().equals("")) tvOpisRazmerniyRiad.setVisibility(View.GONE);
+        if(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(TovariSpisokAdapter.indexTovaraDliaOpisanieFragment).getMestovilova().equals("")) tvOpisanieMestoVilova.setVisibility(View.GONE);
 
 //        ibKorzina = getActivity().findViewById(R.id.ibOpisanieKorzina);
 //        final RecyclerView rvTovariFragm = root.findViewById(R.id.rvTovariFragm);

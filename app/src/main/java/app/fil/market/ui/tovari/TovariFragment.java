@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import app.fil.market.Model.ILoadMore;
 import app.fil.market.R;
@@ -23,11 +25,11 @@ public class TovariFragment extends Fragment {
     private TovariViewModel tovariViewModel;
 //    TextView tvKorzinaCount;
     public static TovariSpisokAdapter adapter;
-    public static ArrayList<TovarFromSQL> listTovarovSQLfromAdapterRV = new ArrayList<>();
+//    public static ArrayList<TovarFromSQL> listTovarovSQLfromAdapterRV = new ArrayList<>();
     final public static int countLoadItems = 10;
 //    String vetkaId;
     public static String vetkaIdprevios=" ";
-    public static boolean firstStart = true;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -45,11 +47,11 @@ public class TovariFragment extends Fragment {
         adapter.setLoadMore(new ILoadMore() {
             @Override
             public void onLoadMore() {
-                listTovarovSQLfromAdapterRV.add(null);
-                adapter.notifyItemInserted(listTovarovSQLfromAdapterRV.size() - 1);
-                listTovarovSQLfromAdapterRV.remove(listTovarovSQLfromAdapterRV.size() - 1);
-                adapter.notifyItemRemoved(listTovarovSQLfromAdapterRV.size());
-                int index = listTovarovSQLfromAdapterRV.size();
+                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).add(null);
+                adapter.notifyItemInserted(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() - 1);
+                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).remove(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() - 1);
+                adapter.notifyItemRemoved(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size());
+                int index = PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size();
                 int end = index + countLoadItems;
                 tovariViewModel.showSQL(index, end,    rvTovariFragm);
             }
@@ -66,20 +68,22 @@ public class TovariFragment extends Fragment {
 //        System.out.println("getArguments "+vetkaId);
 
 
-        if(firstStart){
+        if(PodkategoriiFragment.firstStartListBool.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId))){
             tovariViewModel.showSQL(0,10,    rvTovariFragm);
-            firstStart = false;
+            PodkategoriiFragment.firstStartListBool.set(Integer.valueOf(PodkategoriiFragment.podkatVetkaId), false);
             vetkaIdprevios= PodkategoriiFragment.podkatVetkaId;
             System.out.println("firstStart if");
-        } else if (!firstStart & PodkategoriiFragment.podkatVetkaId.equals(vetkaIdprevios)){
+        } else if (!PodkategoriiFragment.firstStartListBool.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId))
+                & PodkategoriiFragment.podkatVetkaId.equals(vetkaIdprevios)){
             System.out.println("firstStart else if "+PodkategoriiFragment.podkatVetkaId+", "+vetkaIdprevios);
 
-        } else{
-            System.out.println("firstStart else "+PodkategoriiFragment.podkatVetkaId+", "+vetkaIdprevios+")");
-            listTovarovSQLfromAdapterRV.clear();
-            tovariViewModel.showSQL(0,10,    rvTovariFragm);
-            vetkaIdprevios=PodkategoriiFragment.podkatVetkaId;
         }
+//        else{
+//            System.out.println("firstStart else "+PodkategoriiFragment.podkatVetkaId+", "+vetkaIdprevios+")");
+//            listTovarovSQLfromAdapterRV.clear();
+//            tovariViewModel.showSQL(0,10,    rvTovariFragm);
+//            vetkaIdprevios=PodkategoriiFragment.podkatVetkaId;
+//        }
         return root;
     }
 }

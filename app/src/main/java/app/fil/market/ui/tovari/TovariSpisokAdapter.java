@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import app.fil.market.MainActivity;
 import app.fil.market.Model.ILoadMore;
 import app.fil.market.R;
+import app.fil.market.ui.podkategorii.PodkategoriiFragment;
 
 class LoadingViewHolder extends RecyclerView.ViewHolder {
 
@@ -101,12 +102,12 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             }
         });
-        System.out.println("TovariAdapter constructor Array size=" + TovariFragment.listTovarovSQLfromAdapterRV.size());
+//        System.out.println("TovariAdapter constructor Array size=" + TovariFragment.listTovarovSQLfromAdapterRV.size());
     }
 
     @Override
     public int getItemViewType(int position) {
-        return TovariFragment.listTovarovSQLfromAdapterRV.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        return PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     public void setLoadMore(ILoadMore loadMore) {
@@ -130,7 +131,7 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         System.out.println("Tovari Adapter onBindViewHolder =" + position);
         if (holder instanceof ItemViewHolder) {
-            final TovarFromSQL item = TovariFragment.listTovarovSQLfromAdapterRV.get(position);
+            final TovarFromSQL item = PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(position);
             final ItemViewHolder viewHolder = (ItemViewHolder) holder;
 
             viewHolder.tvRowTowarNaimenovanie.setText(
@@ -201,7 +202,7 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             LoadingViewHolder loadingHolder = (LoadingViewHolder) holder;
             loadingHolder.progressBar.setIndeterminate(true);
         }
-        System.out.println("TovariAdapter onBindViewHolder Array size=" + TovariFragment.listTovarovSQLfromAdapterRV.size());
+        System.out.println("TovariAdapter onBindViewHolder Array size=" + PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size());
     }
 
 
@@ -211,7 +212,7 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return TovariFragment.listTovarovSQLfromAdapterRV.size();
+        return PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size();
     }
 
     @Override

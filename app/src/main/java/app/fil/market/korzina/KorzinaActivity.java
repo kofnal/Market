@@ -37,6 +37,7 @@ import app.fil.market.MainActivity;
 import app.fil.market.MyDialog;
 import app.fil.market.R;
 import app.fil.market.Model.Utils;
+import app.fil.market.ui.podkategorii.PodkategoriiFragment;
 import app.fil.market.ui.tovari.TovariFragment;
 import app.fil.market.zakazi.Zakaz_Activity;
 import app.fil.market.ui.tovari.TovarFromSQL;
@@ -59,20 +60,20 @@ public class KorzinaActivity extends AppCompatActivity {
     int countShowToastOt70rub=0;
 
     public static void obnovitDannieKorzini() {
-//        MainActivity.pokupatelStatic.setKorzinaCountStr(0);
-        KorzinaActivity.tovariList2=KorzinaActivity.tovariListBezOtpravlennogoZakaza;
-        for(int i = 0; i<TovariFragment.listTovarovSQLfromAdapterRV.size(); i++){
-
-            for(int y = 0; y<KorzinaActivity.tovariList2.size(); y++){
-               if( TovariFragment.listTovarovSQLfromAdapterRV.get(i).getId_sql_tovara_v_baze()==
-               KorzinaActivity.tovariList2.get(y).getId_sql_tovara_v_baze()){
-                   TovariFragment.listTovarovSQLfromAdapterRV.get(i).setEstLi_V_KorzineObj(true);
-               } else{
-                   TovariFragment.listTovarovSQLfromAdapterRV.get(i).setEstLi_V_KorzineObj(false);
-               }
-            }
-        }
-        TovariFragment.adapter.notifyDataSetChanged();
+////        MainActivity.pokupatelStatic.setKorzinaCountStr(0);
+//        KorzinaActivity.tovariList2=KorzinaActivity.tovariListBezOtpravlennogoZakaza;
+//        for(int i = 0; i< PodkategoriiFragment..listTovarovSQLfromAdapterRV.size(); i++){
+//
+//            for(int y = 0; y<KorzinaActivity.tovariList2.size(); y++){
+//               if( TovariFragment.listTovarovSQLfromAdapterRV.get(i).getId_sql_tovara_v_baze()==
+//               KorzinaActivity.tovariList2.get(y).getId_sql_tovara_v_baze()){
+//                   TovariFragment.listTovarovSQLfromAdapterRV.get(i).setEstLi_V_KorzineObj(true);
+//               } else{
+//                   TovariFragment.listTovarovSQLfromAdapterRV.get(i).setEstLi_V_KorzineObj(false);
+//               }
+//            }
+//        }
+//        TovariFragment.adapter.notifyDataSetChanged();
     }
 
     @Override

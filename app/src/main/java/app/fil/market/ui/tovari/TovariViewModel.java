@@ -90,12 +90,12 @@ public class TovariViewModel extends ViewModel {
                                         jsonRow.getString("edinica_izmerenia_upakovki"),
                                         jsonRow.getString("raskazotovare")
                                 );
-                                System.out.println("TovarFromSQL create foto = "+TovariFragment.listTovarovSQLfromAdapterRV.size()+", " + tovarFromSQLObjRowTovar.getFoto());
-                                TovariFragment.listTovarovSQLfromAdapterRV.add(tovarFromSQLObjRowTovar);
+                                System.out.println("TovarFromSQL create foto = "+PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size()+", " + tovarFromSQLObjRowTovar.getFoto());
+                                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).add(tovarFromSQLObjRowTovar);
                             }
                             int razmerZaprosa = indexEnd - indexStart;
                             if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
-                                if(TovariFragment.listTovarovSQLfromAdapterRV.size()>razmerZaprosa)
+                                if(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size()>razmerZaprosa)
                                     Toast.makeText(BokovoeMenu.tvKorzinaCount.getContext(), "Загружены все товары.", Toast.LENGTH_SHORT).show();
                                 System.out.println("if345dfs3 bolhe net");
                             } else {

@@ -23,10 +23,11 @@ public class PodkategoriiFragment extends Fragment {
 
     private PodkategoriiViewModel podkategoriiViewModel;
     public static ArrayList<PodkategoriaObjectSQL> podkategoriaObjectSQLSList = new ArrayList<>();
-//    public static ArrayList<ArrayList<TovarFromSQL>> podkategoriaObjectSQLSList2 = new ArrayList<>();
+    public static ArrayList<ArrayList<TovarFromSQL>> listTovarovSQLfromAdapterRV = new ArrayList<>();
+    public  static  ArrayList <Boolean> firstStartListBool = new ArrayList<>();
+    public  static boolean firstStart=true;
 //    TextView tvKorzinaCount;
 //    public  static  LinearLayout linLayout ;
-    public static boolean firstStart=true;
     PodkategoriiAdapter adapter;
     public static String podkatVetkaId;
 
@@ -36,21 +37,16 @@ public class PodkategoriiFragment extends Fragment {
         podkategoriiViewModel =
                 ViewModelProviders.of(this).get(PodkategoriiViewModel.class);
         View root = inflater.inflate(R.layout.fragment_tovari, container, false);
-//        tvKorzinaCount = getActivity().findViewById(R.id.tvKorzinaCount);
-//        ibKorzina = getActivity().findViewById(R.id.ibOpisanieKorzina);
         final RecyclerView rvTovariFragm = root.findViewById(R.id.rvTovariFragm);
         rvTovariFragm.setLayoutManager(new LinearLayoutManager(root.getContext()));
         adapter = new PodkategoriiAdapter(rvTovariFragm, getActivity());
         rvTovariFragm.setAdapter(adapter);
-
         if(firstStart){
             podkategoriiViewModel.showSQLPodkat(rvTovariFragm);
             firstStart = false;
         }else{
 
         }
-
-
         return root;
 
     }

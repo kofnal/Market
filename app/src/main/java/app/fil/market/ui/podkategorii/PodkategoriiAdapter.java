@@ -40,8 +40,6 @@ class ItemViewHolder extends RecyclerView.ViewHolder {
 
 public class PodkategoriiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    ILoadMore loadMore;
-    boolean isLoading;
     Activity activity;
 //    ImageButton ibOpisanieKorzina;
 //    TextView tvCountKorzinaObj;
@@ -49,7 +47,6 @@ public class PodkategoriiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     int lastVisibleItem;
     int totalItemCount;
     public static ArrayList<String> deletedItemsSQLId = new ArrayList<>();
-    public static int indexTovaraDliaOpisanieFragment =0;
 
 
     public PodkategoriiAdapter(RecyclerView recyclerView, Activity activity
@@ -62,7 +59,7 @@ public class PodkategoriiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
 
-        System.out.println("TovariAdapter constructor Array size=" + TovariFragment.listTovarovSQLfromAdapterRV.size());
+//        System.out.println("TovariAdapter constructor Array size=" + PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size());
     }
 
 
@@ -94,7 +91,7 @@ public class PodkategoriiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         });
 
 
-        System.out.println("TovariAdapter onBindViewHolder Array size=" + TovariFragment.listTovarovSQLfromAdapterRV.size());
+//        System.out.println("TovariAdapter onBindViewHolder Array size=" + PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size());
     }
 
 
