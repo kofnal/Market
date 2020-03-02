@@ -33,11 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".tovari.TovariActivity" />
-        <activity
-            android:name=".TovarOpisanieActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".PodKategoriiActivity" />
         <activity
             android:name=".korzina.KorzinaActivity"
             android:windowSoftInputMode="stateHidden" />
