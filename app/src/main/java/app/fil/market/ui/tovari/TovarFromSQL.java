@@ -57,7 +57,7 @@ public class TovarFromSQL
                         String kolvovupakovkeStr
     ) {
         this.naimenovanie = naimenovanie;
-        this.id_sql_tovara_v_korzine_pokupatelia = id_sql_tovara_v_korzine_pokupatelia;
+        this.id_sql_tovara_v_korzine_pokupatelia = id_sql_tovara_v_korzine_pokupateliaStr;
         this.id_sql_tovara_v_baze = id_sql_tovara_v_bazeStr;
         if (!cenaZaUpak.equals("null"))
             this.cenaZaUpak = Double.parseDouble(cenaStr);

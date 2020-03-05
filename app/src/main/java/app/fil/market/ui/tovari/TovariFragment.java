@@ -79,10 +79,10 @@ public class TovariFragment extends Fragment {
 
         }
 //        else{
-//            System.out.println("firstStart else "+PodkategoriiFragment.podkatVetkaId+", "+vetkaIdprevios+")");
+//            System.out.println("firstStart else "+PoiskFragment.podkatVetkaId+", "+vetkaIdprevios+")");
 //            listTovarovSQLfromAdapterRV.clear();
 //            tovariViewModel.showSQL(0,10,    rvTovariFragm);
-//            vetkaIdprevios=PodkategoriiFragment.podkatVetkaId;
+//            vetkaIdprevios=PoiskFragment.podkatVetkaId;
 //        }
         return root;
     }

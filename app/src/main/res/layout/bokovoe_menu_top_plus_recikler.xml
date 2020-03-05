@@ -32,6 +32,7 @@
                 android:layout_weight="100"
                 android:background="@drawable/backgrbelizakrugl"
                 android:gravity="center_vertical"
+                android:onClick="tvBokovI_FindOnClick"
                 android:paddingLeft="@dimen/margin_otstup"
                 android:text="@string/ya_ihu"
                 android:textColor="@color/colorCena2"

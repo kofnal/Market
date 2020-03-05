@@ -62,7 +62,7 @@ public class KorzinaActivity extends AppCompatActivity {
     public static void obnovitDannieKorzini() {
 ////        MainActivity.pokupatelStatic.setKorzinaCountStr(0);
 //        KorzinaActivity.tovariList2=KorzinaActivity.tovariListBezOtpravlennogoZakaza;
-//        for(int i = 0; i< PodkategoriiFragment..listTovarovSQLfromAdapterRV.size(); i++){
+//        for(int i = 0; i< PoiskFragment..listTovarovSQLfromAdapterRV.size(); i++){
 //
 //            for(int y = 0; y<KorzinaActivity.tovariList2.size(); y++){
 //               if( TovariFragment.listTovarovSQLfromAdapterRV.get(i).getId_sql_tovara_v_baze()==

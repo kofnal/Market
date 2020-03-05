@@ -1,14 +1,10 @@
-package app.fil.market.ui.podkategorii;
+package app.fil.market.ui.poisk.podkategorii;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -28,10 +24,9 @@ import java.util.Map;
 import app.fil.market.BokovoeMenu;
 import app.fil.market.MainActivity;
 import app.fil.market.Model.Utils;
-import app.fil.market.R;
 import app.fil.market.ui.tovari.TovarFromSQL;
 
-public class PodkategoriiViewModel extends ViewModel {
+public class PoiskViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
     String korzCount;
@@ -68,10 +63,10 @@ public class PodkategoriiViewModel extends ViewModel {
                                 String nazvanie     =    jsonRow.getString("nazvanie");
                                 final String id     =    jsonRow.getString("id");
                                 String foto = Utils.BASE_IP+jsonRow.getString("foto");
-                               PodkategoriaObjectSQL podkategoriaObjectSQL= new PodkategoriaObjectSQL(id, nazvanie, foto);
-                               PodkategoriiFragment.podkategoriaObjectSQLSList.add(podkategoriaObjectSQL);
-                               PodkategoriiFragment.listTovarovSQLfromAdapterRV.add(new ArrayList<TovarFromSQL>());
-                               PodkategoriiFragment.firstStartListBool.add(true);
+                               PoiskObjectSQL poiskObjectSQL = new PoiskObjectSQL(id, nazvanie, foto);
+                               PoiskFragment.poiskObjectSQLSList.add(poiskObjectSQL);
+                               PoiskFragment.listTovarovSQLfromAdapterRV.add(new ArrayList<TovarFromSQL>());
+                               PoiskFragment.firstStartListBool.add(true);
                             }
                             recyclerView.getAdapter().notifyDataSetChanged();
                         } catch (JSONException e) {

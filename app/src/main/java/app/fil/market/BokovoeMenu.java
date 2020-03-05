@@ -82,7 +82,6 @@ public class BokovoeMenu extends AppCompatActivity   {
                 return true;
             }
         });
-
     }
 
 
@@ -104,8 +103,12 @@ public void ibKorzinaClick(View v ){
             Intent intentKorzina = new Intent(getApplicationContext(), KorzinaActivity.class);
             startActivity(intentKorzina);
         }
+}
+public void tvBokovI_FindOnClick(View v ){
+        System.out.println("tvBokovI_FindOnClick");
 
 }
+
     @Override
     protected void onResume() {
         if(tvKorzinaCount!=null){

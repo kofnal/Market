@@ -61,7 +61,7 @@ public class Zakaz_Activity extends AppCompatActivity {
             if(KorzinaActivity.tovariList2.get(i).getIsSelected()) {
                 JSONObject jsObjTovarRow = new JSONObject();
                 try {
-                    jsObjTovarRow.put("id_tovar_sql", KorzinaActivity.tovariList2.get(i).getId_sql_tovara_v_baze());
+                    jsObjTovarRow.put("id_tovar_sql", KorzinaActivity.tovariList2.get(i).getId_sql_tovara_v_korzine_pokupatelia());
                     jsObjTovarRow.put("cena_tovar", KorzinaActivity.tovariList2.get(i).getCenaZaOdinKg());
                     jsObjTovarRow.put("kolihestvo", KorzinaActivity.tovariList2.get(i).getKolihestvo());
                     jsObjTovarRow.put("id_sql_tovara_v_korzine_pokupatelia",

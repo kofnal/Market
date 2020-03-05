@@ -1,4 +1,4 @@
-package app.fil.market.ui.podkategorii;
+package app.fil.market.ui.poisk.podkategorii;
 
 
 import android.app.Activity;
@@ -10,17 +10,13 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import app.fil.market.Model.ILoadMore;
 import app.fil.market.R;
-import app.fil.market.ui.tovari.TovarFromSQL;
-import app.fil.market.ui.tovari.TovariFragment;
 
 class ItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -38,7 +34,7 @@ class ItemViewHolder extends RecyclerView.ViewHolder {
     }
 }
 
-public class PodkategoriiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PoiskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Activity activity;
 //    ImageButton ibOpisanieKorzina;
@@ -49,8 +45,8 @@ public class PodkategoriiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public static ArrayList<String> deletedItemsSQLId = new ArrayList<>();
 
 
-    public PodkategoriiAdapter(RecyclerView recyclerView, Activity activity
-                               //, ImageButton ibOpisanieKorzina
+    public PoiskAdapter(RecyclerView recyclerView, Activity activity
+                        //, ImageButton ibOpisanieKorzina
     ) {
         this.activity = activity;
 //        this.ibOpisanieKorzina = ibOpisanieKorzina;
@@ -76,7 +72,7 @@ public class PodkategoriiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         System.out.println("Tovari Adapter onBindViewHolder =" + position);
 
-            final PodkategoriaObjectSQL item = PodkategoriiFragment.podkategoriaObjectSQLSList.get(position);
+            final PoiskObjectSQL item = PoiskFragment.poiskObjectSQLSList.get(position);
             final ItemViewHolder viewHolder = (ItemViewHolder) holder;
 
 
@@ -85,7 +81,7 @@ public class PodkategoriiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         viewHolder.conLayPodkatRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PodkategoriiFragment.podkatVetkaId=item.getId();
+                PoiskFragment.podkatVetkaId=item.getId();
                 Navigation.findNavController(activity, R.id.nav_host_fragment).navigate(R.id.nav_tovari);
             }
         });
@@ -97,7 +93,7 @@ public class PodkategoriiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return PodkategoriiFragment.podkategoriaObjectSQLSList.size();
+        return PoiskFragment.poiskObjectSQLSList.size();
     }
 
 }

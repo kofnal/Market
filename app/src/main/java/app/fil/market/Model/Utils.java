@@ -1,7 +1,7 @@
 package app.fil.market.Model;
 
 public class Utils {
-    public static final String BASE_IP = "http://34.65.239.89/googledrive/android/market/";
+    public static final String BASE_IP = "https://filapp.000webhostapp.com/";
     public static final String SHOW_KATEGORIA = BASE_IP + "showKategoria.php";
     public static final String SHOW_PODKATEGORIA = BASE_IP + "showPodkat.php";
     public static final String SHOW_TOVAR = BASE_IP + "showTovar.php";

@@ -39,7 +39,7 @@ public class OpisanieTovaraFragment extends Fragment {
     ImageView ivOpisTovar;
     //    TovarFromSQL tovarFromSQLObjFromTovariActivity;
 //    int indexTovaraDliOpisania;
-//    public static PodkategoriiAdapter adapter;
+//    public static PoiskAdapter adapter;
 //    public static ArrayList<TovarFromSQL> listTovarovSQLfromAdapterRV = new ArrayList<>();
 //    final public static int countLoadItems = 10;
 //    String vetkaId;
@@ -129,7 +129,7 @@ public class OpisanieTovaraFragment extends Fragment {
 //        ibKorzina = getActivity().findViewById(R.id.ibOpisanieKorzina);
 //        final RecyclerView rvTovariFragm = root.findViewById(R.id.rvTovariFragm);
 //        rvTovariFragm.setLayoutManager(new LinearLayoutManager(root.getContext()));
-//        adapter = new PodkategoriiAdapter(rvTovariFragm, getActivity());
+//        adapter = new PoiskAdapter(rvTovariFragm, getActivity());
 //        rvTovariFragm.setAdapter(adapter);
 //        listTovarovSQLfromAdapterRV.clear();
 //        final TextView tvTemp=getActivity().findViewById(R.id.tvBokovI_Find);

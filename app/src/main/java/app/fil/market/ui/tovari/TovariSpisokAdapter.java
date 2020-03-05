@@ -79,7 +79,7 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.activity = activity;
 //        this.ibOpisanieKorzina = ibOpisanieKorzina;
 //        this.tvCountKorzinaObj = tvCountKorzina;
-        System.out.println("PodkategoriiAdapter Konstruktor");
+        System.out.println("PoiskAdapter Konstruktor");
 
 
         final LinearLayoutManager linearLayoutManager
