@@ -27,16 +27,34 @@
                 android:id="@+id/tvBokovI_Find"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/shirina_poley_vvoda"
-
                 android:layout_gravity="center_vertical"
-                android:layout_weight="100"
+                android:layout_weight="10"
                 android:background="@drawable/backgrbelizakrugl"
                 android:gravity="center_vertical"
                 android:onClick="tvBokovI_FindOnClick"
                 android:paddingLeft="@dimen/margin_otstup"
                 android:text="@string/ya_ihu"
                 android:textColor="@color/colorCena2"
-                android:textSize="@dimen/shrift_melkiy" />
+                android:textSize="@dimen/shrift_melkiy"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/etTolb"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/shirina_poley_vvoda"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:background="@drawable/backgrbelizakrugl"
+                android:ems="10"
+                android:hint="@string/ya_ihu"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:paddingStart="@dimen/margin_otstup"
+                android:paddingEnd="8dp"
+                android:textColor="@color/colorBlack"
+                android:textColorHint="@color/colorCena2"
+                android:textSize="@dimen/shrift_melkiy"
+                android:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"

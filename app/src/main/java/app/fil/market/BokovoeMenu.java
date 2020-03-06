@@ -1,9 +1,12 @@
 package app.fil.market;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -16,24 +19,36 @@ import androidx.navigation.ui.NavigationUI;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import app.fil.market.korzina.KorzinaActivity;
+import app.fil.market.ui.poisk.PoiskFragment;
+import app.fil.market.ui.poisk.PoiskObjectSQL;
 
 public class BokovoeMenu extends AppCompatActivity   {
 
     private AppBarConfiguration mAppBarConfiguration;
     NavController navController;
     public static TextView tvKorzinaCount;
+    static TextView tvBokovI_Find;
+    static EditText etTolb;
     ImageView ivKorzina;
     public static RequestQueue requestQueue;
+    Activity contextThisActivity = this;
+    DrawerLayout drawer;
+    public  static SharedPreferences sharedPreferences;
+    final public static String prefTagNameFile = "poiskHistory";
+    final public static String prefTagNameRowData = "rowHistory";
+    final public static int kolvoOtobrajaemixTVvPoiske = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +57,13 @@ public class BokovoeMenu extends AppCompatActivity   {
         Toolbar toolbar = findViewById(R.id.toolbar);
         ivKorzina = findViewById(R.id.ivKorzina);
         tvKorzinaCount = findViewById(R.id.tvKorzinaCount);
+        tvBokovI_Find = findViewById(R.id.tvBokovI_Find);
+        etTolb = findViewById(R.id.etTolb);
         requestQueue = Volley.newRequestQueue(getApplicationContext());
+        sharedPreferences= getApplicationContext().getSharedPreferences(prefTagNameFile, MODE_PRIVATE);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
 //        // Passing each menu ID as a set of Ids because each
@@ -82,6 +100,34 @@ public class BokovoeMenu extends AppCompatActivity   {
                 return true;
             }
         });
+        etTolb.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(keyEvent.getAction() == KeyEvent.ACTION_DOWN && keyEvent.getKeyCode()==KeyEvent.KEYCODE_ENTER){
+                    System.out.println("etTolb enter "+etTolb.getText().toString() +", "+keyEvent.toString());
+                    PoiskFragment.poiskObjectSQLSList.add(0, new PoiskObjectSQL(etTolb.getText().toString()));
+                    if(PoiskFragment.poiskObjectSQLSList.size()>kolvoOtobrajaemixTVvPoiske){
+                        PoiskFragment.poiskObjectSQLSList.remove(PoiskFragment.poiskObjectSQLSList.size()-1);
+                    }
+                    Gson gson = new Gson();
+                    String json = gson.toJson(PoiskFragment.poiskObjectSQLSList);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(prefTagNameRowData,json );
+                    editor.commit();
+
+
+
+
+                    PoiskFragment.adapter.notifyDataSetChanged();
+                    etTolb.setText("");
+                    return false;
+                }else{
+                    return false;
+                }
+
+
+            }
+        });
     }
 
 
@@ -107,8 +153,18 @@ public void ibKorzinaClick(View v ){
 public void tvBokovI_FindOnClick(View v ){
         System.out.println("tvBokovI_FindOnClick");
 
-}
+    Navigation.findNavController(contextThisActivity, R.id.nav_host_fragment).navigate(R.id.nav_poiskFragment);
 
+}
+public static  void etPoiskActivaciya(boolean b){
+        if(b){
+            tvBokovI_Find.setVisibility(View.GONE);
+            etTolb.setVisibility(View.VISIBLE);
+        } else{
+            tvBokovI_Find.setVisibility(View.VISIBLE);
+            etTolb.setVisibility(View.GONE);
+        }
+}
     @Override
     protected void onResume() {
         if(tvKorzinaCount!=null){

@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.squareup.picasso.Picasso;
 
+import app.fil.market.BokovoeMenu;
 import app.fil.market.MainActivity;
 import app.fil.market.R;
 import app.fil.market.korzina.KorzinaActivity;
@@ -153,6 +154,7 @@ public class OpisanieTovaraFragment extends Fragment {
 //        vetkaId = getArguments().getString("vetka");
 //        System.out.println("getArguments "+vetkaId);
 //        opisanieTovaraViewModel.showSQL(0,10, tvKorzinaCount,   rvTovariFragm, vetkaId);
+        BokovoeMenu.etPoiskActivaciya(false);
         return root;
     }
 }

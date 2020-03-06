@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import app.fil.market.BokovoeMenu;
 import app.fil.market.R;
 import app.fil.market.ui.tovari.TovarFromSQL;
 import app.fil.market.ui.tovari.TovariSpisokAdapter;
@@ -47,6 +48,7 @@ public class PodkategoriiFragment extends Fragment {
         }else{
 
         }
+        BokovoeMenu.etPoiskActivaciya(false);
         return root;
 
     }

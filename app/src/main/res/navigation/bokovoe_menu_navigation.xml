@@ -18,5 +18,10 @@
         android:id="@+id/nav_opisanie_tovara"
         android:name="app.fil.market.ui.opisanieTovara.OpisanieTovaraFragment"
         tools:layout="@layout/activity_tovar_opisanie" />
+    <fragment
+        android:id="@+id/nav_poiskFragment"
+        android:name="app.fil.market.ui.poisk.PoiskFragment"
+        android:label="fragment_poisk"
+        tools:layout="@layout/fragment_poisk" />
 
 </navigation>

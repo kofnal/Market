@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import app.fil.market.BokovoeMenu;
 import app.fil.market.Model.ILoadMore;
 import app.fil.market.R;
 import app.fil.market.ui.podkategorii.PodkategoriiFragment;
@@ -84,6 +85,7 @@ public class TovariFragment extends Fragment {
 //            tovariViewModel.showSQL(0,10,    rvTovariFragm);
 //            vetkaIdprevios=PoiskFragment.podkatVetkaId;
 //        }
+        BokovoeMenu.etPoiskActivaciya(false);
         return root;
     }
 }

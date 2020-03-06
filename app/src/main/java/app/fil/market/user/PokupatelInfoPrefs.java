@@ -27,7 +27,7 @@ public class PokupatelInfoPrefs {
         editor = prefs.edit();
     }
     public void saveIdSQL(String idSQL){
-        System.out.println("PokupatelInfoPrefs SETSQL ID = " +idSQL);
+        System.out.println("PoiskObjPrefs SETSQL ID = " +idSQL);
         editor.putString(KEY_ID_SQL_TAG, idSQL);
         editor.apply();
     }
@@ -38,7 +38,7 @@ public class PokupatelInfoPrefs {
 
 
     public void saveFioStr(String fioStr){
-        System.out.println("PokupatelInfoPrefs saveFioStr = " +fioStr);
+        System.out.println("PoiskObjPrefs saveFioStr = " +fioStr);
         editor.putString(KEY_FIO_TAG, fioStr);
         editor.apply();
     }
@@ -117,7 +117,7 @@ public class PokupatelInfoPrefs {
 //    public String getKorzinaCountStr(){return "2";}
     public String getKorzinaCountStr(){return prefs.getString(  KEY_KORZINA_COUNT_TAG , "");}
     public String getSqlId(){
-        System.out.println("PokupatelInfoPrefs GetSQL ID = " + prefs.getString(KEY_ID_SQL_TAG, ""));
+        System.out.println("PoiskObjPrefs GetSQL ID = " + prefs.getString(KEY_ID_SQL_TAG, ""));
         return prefs.getString(KEY_ID_SQL_TAG, "");}
     public String getGoogId(){return prefs.getString(KEY_ID_GOOG_TAG, "");}
 
