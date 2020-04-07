@@ -124,18 +124,19 @@ public class TovariViewModel extends ViewModel {
                             }
 
                             int razmerZaprosa = indexEnd - indexStart;
-                            if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
-                                if (PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() > razmerZaprosa) {
+                            if (jsonArray.length() < TovariFragment.countLoadItems || jsonArray.length() == 0) {
+                                TovariFragment.adapter.finishLoading=true;
+
                                     Toast.makeText(BokovoeMenu.tvKorzinaCount.getContext(), "Загружены все товары.", Toast.LENGTH_SHORT).show();
 
-                                    TovariFragment.adapter.finishLoading=true;
+
                                     if (PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(
                                             PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() - 1) == null) {
                                         PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).remove(
                                                 PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() - 1);
                                         TovariFragment.adapter.notifyDataSetChanged();
                                     }
-                                }
+
 
 
                                 System.out.println("if345dfs3 bolhe net");
@@ -164,7 +165,7 @@ public class TovariViewModel extends ViewModel {
                 parameters.put("pokupatel", MainActivity.pokupatelStatic.getSqlId());
                 parameters.put("indexstart", Integer.toString(indexStart));
                 parameters.put("count", Integer.toString(TovariFragment.countLoadItems));
-                parameters.put("poisk", "");
+                parameters.put("poisk", TovariFragment.poiskData);
                 System.out.println("TovariActiv showSQL() send");
                 System.out.println("Otpravka na server iz TovariActiv " + ", tovar id  " + parameters.toString() +
                         Utils.SHOW_TOVAR);

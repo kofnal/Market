@@ -31,8 +31,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import app.fil.market.korzina.KorzinaActivity;
+import app.fil.market.ui.podkategorii.PodkategoriiFragment;
 import app.fil.market.ui.poisk.PoiskFragment;
 import app.fil.market.ui.poisk.PoiskObjectSQL;
+import app.fil.market.ui.tovari.TovariFragment;
 
 public class BokovoeMenu extends AppCompatActivity   {
 
@@ -115,7 +117,13 @@ public class BokovoeMenu extends AppCompatActivity   {
                     editor.putString(prefTagNameRowData,json );
                     editor.commit();
                     PoiskFragment.adapter.notifyDataSetChanged();
+                    TovariFragment.poiskData=etTolb.getText().toString();
+                    PodkategoriiFragment.podkatVetkaId="0";
+                    PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(0).clear();
+
                     etTolb.setText("");
+                    Navigation.findNavController(contextThisActivity, R.id.nav_host_fragment).navigate(R.id.nav_tovari);
+
                     return false;
                 }else{
                     return false;

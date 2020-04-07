@@ -31,6 +31,8 @@ public class TovariFragment extends Fragment {
     final public static int countLoadItems = 10;
 //    String vetkaId;
     public static String vetkaIdprevios=" ";
+    public static String poiskData="";
+
 
 
 
@@ -39,6 +41,9 @@ public class TovariFragment extends Fragment {
         tovariViewModel =
                 ViewModelProviders.of(this).get(TovariViewModel.class);
         View root = inflater.inflate(R.layout.fragment_tovari, container, false);
+        if(!PodkategoriiFragment.podkatVetkaId.equals("0")){
+            poiskData="";
+        }
 //        tvKorzinaCount = getActivity().findViewById(R.id.tvKorzinaCount);
 //        ibKorzina = getActivity().findViewById(R.id.ibOpisanieKorzina);
         System.out.println("TovariActiv PodkategoriiFragment.podkatVetkaId= "+PodkategoriiFragment.podkatVetkaId);
@@ -53,17 +58,6 @@ public class TovariFragment extends Fragment {
         adapter = new TovariSpisokAdapter(rvTovariFragm, getActivity());
         rvTovariFragm.setAdapter(adapter);
 
-
-
-
-//        tovariViewModel.getText().observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-//        vetkaId = getArguments().getString("vetka");
-//        System.out.println("getArguments "+vetkaId);
 
 
         if(PodkategoriiFragment.firstStartListBool.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId))){

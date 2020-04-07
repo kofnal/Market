@@ -63,7 +63,7 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_ITEM = 0, VIEW_TYPE_LOADING = 1;
     ILoadMore loadMore;
     boolean isLoading;
-    boolean finishLoading=false;
+    public boolean finishLoading=false;
     Activity activity;
 //    ImageButton ibOpisanieKorzina;
 //    TextView tvCountKorzinaObj;
