@@ -63,10 +63,11 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_ITEM = 0, VIEW_TYPE_LOADING = 1;
     ILoadMore loadMore;
     boolean isLoading;
+    boolean finishLoading=false;
     Activity activity;
 //    ImageButton ibOpisanieKorzina;
 //    TextView tvCountKorzinaObj;
-    int visibleThreshold = 9;
+    int visibleThreshold = 5;
     int lastVisibleItem;
     int totalItemCount;
     public static ArrayList<String> deletedItemsSQLId = new ArrayList<>();
@@ -131,11 +132,13 @@ public class TovariSpisokAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         System.out.println("Tovari Adapter onBindViewHolder =" + position);
         if (holder instanceof ItemViewHolder) {
-            final TovarFromSQL item = PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(position);
+            final TovarFromSQL item = PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).
+                    get(position);
             final ItemViewHolder viewHolder = (ItemViewHolder) holder;
 
             viewHolder.tvRowTowarNaimenovanie.setText(
-//                    Integer.toString(position+1)+" "+
+                    Integer.toString(position+1)+"pos, "+
+                            item.getId_sql_tovara_v_baze()+", "+
                     item.getNaimenovanie());
             if (item.getSkidka() > 0) {
                 viewHolder.tvRowTovarCenaBezSkidki.setText(item.getCenaStr());

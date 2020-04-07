@@ -31,7 +31,7 @@ public class TovariViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    final int countLoadItems = 10;
+
 
     public TovariViewModel() {
         mText = new MutableLiveData<>();
@@ -41,6 +41,7 @@ public class TovariViewModel extends ViewModel {
     public LiveData<String> getText() {
         return mText;
     }
+
     void showSQL(final int indexStart, final int indexEnd,
                  final RecyclerView recyclerView) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Utils.SHOW_TOVAR,
@@ -48,10 +49,20 @@ public class TovariViewModel extends ViewModel {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
+                            TovariFragment.adapter.setLoaded();
+                           if (PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(
+                                            PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() - 1) == null) {
+                                        PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).remove(
+                                                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() - 1);
+                                        TovariFragment.adapter.notifyDataSetChanged();
+                                    }
 
+                            System.out.println("TovariActiv tovarRow showSQL() response " + response);
+                            JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = jsonObject.getJSONArray("tovar");
-                            System.out.println("TovariActivityActivity tovarRow showSQL() " + jsonObject);
+                            System.out.println("TovariActiv showSQL() resp arr length = "+jsonArray.length()+
+                                    " last id = "+jsonArray.getJSONObject(jsonArray.length()-1).getString("id"));
+                            System.out.println("TovariActiv tovarRow showSQL() " + jsonObject);
                             JSONArray jsonArrayKorzina = jsonObject.getJSONArray("korzina");
                             if (jsonArrayKorzina.length() > 0) {
 
@@ -69,7 +80,7 @@ public class TovariViewModel extends ViewModel {
                             }
 
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                System.out.println("show SQL i="+i+", "+jsonArray.length());
+                                System.out.println("show SQL i=" + i + ", " + jsonArray.length());
                                 JSONObject jsonRow = jsonArray.getJSONObject(i);
                                 System.out.println("TovarActvity Tovar row " + jsonRow);
                                 final TovarFromSQL tovarFromSQLObjRowTovar = new TovarFromSQL(
@@ -90,29 +101,58 @@ public class TovariViewModel extends ViewModel {
                                         jsonRow.getString("edinica_izmerenia_upakovki"),
                                         jsonRow.getString("raskazotovare")
                                 );
-                                System.out.println("TovarFromSQL create foto = "+PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size()+", " + tovarFromSQLObjRowTovar.getFoto());
+//                                System.out.println("TovarFromSQL create foto = " + PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() + ", " + tovarFromSQLObjRowTovar.getFoto());
                                 PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).add(tovarFromSQLObjRowTovar);
+//try{
+//    System.out.println("Otpravka na server iz TovariActiv arrsize= "+
+//            Integer.toString(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size())+
+//            ", id="+PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).
+//            get(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size()-1
+//            ).id_sql_tovara_v_baze);
+//} catch(Exception e){
+//    System.out.println("Otpravka na server iz TovariActiv arrsize= null");
+//}
+
+
                             }
+                            if (jsonArray.length() == TovariFragment.countLoadItems) {
+                                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).add(null);
+                                System.out.println("add null in progresBar");
+                            } else {
+//                                Toast.makeText(BokovoeMenu.tvKorzinaCount.getContext(), "Загружены все товары.", Toast.LENGTH_SHORT).show();
+
+                            }
+
                             int razmerZaprosa = indexEnd - indexStart;
                             if (jsonArray.length() < razmerZaprosa || jsonArray.length() == 0) {
-                                if(PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size()>razmerZaprosa)
+                                if (PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() > razmerZaprosa) {
                                     Toast.makeText(BokovoeMenu.tvKorzinaCount.getContext(), "Загружены все товары.", Toast.LENGTH_SHORT).show();
+
+                                    TovariFragment.adapter.finishLoading=true;
+                                    if (PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).get(
+                                            PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() - 1) == null) {
+                                        PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).remove(
+                                                PodkategoriiFragment.listTovarovSQLfromAdapterRV.get(Integer.valueOf(PodkategoriiFragment.podkatVetkaId)).size() - 1);
+                                        TovariFragment.adapter.notifyDataSetChanged();
+                                    }
+                                }
+
+
                                 System.out.println("if345dfs3 bolhe net");
                             } else {
                                 System.out.println("ehe est 345dfs3");
                             }
-                            System.out.println("adapter.notifyDataSetChanged()");
-                            recyclerView.getAdapter().notifyDataSetChanged();
-                            TovariFragment.adapter.setLoaded();
 
+                            TovariFragment.adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             System.out.println("\n ERR Try TovariActiv showSQL " + e.toString() + " <--->" + response);
                         }
                     }
                 }, new Response.ErrorListener() {
+
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("Err TovariActiv showSQL " + error.toString());
+                System.out.println("ERR TovariActiv showSQL " + error.toString());
 
             }
         }) {
@@ -123,9 +163,15 @@ public class TovariViewModel extends ViewModel {
                 parameters.put("vetka", PodkategoriiFragment.podkatVetkaId);
                 parameters.put("pokupatel", MainActivity.pokupatelStatic.getSqlId());
                 parameters.put("indexstart", Integer.toString(indexStart));
-                parameters.put("count", Integer.toString(countLoadItems));
-//                System.out.println("Otpravka na server iz " + vetkaId + ", tovar id  " + parameters.toString());
+                parameters.put("count", Integer.toString(TovariFragment.countLoadItems));
+                parameters.put("poisk", "");
+                System.out.println("TovariActiv showSQL() send");
+                System.out.println("Otpravka na server iz TovariActiv " + ", tovar id  " + parameters.toString() +
+                        Utils.SHOW_TOVAR);
+
+//
                 return parameters;
+
             }
         };
         Volley.newRequestQueue(BokovoeMenu.tvKorzinaCount.getContext()).add(stringRequest);

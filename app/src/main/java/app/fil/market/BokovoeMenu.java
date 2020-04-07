@@ -114,10 +114,6 @@ public class BokovoeMenu extends AppCompatActivity   {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(prefTagNameRowData,json );
                     editor.commit();
-
-
-
-
                     PoiskFragment.adapter.notifyDataSetChanged();
                     etTolb.setText("");
                     return false;

@@ -45,6 +45,7 @@ public class PodkategoriiViewModel extends ViewModel {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            System.out.println("KotegoriiPodActivity jsonObj from SQL Server -"+response);
                             JSONObject jsonObject= new JSONObject(response);
 //                            System.out.println("KotegoriiPodActivity jsonObj from SQL Server -"+jsonObject);
                             JSONArray jsonArray = jsonObject.getJSONArray("serv");
